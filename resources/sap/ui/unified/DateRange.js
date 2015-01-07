@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company.
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Element', './library'],
 	 * @class
 	 * Date range for use in DatePicker
 	 * @extends sap.ui.core.Element
-	 * @version 1.26.2
+	 * @version 1.26.3
 	 *
 	 * @constructor
 	 * @public
@@ -51,10 +51,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Element', './library'],
 
 	DateRange.prototype.setStartDate = function(oDate){
 
-		jQuery.sap.assert(!oDate || oDate instanceof Date, "Date must be a JavaScript date object");
 		if (oDate) {
+			if (!(oDate instanceof Date)) {
+				throw new Error("Date must be a JavaScript date object; " + this);
+			}
+
 			var iYear = oDate.getFullYear();
-			jQuery.sap.assert(iYear <= 9999 && iYear >= 1, "Date must not be in valid range (between 0001-01-01 and 9999-12-31)");
+			if (iYear < 1 || iYear > 9999) {
+				throw new Error("Date must not be in valid range (between 0001-01-01 and 9999-12-31); " + this);
+			}
 		}
 
 		this.setProperty("startDate", oDate);
@@ -63,10 +68,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Element', './library'],
 
 	DateRange.prototype.setEndDate = function(oDate){
 
-		jQuery.sap.assert(!oDate || oDate instanceof Date, "Date must be a JavaScript date object");
 		if (oDate) {
+			if (!(oDate instanceof Date)) {
+				throw new Error("Date must be a JavaScript date object; " + this);
+			}
+
 			var iYear = oDate.getFullYear();
-			jQuery.sap.assert(iYear <= 9999 && iYear >= 1, "Date must not be in valid range (between 0001-01-01 and 9999-12-31)");
+			if (iYear < 1 || iYear > 9999) {
+				throw new Error("Date must not be in valid range (between 0001-01-01 and 9999-12-31); " + this);
+			}
 		}
 
 		this.setProperty("endDate", oDate);

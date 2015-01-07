@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company.
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -34,7 +34,7 @@ sap.ui.define(['jquery.sap.global'],
 			rm.addClass("sapUiUfdShellOvrlyAnim");
 		}
 		rm.writeClasses();
-		rm.write("><div>");
+		rm.write("><span id='", oControl.getId(), "-focfirst' tabIndex='0'></span><div id='", oControl.getId(), "-inner'>");
 		
 		rm.write("<header class='sapUiUfdShellOvrlyHead'>");
 		rm.write("<hr class='sapUiUfdShellOvrlyBrand'/>");
@@ -53,7 +53,7 @@ sap.ui.define(['jquery.sap.global'],
 		ShellOverlayRenderer.renderContent(rm, oControl);
 		rm.write("</div>");
 		
-		rm.write("</div></div>");
+		rm.write("</div><span id='", oControl.getId(), "-foclast' tabIndex='0'></span></div>");
 	};
 	
 	ShellOverlayRenderer.renderSearch = function(rm, oControl) {
@@ -72,7 +72,7 @@ sap.ui.define(['jquery.sap.global'],
 	};
 	
 	ShellOverlayRenderer.renderContent = function(rm, oControl) {
-		rm.write("<div>");
+		rm.write("<div tabindex='-1'>");
 		var aContent = oControl.getContent();
 		for (var i = 0; i < aContent.length; i++) {
 			rm.renderControl(aContent[i]);

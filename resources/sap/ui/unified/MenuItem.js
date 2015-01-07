@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company.
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool', './MenuItemBase', '.
 	 * @extends sap.ui.unified.MenuItemBase
 	 *
 	 * @author SAP SE
-	 * @version 1.26.2
+	 * @version 1.26.3
 	 *
 	 * @constructor
 	 * @public
@@ -76,11 +76,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool', './MenuItemBase', '.
 	
 		// ARIA
 		if (oInfo.bAccessible) {
-			rm.writeAttribute("role", "menuitem");
-			rm.writeAttribute("aria-labelledby", oMenu.getId() + " " + this.getId() + "-txt " + this.getId() + "-scuttxt");
-			rm.writeAttribute("aria-disabled", !oMenu.checkEnabled(oItem));
-			rm.writeAttribute("aria-posinset", oInfo.iItemNo);
-			rm.writeAttribute("aria-setsize", oInfo.iTotalItems);
+			rm.writeAccessibilityState(oMenu, { //Pass the Menu here to write aria-labelledby
+				role: "menuitem",
+				disabled: !oMenu.checkEnabled(oItem),
+				posinset: oInfo.iItemNo,
+				setsize: oInfo.iTotalItems,
+				labelledby: {value: oMenu.getId() + "-label " + this.getId() + "-txt " + this.getId() + "-scuttxt", append: true}
+			});
 			if (oSubMenu) {
 				rm.writeAttribute("aria-haspopup", true);
 				rm.writeAttribute("aria-owns", oSubMenu.getId());

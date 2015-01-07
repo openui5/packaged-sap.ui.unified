@@ -1,6 +1,6 @@
 /*!
  * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
- * (c) Copyright 2009-2014 SAP SE or an SAP affiliate company.
+ * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -23,7 +23,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/ValueStateSupport', './MenuItem
 	 * @extends sap.ui.unified.MenuItemBase
 	 *
 	 * @author SAP SE
-	 * @version 1.26.2
+	 * @version 1.26.3
 	 *
 	 * @constructor
 	 * @public
@@ -89,7 +89,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/ValueStateSupport', './MenuItem
 		// ARIA
 		if (oInfo.bAccessible) {
 			rm.writeAttribute("role", "menuitem");
-			rm.writeAttribute("aria-labelledby", oMenu.getId() + " " + itemId + "-txt " + itemId + "-scuttxt");
 			rm.writeAttribute("aria-disabled", !bIsEnabled);
 			rm.writeAttribute("aria-posinset", oInfo.iItemNo);
 			rm.writeAttribute("aria-setsize", oInfo.iTotalItems);
@@ -107,16 +106,25 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/ValueStateSupport', './MenuItem
 		
 		// Text filed column 
 		rm.write("<div id=\"" + itemId + "-txt\" class=\"sapUiMnuItmTxt\">");
-		rm.write("<label id=\"" + itemId + "-lbl\" for=\"" + itemId + "-tf\" class=\"sapUiMnuTfItemLbl\">");
+		rm.write("<label id=\"" + itemId + "-lbl\" class=\"sapUiMnuTfItemLbl\">");
 		rm.writeEscaped(oItem.getLabel() || "");
 		rm.write("</label>");
 		rm.write("<div id=\"" + itemId + "-str\" class=\"sapUiMnuTfItmStretch\"></div>"); // Helper to strech the width if needed
 		rm.write("<div class=\"sapUiMnuTfItemWrppr\">");
-		rm.write("<input id=\"" + itemId + "-tf\" tabindex=\"-1\" role=\"textbox\" aria-multiline=\"false\" aria-autocomplete=\"none\"");
+		rm.write("<input id=\"" + itemId + "-tf\" tabindex=\"-1\"");
 		rm.writeAttributeEscaped("value", oItem.getValue() || "");
 		rm.writeAttribute("class", bIsEnabled ? "sapUiMnuTfItemTf sapUiMnuTfItemTfEnbl" : "sapUiMnuTfItemTf sapUiMnuTfItemTfDsbl");
 		if (!bIsEnabled) {
 			rm.writeAttribute("disabled", "disabled");
+		}
+		if (oInfo.bAccessible) {
+			rm.writeAccessibilityState(oMenu, { //Pass the Menu here to write aria-labelledby
+				role: "textbox",
+				disabled: !bIsEnabled,
+				multiline: false,
+				autocomplete: "none",
+				labelledby: {value: oMenu.getId() + "-label " + itemId + "-lbl", append: true}
+			});
 		}
 		rm.write("></input></div></div>");
 		
