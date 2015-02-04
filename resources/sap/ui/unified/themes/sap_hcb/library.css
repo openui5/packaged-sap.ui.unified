@@ -164,12 +164,12 @@
   position: absolute;
   right: 100%;
   width: 100%;
-  color: #d3d3d3;
+  color: #ffffff;
   font-size: 10px;
   cursor: default;
 }
 .sapUiCalWH {
-  color: #d3d3d3;
+  color: #ffffff;
   white-space: nowrap;
 }
 .sapUiCalDay,
@@ -196,7 +196,7 @@
   color: #7a5100;
 }
 .sapUiCalDayWeekEnd {
-  background-color: #7a5100;
+  background-color: #000000;
 }
 .sapUiCalDaySel,
 .sapUiCalMonthSel,
@@ -536,7 +536,7 @@ html[data-sap-ui-browser^="cr"] .sapUiFupInputMask > input {
   min-width: 80px;
   border: 1px solid #ffffff;
   /* the regular popup menu border */
-  background-color: #7a5100;
+  background-color: #000000;
   /* the popup menu's main background */
   cursor: default;
   outline: none;
@@ -1168,7 +1168,7 @@ html[data-sap-ui-browser^="cr"] .sapUiFupInputMask > input {
   border: medium none;
   margin: 0;
   z-index: 7;
-  background-color: #f0ab00;
+  background-color: #ffffff;
 }
 .sapUiUfdShell.sapUiUfdShellNoHead > .sapUiUfdShellBrand {
   display: none;
@@ -1536,6 +1536,20 @@ html[data-sap-ui-browser^="cr"] .sapUiFupInputMask > input {
 /* modal, bubble, bottom, top */
 /* modal, bubble, bottom, top */
 /* Toolbar Separator */
+/* ------------------------------------------------------------------- */
+/* Generic Mapping: not for usage in standard control development !!!! */
+/* ------------------------------------------------------------------- */
+/* Semantic Text Colors */
+/* Semantic Element Colors */
+/* Semantic Backgrounds */
+/* Background Brand */
+/* Text Colors */
+/* Border Colors */
+/* @sapUiLightBorder: @sapHCStandardFG; */
+/* @sapUiExtraLightBorder: @sapHCStandardFG; */
+/* Accent */
+/* Backgrounds Header/Footer */
+/* Background */
 /* =============================================== */
 /* CSS for control sap.ui.unified/Calendar.control */
 /* HCB                                             */
