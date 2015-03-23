@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.26.8
+	 * @version 1.26.9
 	 *
 	 * @constructor
 	 * @public
@@ -582,7 +582,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 		var oDomRef = this._oFilePathDomRef;
 		var sWidth = this.getWidth();
 
-		if (sWidth.substr( -1) == "%") {
+		if (sWidth.substr( -1) == "%" && oDomRef) {
 			// Special case - if the width is not in px, we only change the top element
 
 			// Resize all elements from the input field up to the control element itself.
@@ -593,18 +593,20 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 
 			oDomRef.style.width = sWidth;
 		} else {
-			oDomRef.style.width = sWidth;
+			if (oDomRef) {
+				oDomRef.style.width = sWidth;
 
-			// Now make sure the field including the button has the correct size
-			var $fp = jQuery(this._oFilePathDomRef);
-			var _newWidth = $fp.outerWidth() - _buttonWidth;
-			if (_newWidth < 0) {
-				this.oFilePath.getDomRef().style.width = "0px";
-				if (!!!sap.ui.Device.browser.internet_explorer) {
-					this.oFileUpload.style.width = $b.outerWidth(true);
+				// Now make sure the field including the button has the correct size
+				var $fp = jQuery(this._oFilePathDomRef);
+				var _newWidth = $fp.outerWidth() - _buttonWidth;
+				if (_newWidth < 0) {
+					this.oFilePath.getDomRef().style.width = "0px";
+					if (!!!sap.ui.Device.browser.internet_explorer) {
+						this.oFileUpload.style.width = $b.outerWidth(true);
+					}
+				} else {
+					this.oFilePath.getDomRef().style.width = _newWidth + "px";
 				}
-			} else {
-				this.oFilePath.getDomRef().style.width = _newWidth + "px";
 			}
 		}
 	};
