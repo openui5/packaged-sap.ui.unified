@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.28.2
+	 * @version 1.28.3
 	 *
 	 * @constructor
 	 * @public
@@ -302,6 +302,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 
 		this.bOpen = true;
 		this.oOpenerRef = oOpenerRef;
+		this.bIgnoreOpenerDOMRef = false;
 
 		// Open the sap.ui.core.Popup
 		this.getPopup().open(0, my, at, of, offset || "0 0", collision || "_sapUiCommonsMenuFlip _sapUiCommonsMenuFlip", true);
@@ -358,9 +359,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 
 		this.bOpen = false;
 		// Close all sub menus if there are any
-		if (this.oOpenedSubMenu) {
-			this.oOpenedSubMenu.close();
-		}
+		this.closeSubmenu();
 
 		// Reset the hover state
 		this.setHoveredItem();
@@ -390,7 +389,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 	Menu.prototype._menuClosed = function() {
 		//TBD: standard popup autoclose: this.close(); //Ensure proper cleanup
 		if (this.oOpenerRef) {
-			if (!this.ignoreOpenerDOMRef) {
+			if (!this.bIgnoreOpenerDOMRef) {
 				try {
 					this.oOpenerRef.focus();
 				} catch (e) {
@@ -557,10 +556,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 
 		this.setHoveredItem(oItem);
 
-		if (this.oOpenedSubMenu && !this.oOpenedSubMenu._bFixed) {
-			this.oOpenedSubMenu.close();
-			this.oOpenedSubMenu = null;
-		}
+		this.closeSubmenu(true);
 
 		if (jQuery.sap.checkMouseEnterOrLeave(oEvent, this.getDomRef())) {
 			this.getDomRef().focus();
@@ -636,9 +632,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 		}
 
 		if (!isInMenuHierarchy) {
-			this.ignoreOpenerDOMRef = true;
+			this.bIgnoreOpenerDOMRef = true;
 			this.close();
-			this.ignoreOpenerDOMRef = false;
 		}
 	};
 
@@ -667,8 +662,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 			this.getRootMenu().close();
 		} else {
 			if (!sap.ui.Device.system.desktop && this.oOpenedSubMenu === oSubMenu) {
-				this.oOpenedSubMenu.close();
-				this.oOpenedSubMenu = null;
+				this.closeSubmenu();
 			} else {
 				// Item with sub menu was triggered -> Open sub menu and fire event.
 				this.openSubmenu(oItem, bWithKeyboard);
@@ -742,6 +736,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 		}
 	};
 
+	/**
+	 * Opens the submenu of the given item (if any).
+	 * 
+	 * @param {boolean} bWithKeyboard Whether the submenu is opened via keyboard 
+	 * @param {boolean} bWithHover Whether the submenu is opened on hover or not (click)
+	 * 
+	 * @private
+	 */
 	Menu.prototype.openSubmenu = function(oItem, bWithKeyboard, bWithHover){
 		var oSubMenu = oItem.getSubmenu();
 		if (!oSubMenu) {
@@ -750,8 +752,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 
 		if (this.oOpenedSubMenu && this.oOpenedSubMenu !== oSubMenu) {
 			// Another sub menu is open and has not been fixed. Close it at first.
-			this.oOpenedSubMenu.close();
-			this.oOpenedSubMenu = null;
+			this.closeSubmenu();
 		}
 
 		if (this.oOpenedSubMenu) {
@@ -768,6 +769,27 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 			this.oOpenedSubMenu = oSubMenu;
 			var eDock = Popup.Dock;
 			oSubMenu.open(bWithKeyboard, this, eDock.BeginTop, eDock.EndTop, oItem, "0 0");
+		}
+	};
+	
+	/**
+	 * Closes an open submenu (if any) of this menu.
+	 * 
+	 * @param {boolean} bIfNotFixedOnly If true, the submenu is only close if it is not fixed (opened via hover and not via click)
+	 * @param {boolean} bIgnoreOpenerDOMRef If true, the focus is not set back to the opener dom ref (item) of the submenu
+	 * 
+	 * @private
+	 */
+	Menu.prototype.closeSubmenu = function(bIfNotFixedOnly, bIgnoreOpenerDOMRef){
+		if (this.oOpenedSubMenu) {
+			if (bIfNotFixedOnly && this.oOpenedSubMenu._bFixed) {
+				return;
+			}
+			if (bIgnoreOpenerDOMRef) {
+				this.oOpenedSubMenu.bIgnoreOpenerDOMRef = true;
+			}
+			this.oOpenedSubMenu.close();
+			this.oOpenedSubMenu = null;
 		}
 	};
 

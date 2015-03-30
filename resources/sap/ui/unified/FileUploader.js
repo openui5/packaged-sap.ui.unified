@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.28.2
+	 * @version 1.28.3
 	 *
 	 * @constructor
 	 * @public
@@ -794,7 +794,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 		var oXhr = aXhr[iIndex];
 		var sFilename = aFiles[iIndex].name;
 
-		if (sap.ui.Device.browser.internet_explorer) {
+		if (sap.ui.Device.browser.internet_explorer && aFiles[iIndex].type) {
 			var sContentType = aFiles[iIndex].type;
 			oXhr.xhr.setRequestHeader("Content-Type", sContentType);
 			oXhr.requestHeaders.push({name: "Content-Type", value: sContentType});
