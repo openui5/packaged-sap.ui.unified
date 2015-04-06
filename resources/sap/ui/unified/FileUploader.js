@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.26.9
+	 * @version 1.26.10
 	 *
 	 * @constructor
 	 * @public
@@ -710,7 +710,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 				if (window.File) {
 					var oFiles = jQuery.sap.domById(this.getId() + "-fu").files;
 				}
-				this.fireChange({id:this.getId(), newValue:sValue, files:oFiles});
+				if (!this.getSameFilenameAllowed() || sValue) {
+					this.fireChange({id:this.getId(), newValue:sValue, files:oFiles});
+				}
 			}
 			if (bUpload) {
 				this.upload();
@@ -817,7 +819,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 
 						var sFilename = oFiles[0].name;
 
-						if (sap.ui.Device.browser.internet_explorer) {
+						if (sap.ui.Device.browser.internet_explorer && oFiles[0].type) {
 							var sContentType = oFiles[0].type;
 							oXhr.xhr.setRequestHeader("Content-Type", sContentType);
 							oXhr.requestHeaders.push({name: "Content-Type", value: sContentType});
