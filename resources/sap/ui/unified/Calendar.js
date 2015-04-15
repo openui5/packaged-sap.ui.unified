@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * Basic Calendar.
 	 * This calendar is used for DatePickers
 	 * @extends sap.ui.core.Control
-	 * @version 1.28.3
+	 * @version 1.28.4
 	 *
 	 * @constructor
 	 * @public
@@ -568,7 +568,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 		};
 
-		Calendar.prototype.onThemeChanged = function(){
+		Calendar.prototype.onThemeChanged = function() {
+
+			//If the calendar is not yet rendered we cannot perform the theme change operations, which include DOM manipulation
+			if (!this.getDomRef()) {
+				return;
+			}
 
 			var that = this;
 			this._bNamesLengthChecked = undefined;
