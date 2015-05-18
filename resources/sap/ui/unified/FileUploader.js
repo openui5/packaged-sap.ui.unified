@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.28.5
+	 * @version 1.28.6
 	 *
 	 * @constructor
 	 * @public
@@ -463,6 +463,17 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 		// Compatibility issue: converting the given types to an array in case it is a string
 		var aTypes = this._convertTypesToArray(vTypes);
 		this.setProperty("mimeType", aTypes, false);
+		return this;
+	};
+
+	FileUploader.prototype.setTooltip = function(oTooltip) {
+		this._refreshTooltipBaseDelegate(oTooltip);
+		this.setAggregation("tooltip", oTooltip, true);
+		if (this.oFileUpload) {
+			if (typeof oTooltip  === "string") {
+				jQuery(this.oFileUpload).attr("title", jQuery.sap.escapeHTML(oTooltip));
+			}
+		}
 		return this;
 	};
 
