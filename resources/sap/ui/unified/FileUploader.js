@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.28.7
+	 * @version 1.28.8
 	 *
 	 * @constructor
 	 * @public
@@ -799,11 +799,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 
 	FileUploader.prototype.sendFiles = function(aXhr, aFiles, iIndex) {
 
+		var that = this;
+
 		if (iIndex >= aFiles.length) {
+			if (this.getSameFilenameAllowed() && this.getUploadOnChange()) {
+				that.setValue("", true);
+			}
 			return;
 		}
 
-		var that = this;
 		var oXhr = aXhr[iIndex];
 		var sFilename = aFiles[iIndex].name;
 
@@ -969,7 +973,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 					uploadForm.submit();
 				}
 				jQuery.sap.log.info("File uploading to " + this.getUploadUrl());
-				if (this.getSameFilenameAllowed() && this.getUploadOnChange()) {
+				if (this.getSameFilenameAllowed() && this.getUploadOnChange() && this.getUseMultipart()) {
 					this.setValue("", true);
 				}
 			}
@@ -1092,7 +1096,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 					if (aMimeTypes && aMimeTypes.length > 0) {
 						var bWrongMime = true;
 						for (var j = 0; j < aMimeTypes.length; j++) {
-							if (sType == aMimeTypes[j]) {
+							if (sType == aMimeTypes[j] || aMimeTypes[j] == "*/*" || sType.match(aMimeTypes[j])) {
 								bWrongMime = false;
 							}
 						}
@@ -1111,7 +1115,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 						var iIdx = sName.lastIndexOf(".");
 						var sFileEnding = sName.substring(iIdx + 1);
 						for (var k = 0; k < aFileTypes.length; k++) {
-							if (sFileEnding == aFileTypes[k]) {
+							if (sFileEnding.toLowerCase() == aFileTypes[k].toLowerCase()) {
 								bWrongType = false;
 							}
 						}

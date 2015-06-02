@@ -19,7 +19,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * renders a MonthPicker with ItemNavigation
 	 * This is used inside the calendar. Not for stand alone usage
 	 * @extends sap.ui.core.Control
-	 * @version 1.28.7
+	 * @version 1.28.8
 	 *
 	 * @constructor
 	 * @public
@@ -261,7 +261,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 				var bTooLong = false;
 				for (i = 0; i < aMonths.length; i++) {
 					var oMonth = aMonths[i];
-					if (oMonth.clientWidth < oMonth.scrollWidth) {
+					if (Math.abs(oMonth.clientWidth - oMonth.scrollWidth) > 1) {
 						bTooLong = true;
 						break;
 					}
