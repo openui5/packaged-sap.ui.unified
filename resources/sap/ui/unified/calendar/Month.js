@@ -27,7 +27,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * If used inside the calendar the properties and aggregation are directly taken from the parent
 	 * (To not duplicate and sync DateRanges and so on...)
 	 * @extends sap.ui.core.Control
-	 * @version 1.28.9
+	 * @version 1.28.10
 	 *
 	 * @constructor
 	 * @public
@@ -57,7 +57,22 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			/**
 			 * If set, a header with the month name is shown
 			 */
-			showHeader : {type : "boolean", group : "Misc", defaultValue : false}
+			showHeader : {type : "boolean", group : "Misc", defaultValue : false},
+
+			/**
+			 * If set, the first day of the displayed week is this day. Valid values are 0 to 6.
+			 * If not a valid value is set, the default of the used locale is used.
+			 * @since 1.28.9
+			 */
+			firstDayOfWeek : {type : "int", group : "Misc", defaultValue : -1},
+
+			/**
+			 * If set, the provided weekdays are displayed as non-working days.
+			 * Valid values inside the array are 0 to 6.
+			 * If not set, the weekend defined in the locale settings is displayed as non-working days.
+			 * @since 1.28.9
+			 */
+			nonWorkingDays : {type : "int[]", group : "Misc", defaultValue : null}
 		},
 		aggregations : {
 
@@ -124,8 +139,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 				delete this._oItemNavigation;
 			}
 
-			if (this._sRenderMonth) {
-				jQuery.sap.clearDelayedCall(this._sRenderMonth);
+			if (this._sInvalidateMonth) {
+				jQuery.sap.clearDelayedCall(this._sInvalidateMonth);
 			}
 
 		};
@@ -146,13 +161,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 			if (!this._bDateRangeChanged && (!oOrigin || !(oOrigin instanceof sap.ui.unified.DateRange))) {
 				Control.prototype.invalidate.apply(this, arguments);
-			} else if (this.getDomRef() && !this._sRenderMonth) {
+			} else if (this.getDomRef() && !this._sInvalidateMonth) {
 				// DateRange changed -> only rerender days
 				// do this only once if more DateRanges / Special days are changed
 				var that = this;
-				this._sRenderMonth = jQuery.sap.delayedCall(0, this, _renderMonth, [that, this._bNoFocus]);
-				this._bDateRangeChanged = undefined;
-				this._bNoFocus = undefined; // set in Calendar to prevent focus flickering for multiple months
+				if (this._bInvalidateSync) { // set if calendar already invalidates in delayed call
+					_invalidateMonth(that);
+				} else {
+					this._sInvalidateMonth = jQuery.sap.delayedCall(0, that, _invalidateMonth, [that]);
+				}
 			}
 
 		};
@@ -177,7 +194,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		Month.prototype.removeAllSpecialDates = function() {
 
 			this._bDateRangeChanged = true;
-			var aRemoved = this.removeAllAggregation("selectedDates");
+			var aRemoved = this.removeAllAggregation("specialDates");
 			return aRemoved;
 
 		};
@@ -185,7 +202,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		Month.prototype.destroySpecialDates = function() {
 
 			this._bDateRangeChanged = true;
-			var oDestroyed = this.destroyAggregation("selectedDates");
+			var oDestroyed = this.destroyAggregation("specialDates");
 			return oDestroyed;
 
 		};
@@ -357,7 +374,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		 * if used inside Calendar get the value from the parent
 		 * To don't have sync issues...
 		 */
-		Month.prototype.getShowHeader = function(){
+		Month.prototype._getShowHeader = function(){
 
 			var oParent = this.getParent();
 
@@ -382,6 +399,55 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			} else {
 				return this.getAssociation("ariaLabelledBy", []);
 			}
+
+		};
+
+		/*
+		 * if used inside Calendar get the value from the parent
+		 * To don't have sync issues...
+		 * If not a valid day, use LocaleData
+		 */
+		Month.prototype._getFirstDayOfWeek = function(){
+
+			var oParent = this.getParent();
+			var iFirstDayOfWeek = 0;
+
+			if (oParent && oParent.getFirstDayOfWeek) {
+				iFirstDayOfWeek = oParent.getFirstDayOfWeek();
+			} else {
+				iFirstDayOfWeek = this.getProperty("firstDayOfWeek");
+			}
+
+			if (iFirstDayOfWeek < 0 || iFirstDayOfWeek > 6) {
+				var oLocaleData = this._getLocaleData();
+				iFirstDayOfWeek = oLocaleData.getFirstDayOfWeek();
+			}
+
+			return iFirstDayOfWeek;
+
+		};
+
+		/*
+		 * if used inside Calendar get the value from the parent
+		 * To don't have sync issues...
+		 * If not a valid day, use LocaleData
+		 */
+		Month.prototype._getNonWorkingDays = function(){
+
+			var oParent = this.getParent();
+			var aNonWorkingDays;
+
+			if (oParent && oParent.getNonWorkingDays) {
+				aNonWorkingDays = oParent.getNonWorkingDays();
+			} else {
+				aNonWorkingDays = this.getProperty("nonWorkingDays");
+			}
+
+			if (aNonWorkingDays && !jQuery.isArray(aNonWorkingDays)) {
+				aNonWorkingDays = [];
+			}
+
+			return aNonWorkingDays;
 
 		};
 
@@ -698,11 +764,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			this._bLongWeekDays = undefined;
 			var aWeekHeaders = this.$().find(".sapUiCalWH");
 			var oLocaleData = this._getLocaleData();
-			var iFirstDayOfWeek = oLocaleData.getFirstDayOfWeek();
+			var iStartDay = this._getFirstWeekDay();
 			var aDayNames = oLocaleData.getDaysStandAlone("abbreviated");
-			for (var i = 0; i < aDayNames.length; i++) {
+			for (var i = 0; i < aWeekHeaders.length; i++) {
 				var oWeekDay = aWeekHeaders[i];
-				jQuery(oWeekDay).text(aDayNames[(i + iFirstDayOfWeek) % 7]);
+				jQuery(oWeekDay).text(aDayNames[(i + iStartDay) % 7]);
 			}
 
 			var that = this;
@@ -808,12 +874,22 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 		Month.prototype._renderHeader = function(){
 
-			if (this.getShowHeader()) {
+			if (this._getShowHeader()) {
 				var oDate = this._getDate();
 				var oLocaleData = this._getLocaleData();
 				var aMonthNames = oLocaleData.getMonthsStandAlone("wide");
 				this.$("Head").text(aMonthNames[oDate.getUTCMonth()]);
 			}
+
+		};
+
+		/*
+		 * returns the first displayed week day. Needed to change week days if too long
+		 */
+		Month.prototype._getFirstWeekDay = function(){
+
+			var oLocaleData = this._getLocaleData();
+			return oLocaleData.getFirstDayOfWeek();
 
 		};
 
@@ -1007,8 +1083,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		}
 
 		function _renderMonth(oThis, bNoFocus){
-
-			oThis._sRenderMonth = undefined; // initialize delayed call
 
 			var oDate = oThis.getRenderer().getStartDate(oThis);
 			var $Container = oThis.$("days");
@@ -1222,7 +1296,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 				for (i = 0; i < aWeekHeaders.length; i++) {
 					oWeekDay = aWeekHeaders[i];
-					if (oWeekDay.clientWidth < oWeekDay.scrollWidth) {
+					if (Math.abs(oWeekDay.clientWidth - oWeekDay.scrollWidth) > 1) {
 						bTooLong = true;
 						break;
 					}
@@ -1231,11 +1305,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 				if (bTooLong) {
 					oThis._bLongWeekDays = false;
 					var oLocaleData = oThis._getLocaleData();
-					var iFirstDayOfWeek = oLocaleData.getFirstDayOfWeek();
+					var iStartDay = oThis._getFirstWeekDay();
 					var aDayNames = oLocaleData.getDaysStandAlone("narrow");
-					for ( i = 0; i < aDayNames.length; i++) {
+					for ( i = 0; i < aWeekHeaders.length; i++) {
 						oWeekDay = aWeekHeaders[i];
-						jQuery(oWeekDay).text(aDayNames[(i + iFirstDayOfWeek) % 7]);
+						jQuery(oWeekDay).text(aDayNames[(i + iStartDay) % 7]);
 					}
 				} else {
 					oThis._bLongWeekDays = true;
@@ -1243,6 +1317,16 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 				oThis._bNamesLengthChecked = true;
 			}
+
+		}
+
+		function _invalidateMonth(oThis){
+
+			oThis._sInvalidateMonth = undefined;
+
+			_renderMonth(oThis, oThis._bNoFocus);
+			oThis._bDateRangeChanged = undefined;
+			oThis._bNoFocus = undefined; // set in Calendar to prevent focus flickering for multiple months
 
 		}
 

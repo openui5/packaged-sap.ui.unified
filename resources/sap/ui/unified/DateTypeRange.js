@@ -10,7 +10,7 @@ sap.ui.define(['jquery.sap.global', './DateRange', './library'],
 	"use strict";
 
 
-	
+
 	/**
 	 * Constructor for a new DateTypeRange.
 	 *
@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', './DateRange', './library'],
 	 * @class
 	 * Date range with calendar day type information. Used to visualize special days in the Calendar.
 	 * @extends sap.ui.unified.DateRange
-	 * @version 1.28.9
+	 * @version 1.28.10
 	 *
 	 * @constructor
 	 * @public
@@ -29,24 +29,24 @@ sap.ui.define(['jquery.sap.global', './DateRange', './library'],
 	 * @ui5-metamodel This control/element also will be described in the UI5 (legacy) designtime metamodel
 	 */
 	var DateTypeRange = DateRange.extend("sap.ui.unified.DateTypeRange", /** @lends sap.ui.unified.DateTypeRange.prototype */ { metadata : {
-	
+
 		library : "sap.ui.unified",
 		properties : {
-	
+
 			/**
-			 * Type of the dayte range.
+			 * Type of the date range.
 			 */
-			type : {type : "sap.ui.unified.CalendarDayType", group : "Appearance", defaultValue : null}
+			type : {type : "sap.ui.unified.CalendarDayType", group : "Appearance", defaultValue : sap.ui.unified.CalendarDayType.Type01}
 		}
 	}});
-	
+
 	///**
 	// * This file defines behavior for the control,
 	// */
 	//sap.ui.unified.DateTypeRange.prototype.init = function(){
 	//   // do something for initialization...
 	//};
-	
+
 
 	return DateTypeRange;
 
