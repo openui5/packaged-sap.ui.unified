@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.30.0
+	 * @version 1.30.1
 	 *
 	 * @constructor
 	 * @public
@@ -914,8 +914,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 			return true;
 		}
 		
-		var oParent = this.getParent();
-		if (oParent && oParent.$ && oParent.$().closest(".sapUiSizeCompact,.sapUiSizeCondensed,.sapUiSizeCozy").hasClass("sapUiSizeCozy")) {
+		if (checkCozyMode(this.oOpenerRef)) {
+			return true;
+		}
+		
+		if (checkCozyMode(this.getParent())) {
 			return true;
 		}
 		
@@ -924,6 +927,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 
 
 	///////////////////////////////////////// Hidden Functions /////////////////////////////////////////
+	
+	function checkCozyMode(oRef) {
+		if (!oRef) {
+			return false;
+		}
+		oRef = oRef.$ ? oRef.$() : jQuery(oRef);
+		return oRef.closest(".sapUiSizeCompact,.sapUiSizeCondensed,.sapUiSizeCozy").hasClass("sapUiSizeCozy");
+	}
 
 	function setItemToggleState(oMenu, bOpen){
 		var oParent = oMenu.getParent();
