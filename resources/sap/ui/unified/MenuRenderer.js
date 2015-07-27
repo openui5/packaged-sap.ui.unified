@@ -15,7 +15,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * Menu renderer.
 	 * @author SAP - TD Core UI&AM UI Infra
 	 *
-	 * @version 1.30.2
+	 * @version 1.30.3
 	 * @namespace
 	 */
 	var MenuRenderer = {
