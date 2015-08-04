@@ -1,5 +1,5 @@
 /*!
- * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
+ * UI development toolkit for HTML5 (OpenUI5)
  * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.28.12
+	 * @version 1.28.13
 	 *
 	 * @constructor
 	 * @public
@@ -1014,7 +1014,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 		if (!this.getEnabled()) {
 			return;
 		}
-		if (this.getSameFilenameAllowed()) {
+		if (this.getSameFilenameAllowed() && this.getUploadOnChange()) {
 			this.setValue("", true);
 		}
 		var iKeyCode = oEvent.keyCode,
@@ -1034,7 +1034,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 			}
 		} else if (iKeyCode != eKC.TAB &&
 					iKeyCode != eKC.SHIFT &&
-					iKeyCode != eKC.F6) {
+					iKeyCode != eKC.F6 &&
+					iKeyCode != eKC.PAGE_UP &&
+					iKeyCode != eKC.PAGE_DOWN &&
+					iKeyCode != eKC.END &&
+					iKeyCode != eKC.HOME &&
+					iKeyCode != eKC.ARROW_LEFT &&
+					iKeyCode != eKC.ARROW_UP &&
+					iKeyCode != eKC.ARROW_RIGHT &&
+					iKeyCode != eKC.ARROW_DOWN) {
 			oEvent.preventDefault();
 			oEvent.stopPropagation();
 		}
