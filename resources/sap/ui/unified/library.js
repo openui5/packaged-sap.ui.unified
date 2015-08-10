@@ -19,14 +19,14 @@ sap.ui.define(['jquery.sap.global',
 	 * @namespace
 	 * @name sap.ui.unified
 	 * @author SAP SE
-	 * @version 1.28.13
+	 * @version 1.28.14
 	 * @public
 	 */
 
 	// delegate further initialization of this library to the Core
 	sap.ui.getCore().initLibrary({
 		name : "sap.ui.unified",
-		version: "1.28.13",
+		version: "1.28.14",
 		dependencies : ["sap.ui.core"],
 		types: [
 			"sap.ui.unified.CalendarDayType",
@@ -260,6 +260,7 @@ sap.ui.define(['jquery.sap.global',
 			createTextField: function(sId){ throw new Error("no TextField control available!"); }, /* must return a TextField control */
 			setTextFieldContent: function(oTextField, sWidth){ throw new Error("no TextField control available!"); },
 			createButton: function(){ throw new Error("no Button control available!"); }, /* must return a Button control */
+			addFormClass: function(){ return null; },
 			bFinal: false /* if true, the helper must not be overwritten by an other library */
 		};
 	}

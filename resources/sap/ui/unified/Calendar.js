@@ -25,7 +25,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * Basic Calendar.
 	 * This calendar is used for DatePickers
 	 * @extends sap.ui.core.Control
-	 * @version 1.28.13
+	 * @version 1.28.14
 	 *
 	 * @constructor
 	 * @public
@@ -966,9 +966,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 			// check special case if only 4 weeks are displayed (e.g. February 2021) -> top padding must be removed
 			// can only happen if only one month is displayed -> otherwise at least one month has more than 28 days.
-			if (_getMonths(oThis) > 1) {
+			if (_getMonths(oThis) == 1) {
 				var oMonth = oThis.getAggregation("month")[0];
-				var aDomRefs = oMonth.$("days").children(".sapUiCalDay");
+				var aDomRefs = oMonth.$("days").find(".sapUiCalDay");
 				if (aDomRefs.length == 28) {
 					oYearPicker.$().addClass("sapUiCalYearNoTop");
 				}else {

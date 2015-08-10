@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.28.13
+	 * @version 1.28.14
 	 *
 	 * @constructor
 	 * @public
@@ -769,20 +769,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 		if (!this.bMobileLib) {
 			jQuery(this.oBrowse.getDomRef()).removeClass('sapUiBtnStdHover');
 			this.oBrowse.onmouseout(oEvent);
-		}
-	};
-
-	FileUploader.prototype.onfocusin = function () {
-		if (!this.bMobileLib) {
-			jQuery(this.oBrowse.getDomRef()).addClass('sapUiBtnStdFocus').attr("tabindex", "-1");
-			jQuery(this.oFilePath.getDomRef()).removeClass('sapUiTfFoc');
-			this.focus();
-		}
-	};
-
-	FileUploader.prototype.onfocusout = function () {
-		if (!this.bMobileLib) {
-			jQuery(this.oBrowse.getDomRef()).removeClass('sapUiBtnStdFocus').attr("tabindex", "0");
 		}
 	};
 

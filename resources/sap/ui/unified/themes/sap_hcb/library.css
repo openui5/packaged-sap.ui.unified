@@ -497,7 +497,7 @@ html[dir=rtl][data-sap-ui-browser^="ie"] .sapUiUfdCurrencyValue {
 .sapUiFup {
   display: inline-block;
 }
-.sapUiFupInp {
+.sapUiFupInp .sapUiFUM {
   top: 2px;
 }
 .sapUiFupGroup {
