@@ -1,5 +1,5 @@
 /*!
- * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
+ * UI development toolkit for HTML5 (OpenUI5)
  * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
@@ -19,14 +19,14 @@ sap.ui.define(['jquery.sap.global',
 	 * @namespace
 	 * @name sap.ui.unified
 	 * @author SAP SE
-	 * @version 1.30.4
+	 * @version 1.30.5
 	 * @public
 	 */
 
 	// delegate further initialization of this library to the Core
 	sap.ui.getCore().initLibrary({
 		name : "sap.ui.unified",
-		version: "1.30.4",
+		version: "1.30.5",
 		dependencies : ["sap.ui.core"],
 		types: [
 			"sap.ui.unified.CalendarDayType",
@@ -262,6 +262,7 @@ sap.ui.define(['jquery.sap.global',
 			createTextField: function(sId){ throw new Error("no TextField control available!"); }, /* must return a TextField control */
 			setTextFieldContent: function(oTextField, sWidth){ throw new Error("no TextField control available!"); },
 			createButton: function(){ throw new Error("no Button control available!"); }, /* must return a Button control */
+			addFormClass: function(){ return null; },
 			bFinal: false /* if true, the helper must not be overwritten by an other library */
 		};
 	}

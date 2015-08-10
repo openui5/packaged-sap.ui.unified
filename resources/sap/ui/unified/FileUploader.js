@@ -1,5 +1,5 @@
 /*!
- * SAP UI development toolkit for HTML5 (SAPUI5/OpenUI5)
+ * UI development toolkit for HTML5 (OpenUI5)
  * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.30.4
+	 * @version 1.30.5
 	 *
 	 * @constructor
 	 * @public
@@ -991,20 +991,31 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 							});
 							this._aXhr[j].xhr.open("POST", this.getUploadUrl(), true);
 							if (this.getHeaderParameters()) {
-								var oHeaderParams = this.getHeaderParameters();
-								for (var i = 0; i < oHeaderParams.length; i++) {
-									var sHeader = oHeaderParams[i].getName();
-									var sValue = oHeaderParams[i].getValue();
-									this._aXhr[j].xhr.setRequestHeader(sHeader, sValue);
-									this._aXhr[j].requestHeaders.push({name: sHeader, value: sValue});
+								var aHeaderParams = this.getHeaderParameters();
+								for (var i = 0; i < aHeaderParams.length; i++) {
+									var sHeader = aHeaderParams[i].getName();
+									var sValue = aHeaderParams[i].getValue();
+									this._aXhr[j].requestHeaders.push({
+										name: sHeader, 
+										value: sValue
+									});
 								}
 							}
 							var sFilename = aFiles[j].name;
-							var oRequestHeaders = this._aXhr[j].requestHeaders;
+							var aRequestHeaders = this._aXhr[j].requestHeaders;
 							this.fireUploadStart({
 								"fileName": sFilename,
-								"requestHeaders": oRequestHeaders
+								"requestHeaders": aRequestHeaders
 							});
+							for (var i = 0; i < aRequestHeaders.length; i++) {
+								// Check if request is still open in case abort() was called.
+								if (this._aXhr[j].xhr.readyState === 0) {
+									break;
+								}
+								var sHeader = aRequestHeaders[i].name;
+								var sValue = aRequestHeaders[i].value;
+								this._aXhr[j].xhr.setRequestHeader(sHeader, sValue);
+							}
 						}
 						if (this.getUseMultipart()) {
 							var formData = new window.FormData();
@@ -1064,6 +1075,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 						var sValue = this._aXhr[i].requestHeaders[j].value;
 						if (sHeader == sHeaderCheck && sValue == sValueCheck) {
 							this._aXhr[i].xhr.abort();
+							jQuery.sap.log.info("File upload aborted.");
 						}
 					}
 				} else {
@@ -1097,7 +1109,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 		if (!this.getEnabled()) {
 			return;
 		}
-		if (this.getSameFilenameAllowed()) {
+		if (this.getSameFilenameAllowed() && this.getUploadOnChange()) {
 			this.setValue("", true);
 		}
 		var iKeyCode = oEvent.keyCode,
@@ -1117,7 +1129,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 			}
 		} else if (iKeyCode != eKC.TAB &&
 					iKeyCode != eKC.SHIFT &&
-					iKeyCode != eKC.F6) {
+					iKeyCode != eKC.F6 &&
+					iKeyCode != eKC.PAGE_UP &&
+					iKeyCode != eKC.PAGE_DOWN &&
+					iKeyCode != eKC.END &&
+					iKeyCode != eKC.HOME &&
+					iKeyCode != eKC.ARROW_LEFT &&
+					iKeyCode != eKC.ARROW_UP &&
+					iKeyCode != eKC.ARROW_RIGHT &&
+					iKeyCode != eKC.ARROW_DOWN) {
 			oEvent.preventDefault();
 			oEvent.stopPropagation();
 		}
