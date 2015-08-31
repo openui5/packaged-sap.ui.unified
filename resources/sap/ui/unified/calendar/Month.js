@@ -27,7 +27,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * If used inside the calendar the properties and aggregation are directly taken from the parent
 	 * (To not duplicate and sync DateRanges and so on...)
 	 * @extends sap.ui.core.Control
-	 * @version 1.28.16
+	 * @version 1.28.17
 	 *
 	 * @constructor
 	 * @public
@@ -1011,6 +1011,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		}
 
 		function _handleMousedown(oThis, oEvent, oFocusedDate, iIndex){
+
+			if (oEvent.button) {
+				// only use left mouse button
+				return;
+			}
 
 			_selectDay(oThis, oFocusedDate, oEvent.shiftKey);
 			_fireSelect(oThis);
