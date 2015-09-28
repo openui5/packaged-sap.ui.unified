@@ -27,7 +27,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * <b>Note:</b> JavaScript Date objects are used to set and return the months, mark them as selected or as a special type.
 	 * But the date part of the Date object is not used. If a Date object is returned the date will be set to the 1st of the corresponding month.
 	 * @extends sap.ui.core.Control
-	 * @version 1.32.1
+	 * @version 1.32.2
 	 *
 	 * @constructor
 	 * @public
@@ -530,7 +530,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			}
 
 			// remove tabindex of dummy element if focus is inside calendar
-			jQuery.sap.byId(this.getId() + "-end").attr("tabindex", "-1");
+			this.$("end").attr("tabindex", "-1");
 
 		};
 
@@ -538,7 +538,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 			if (!oEvent.relatedControlId || !jQuery.sap.containsOrEquals(this.getDomRef(), sap.ui.getCore().byId(oEvent.relatedControlId).getFocusDomRef())) {
 				// put dummy element back to tab-chain
-				jQuery.sap.byId(this.getId() + "-end").attr("tabindex", "0");
+				this.$("end").attr("tabindex", "0");
 
 				if (!this._bPoupupMode) {
 					// restore Tabindex from day and year

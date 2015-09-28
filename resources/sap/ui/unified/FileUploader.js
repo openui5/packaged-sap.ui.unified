@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.32.1
+	 * @version 1.32.2
 	 *
 	 * @constructor
 	 * @public
@@ -506,7 +506,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 		this.setAggregation("tooltip", oTooltip, true);
 		if (this.oFileUpload) {
 			if (typeof oTooltip  === "string") {
-				jQuery(this.oFileUpload).attr("title", jQuery.sap.escapeHTML(oTooltip));
+				jQuery(this.oFileUpload).attr("title", jQuery.sap.encodeHTML(oTooltip));
 			}
 		}
 		return this;
@@ -611,7 +611,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 
 	FileUploader.prototype._recalculateWidth = function() {
 		// calculation of the width of the overlay for the original file upload
-		// !!!sap.ui.Device.browser.internet_explorer check: only for non IE browsers since there we need
+		// !sap.ui.Device.browser.internet_explorer check: only for non IE browsers since there we need
 		// the button in front of the fileuploader
 		if (this.getWidth()) {
 			if (this.getButtonOnly() && this.oBrowse.getDomRef()) {
@@ -657,7 +657,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 				var _newWidth = $fp.outerWidth() - _buttonWidth;
 				if (_newWidth < 0) {
 					this.oFilePath.getDomRef().style.width = "0px";
-					if (!!!sap.ui.Device.browser.internet_explorer) {
+					if (!sap.ui.Device.browser.internet_explorer) {
 						this.oFileUpload.style.width = $b.outerWidth(true);
 					}
 				} else {
@@ -811,7 +811,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 	 */
 	FileUploader.prototype.clear = function () {
 		var uploadForm = this.getDomRef("fu_form");
-		uploadForm.reset();
+		if (uploadForm) {
+			uploadForm.reset();
+		}
 		//clear the value, don't fire change event, and supress the refocusing of the file input field
 		return this.setValue("", false, true);
 	};
@@ -1191,7 +1193,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 							fileSize:fSize
 						});
 						uploadForm.reset();
-						this.setValue("", false, true);
+						this.setValue("", true, true);
 						return;
 					}
 					//check if the filename is too long and fire the corresponding event if necessary
@@ -1200,7 +1202,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 							fileName: sName
 						});
 						uploadForm.reset();
-						this.setValue("", false, true);
+						this.setValue("", true, true);
 						return;
 					}
 					//check allowed mime-types for potential mismatches
@@ -1218,7 +1220,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 								mimeType:sType
 							});
 							uploadForm.reset();
-							this.setValue("", false, true);
+							this.setValue("", true, true);
 							return;
 						}
 					}
@@ -1239,7 +1241,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 								fileType:sFileEnding
 							});
 							uploadForm.reset();
-							this.setValue("", false, true);
+							this.setValue("", true, true);
 							return;
 						}
 					}
@@ -1267,7 +1269,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 						fileType:sFileEnding
 					});
 					uploadForm.reset();
-					this.setValue("", false, true);
+					this.setValue("", true, true);
 					return;
 				}
 				//check if the filename is too long and fire the corresponding event if necessary
@@ -1276,7 +1278,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 						fileName: sName
 					});
 					uploadForm.reset();
-					this.setValue("", false, true);
+					this.setValue("", true, true);
 					return;
 				}
 				if (sName) {
@@ -1376,12 +1378,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 			}
 			aFileUpload.push('size="1" ');
 			if (this.getTooltip_AsString() ) {
-				aFileUpload.push('title="' + jQuery.sap.escapeHTML(this.getTooltip_AsString()) + '" ');
+				aFileUpload.push('title="' + jQuery.sap.encodeHTML(this.getTooltip_AsString()) + '" ');
 			//} else if (this.getTooltip() ) {
 				// object tooltip, do nothing - tooltip will be displayed
 			} else if (this.getValue() != "") {
 				// only if there is no tooltip, then set value as fallback
-				aFileUpload.push('title="' + jQuery.sap.escapeHTML(this.getValue()) + '" ');
+				aFileUpload.push('title="' + jQuery.sap.encodeHTML(this.getValue()) + '" ');
 			}
 			if (!this.getEnabled()) {
 				aFileUpload.push('disabled="disabled" ');

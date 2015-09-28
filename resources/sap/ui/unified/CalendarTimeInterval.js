@@ -24,7 +24,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * @class
 	 * Calendar with granularity of time items displayed in one line.
 	 * @extends sap.ui.core.Control
-	 * @version 1.32.1
+	 * @version 1.32.2
 	 *
 	 * @constructor
 	 * @public
@@ -650,7 +650,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			}
 
 			// remove tabindex of dummy element if focus is inside calendar
-			jQuery.sap.byId(this.getId() + "-end").attr("tabindex", "-1");
+			this.$("end").attr("tabindex", "-1");
 
 		};
 
@@ -658,7 +658,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 			if (!oEvent.relatedControlId || !jQuery.sap.containsOrEquals(this.getDomRef(), sap.ui.getCore().byId(oEvent.relatedControlId).getFocusDomRef())) {
 				// put dummy element back to tab-chain
-				jQuery.sap.byId(this.getId() + "-end").attr("tabindex", "0");
+				this.$("end").attr("tabindex", "0");
 
 				if (!this._bPoupupMode) {
 					// restore Tabindex from day and year
