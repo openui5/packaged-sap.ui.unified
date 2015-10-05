@@ -25,7 +25,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * Basic Calendar.
 	 * This calendar is used for DatePickers
 	 * @extends sap.ui.core.Control
-	 * @version 1.30.8
+	 * @version 1.30.9
 	 *
 	 * @constructor
 	 * @public
@@ -611,7 +611,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			}
 
 			// remove tabindex of dummy element if focus is inside calendar
-			jQuery.sap.byId(this.getId() + "-end").attr("tabindex", "-1");
+			this.$("end").attr("tabindex", "-1");
 
 		};
 
@@ -619,7 +619,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 			if (!oEvent.relatedControlId || !jQuery.sap.containsOrEquals(this.getDomRef(), sap.ui.getCore().byId(oEvent.relatedControlId).getFocusDomRef())) {
 				// put dummy element back to tab-chain
-				jQuery.sap.byId(this.getId() + "-end").attr("tabindex", "0");
+				this.$("end").attr("tabindex", "0");
 
 				if (!this._bPoupupMode) {
 					// restore Tabindex from day, month, year
@@ -858,7 +858,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 		}
 
-		function _showMonthPicker(oThis){
+		function _showMonthPicker(oThis, bNoFocus){
 
 			if (oThis._iMode == 2) {
 				_hideYearPicker(oThis, true);
@@ -878,15 +878,17 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			}
 			oThis.$("contentOver").css("display", "");
 
-			oMonthPicker.setMonth(oDate.getUTCMonth());
+			if (!bNoFocus) {
+				oMonthPicker.setMonth(oDate.getUTCMonth());
 
-			if (oThis._iMode == 0) {
-				// remove tabindex from month
-				var aMonths = oThis.getAggregation("month");
+				if (oThis._iMode == 0) {
+					// remove tabindex from month
+					var aMonths = oThis.getAggregation("month");
 
-				for (var i = 0; i < aMonths.length; i++) {
-					var oMonth = aMonths[i];
-					jQuery(oMonth._oItemNavigation.getItemDomRefs()[oMonth._oItemNavigation.getFocusedIndex()]).attr("tabindex", "-1");
+					for (var i = 0; i < aMonths.length; i++) {
+						var oMonth = aMonths[i];
+						jQuery(oMonth._oItemNavigation.getItemDomRefs()[oMonth._oItemNavigation.getFocusedIndex()]).attr("tabindex", "-1");
+					}
 				}
 			}
 
@@ -1016,9 +1018,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		function _checkNamesLength(oThis){
 
 			if (!oThis._bNamesLengthChecked) {
-				// check month names
-				_showMonthPicker(oThis);
-				_hideMonthPicker(oThis);
+				// check month names (don't change focus)
+				_showMonthPicker(oThis, true);
+				_hideMonthPicker(oThis, true);
 
 				var oMonthPicker = oThis.getAggregation("monthPicker");
 				oThis._bLongMonth = oMonthPicker._bLongMonth;
