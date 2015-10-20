@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.30.9
+	 * @version 1.30.10
 	 *
 	 * @constructor
 	 * @public
@@ -894,9 +894,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 	};
 
 	Menu.prototype.focus = function(){
-		var res = sap.ui.core.Control.prototype.focus.apply(this, arguments);
-		this._setActiveDescendant(this.oHoveredItem);
-		return res;
+		if (this.bOpen) {
+			Control.prototype.focus.apply(this, arguments);
+			this._setActiveDescendant(this.oHoveredItem);
+		}
 	};
 	
 	/**
