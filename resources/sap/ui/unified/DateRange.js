@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Element', './library'],
 	 * @class
 	 * Date range for use in DatePicker
 	 * @extends sap.ui.core.Element
-	 * @version 1.32.3
+	 * @version 1.32.4
 	 *
 	 * @constructor
 	 * @public
@@ -64,6 +64,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Element', './library'],
 
 		this.setProperty("startDate", oDate);
 
+		return this;
+
 	};
 
 	DateRange.prototype.setEndDate = function(oDate){
@@ -80,6 +82,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Element', './library'],
 		}
 
 		this.setProperty("endDate", oDate);
+
+		return this;
 
 	};
 
