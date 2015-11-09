@@ -27,7 +27,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * If used inside the calendar the properties and aggregation are directly taken from the parent
 	 * (To not duplicate and sync DateRanges and so on...)
 	 * @extends sap.ui.core.Control
-	 * @version 1.28.21
+	 * @version 1.28.22
 	 *
 	 * @constructor
 	 * @public
@@ -565,6 +565,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 				$Target = $Target.parent();
 			}
 
+			if (this._sLastTargetId && this._sLastTargetId == $Target.attr("id")) {
+				// mouse move at same day -> do nothing
+				return;
+			}
+			this._sLastTargetId = $Target.attr("id");
+
 			var that = this;
 
 			if ($Target.hasClass("sapUiCalDay")) {
@@ -745,6 +751,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 			jQuery(window.document).unbind('mousemove', this._mouseMoveProxy);
 			this._bMouseMove = undefined;
+			this._sLastTargetId = undefined;
 
 			if (bFireEvent) {
 				// fire internal event for Calendar. In MultiMonth case all months must react on mousemove
@@ -983,6 +990,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 				}
 			}
 
+			if (oEvent.type == "mousedown" && this.getIntervalSelection()) {
+				// as in focus event the month can be cahnged store the last target here
+				this._sLastTargetId = $DomRef.attr("id");
+			}
+
 			this.fireFocus({date: CalendarUtils._createLocalDate(oFocusedDate), otherMonth: bOtherMonth});
 
 			if (oEvent.type == "mousedown") {
@@ -1005,6 +1017,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 				// as no click event is fired in some cases, e.g. if month is changed (because of changing DOM) select the day on mousedown
 				var that = this;
 				var oFocusedDate = this._getDate();
+				if (this.getIntervalSelection()) {
+					var aDomRefs = this._oItemNavigation.getItemDomRefs();
+					this._sLastTargetId = aDomRefs[iIndex].id;
+				}
 				_handleMousedown(that, oEvent, oFocusedDate, iIndex);
 			}
 
@@ -1040,10 +1056,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 				throw new Error("Date must not be in valid range (between 0001-01-01 and 9999-12-31); " + oThis);
 			}
 
-			var oUTCDate = CalendarUtils._createUniversalUTCDate(oDate);
-			var bFocusable = oThis.checkDateFocusable(oDate);
-			oThis.setProperty("date", oDate, true);
-			oThis._oUTCDate = oUTCDate;
+			var bFocusable = true; // if date not changed it is still focusable
+			if (!jQuery.sap.equal(oThis.getDate(), oDate)) {
+				var oUTCDate = CalendarUtils._createUniversalUTCDate(oDate);
+				bFocusable = oThis.checkDateFocusable(oDate);
+				oThis.setProperty("date", oDate, true);
+				oThis._oUTCDate = oUTCDate;
+			}
 
 			if (oThis.getDomRef()) {
 				if (bFocusable) {
@@ -1061,7 +1080,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 			if (!bNoSetDate) {
 				// use JS date as public function is called
-				oThis.setDate(new Date(oDate.getTime()));
+				oThis.setDate(CalendarUtils._createLocalDate(new Date(oDate.getTime())));
 			}
 
 			var sYyyymmdd = oThis._oFormatYyyymmdd.format(oDate, true);
@@ -1070,7 +1089,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			for ( var i = 0; i < aDomRefs.length; i++) {
 				$DomRefDay = jQuery(aDomRefs[i]);
 				if ($DomRefDay.attr("data-sap-day") == sYyyymmdd) {
-					oThis._oItemNavigation.focusItem(i);
+					if (document.activeElement != aDomRefs[i]) {
+						oThis._oItemNavigation.focusItem(i);
+					}
 					break;
 				}
 			}
@@ -1081,6 +1102,22 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 			var oDate = oThis.getRenderer().getStartDate(oThis);
 			var $Container = oThis.$("days");
+			var aDomRefs;
+			var $DomRef;
+			var i = 0;
+			var iLastIndex = 0;
+
+			if (oThis._sLastTargetId) {
+				// new month during mousemove -> get index of last moving taget to ignore move on same area
+				aDomRefs = oThis._oItemNavigation.getItemDomRefs();
+				for ( i = 0; i < aDomRefs.length; i++) {
+					$DomRef = jQuery(aDomRefs[i]);
+					if ($DomRef.attr("id") == oThis._sLastTargetId) {
+						iLastIndex = i;
+						break;
+					}
+				}
+			}
 
 			if ($Container.length > 0) {
 				var oRm = sap.ui.getCore().createRenderManager();
@@ -1097,6 +1134,15 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			_initItemNavigation(oThis);
 			if (!bNoFocus) {
 				oThis._oItemNavigation.focusItem(oThis._oItemNavigation.getFocusedIndex());
+			}
+
+			if (oThis._sLastTargetId) {
+				// new month during mousemove -> get index of last moving taget to ignore move on same area
+				aDomRefs = oThis._oItemNavigation.getItemDomRefs();
+				if (iLastIndex <= aDomRefs.length - 1) {
+					$DomRef = jQuery(aDomRefs[iLastIndex]);
+					oThis._sLastTargetId = $DomRef.attr("id");
+				}
 			}
 
 		}
