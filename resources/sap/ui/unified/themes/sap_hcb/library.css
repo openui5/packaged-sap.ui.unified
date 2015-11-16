@@ -1680,7 +1680,8 @@ html[data-sap-ui-browser^="cr"] .sapUiFupInputMask > input {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
 }
-.sapUiCalItemSel {
+.sapUiCalItemSel,
+.sapUiCalItemSel.sapUiCalItemOtherMonth {
   background-color: #0f5d94;
 }
 .sapUiCalWH {

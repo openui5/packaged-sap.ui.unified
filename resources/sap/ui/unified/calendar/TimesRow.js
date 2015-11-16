@@ -31,7 +31,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 *
 	 * The TimesRow works with JavaScript Date objects.
 	 * @extends sap.ui.core.Control
-	 * @version 1.32.5
+	 * @version 1.32.6
 	 *
 	 * @constructor
 	 * @public
@@ -167,6 +167,27 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		TimesRow.prototype.onAfterRendering = function(){
 
 			_initItemNavigation.call(this);
+
+		};
+
+		TimesRow.prototype.onsapfocusleave = function(oEvent){
+
+			if (!oEvent.relatedControlId || !jQuery.sap.containsOrEquals(this.getDomRef(), sap.ui.getCore().byId(oEvent.relatedControlId).getFocusDomRef())) {
+				if (this._bMouseMove) {
+					_unbindMousemove.call(this, true);
+
+					_selectTime.call(this, this._getDate());
+					this._bMoveChange = false;
+					this._bMousedownChange = false;
+					_fireSelect.call(this);
+				}
+
+				if (this._bMousedownChange) {
+					// mouseup somewhere outside of control -> if focus left finish selection
+					this._bMousedownChange = false;
+					_fireSelect.call(this);
+				}
+			}
 
 		};
 
@@ -649,7 +670,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 				if (oFocusedDate.getTime() != oOldFocusedDate.getTime()) {
 					this._setDate(oFocusedDate);
-					_selectTime.call(this, oFocusedDate, false, true);
+					_selectTime.call(this, oFocusedDate, true);
 					this._bMoveChange = true;
 				}
 			}
@@ -687,8 +708,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 					_selectTime.call(this, oFocusedDate);
 					this._bMoveChange = false;
+					this._bMousedownChange = false;
 					_fireSelect.call(this);
 				}
+			}
+
+			if (this._bMousedownChange) {
+				this._bMousedownChange = false;
+				_fireSelect.call(this);
 			}
 
 		};
@@ -945,9 +972,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 				return;
 			}
 
-			_selectTime.call(this, oFocusedDate, oEvent.shiftKey);
-			_fireSelect.call(this);
-			if (this.getIntervalSelection() && this.$().is(":visible")) {
+			_selectTime.call(this, oFocusedDate);
+			this._bMousedownChange = true;
+
+			if (this._bMouseMove) {
+				// a mouseup must be happened outside of control -> just end move
+				_unbindMousemove.call(this, true);
+				this._bMoveChange = false;
+			}else if (this.getIntervalSelection() && this.$().is(":visible")) {
 				// if closed in select event, do not add mousemove handler
 				_bindMousemove.call(this, true);
 			}
@@ -968,21 +1000,24 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 				throw new Error("Date must not be in valid range (between 0001-01-01 and 9999-12-31); " + this);
 			}
 
-			var oUTCDate = CalendarUtils._createUniversalUTCDate(oDate, true);
-			oUTCDate = this._getIntervalStart(oUTCDate);
-			var bFocusable = this.checkDateFocusable(oDate);
+			var bFocusable = true; // if date not changed it is still focusable
+			if (!jQuery.sap.equal(this.getDate(), oDate)) {
+				var oUTCDate = CalendarUtils._createUniversalUTCDate(oDate, true);
+				oUTCDate = this._getIntervalStart(oUTCDate);
+				bFocusable = this.checkDateFocusable(oDate);
 
-			if (!this._bNoRangeCheck && !bFocusable) {
-				throw new Error("Date must be in visible date range; " + this);
+				if (!this._bNoRangeCheck && !bFocusable) {
+					throw new Error("Date must be in visible date range; " + this);
+				}
+
+				this.setProperty("date", oDate, true);
+				this._oUTCDate = oUTCDate;
 			}
-
-			this.setProperty("date", oDate, true);
-			this._oUTCDate = oUTCDate;
 
 			if (this.getDomRef()) {
 				if (bFocusable) {
 					if (!bNoFocus) {
-					_focusDate.call(this, this._oUTCDate, true);
+					_focusDate.call(this, this._oUTCDate);
 					}
 				} else {
 					_renderRow.call(this, bNoFocus);
@@ -991,12 +1026,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 		}
 
-		function _focusDate(oDate, bNoSetDate){
-
-			if (!bNoSetDate) {
-				// use JS date as public function is called
-				this.setDate(new Date(oDate.getTime()));
-			}
+		function _focusDate(oDate){
 
 			var sYyyyMMddHHmm = this._oFormatYyyyMMddHHmm.format(oDate, true);
 			var aDomRefs = this._oItemNavigation.getItemDomRefs();
@@ -1004,7 +1034,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			for ( var i = 0; i < aDomRefs.length; i++) {
 				$DomRefTime = jQuery(aDomRefs[i]);
 				if ($DomRefTime.attr("data-sap-time") == sYyyyMMddHHmm) {
-					this._oItemNavigation.focusItem(i);
+					if (document.activeElement != aDomRefs[i]) {
+						this._oItemNavigation.focusItem(i);
+					}
 					break;
 				}
 			}
@@ -1050,7 +1082,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 		}
 
-		function _selectTime(oDate, bIntervalEnd, bMove){
+		function _selectTime(oDate, bMove){
 
 			var aSelectedDates = this.getSelectedDates();
 			var oDateRange;

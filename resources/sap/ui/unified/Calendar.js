@@ -25,7 +25,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * Basic Calendar.
 	 * This calendar is used for DatePickers
 	 * @extends sap.ui.core.Control
-	 * @version 1.32.5
+	 * @version 1.32.6
 	 *
 	 * @constructor
 	 * @public
@@ -658,12 +658,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			var that = this;
 			this._bNamesLengthChecked = undefined;
 			var oMonthPicker = this.getAggregation("monthPicker");
-			_showMonthPicker(that);
+			_showMonthPicker(that, true);
 			oMonthPicker._bNoThemeChange = false;
 			oMonthPicker.onThemeChanged( arguments );
 			oMonthPicker._bNoThemeChange = true;
 			this._bLongMonth = oMonthPicker._bLongMonth;
-			_hideMonthPicker(that);
+			_hideMonthPicker(that, true);
 
 			var aMonths = this.getAggregation("month");
 			for (var i = 0; i < aMonths.length; i++) {

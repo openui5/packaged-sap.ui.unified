@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.32.5
+	 * @version 1.32.6
 	 *
 	 * @constructor
 	 * @public
@@ -944,8 +944,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 					"status": sStatus,
 					"requestHeaders": oRequestHeaders
 				});
-				iIndex++;
-				that.sendFiles(aXhr, aFiles, iIndex);
 			}
 			that._bUploading = false;
 		};
@@ -954,6 +952,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 			that.sendFiles(aXhr, aFiles, iIndex);
 		} else {
 			oXhr.xhr.send(aFiles[iIndex]);
+			iIndex++;
+			that.sendFiles(aXhr, aFiles, iIndex);
 		}
 	};
 
