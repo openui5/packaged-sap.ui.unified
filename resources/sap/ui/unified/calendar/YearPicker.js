@@ -19,7 +19,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/delegate
 	 * renders a YearPicker with ItemNavigation
 	 * This is used inside the calendar. Not for stand alone usage
 	 * @extends sap.ui.core.Control
-	 * @version 1.28.22
+	 * @version 1.28.23
 	 *
 	 * @constructor
 	 * @public
@@ -127,6 +127,16 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/delegate
 
 		};
 
+		YearPicker.prototype.onmouseup = function(oEvent){
+
+			// fire select event on mouseup to prevent closing MonthPicker during click
+
+			if (this._bMousedownChange) {
+				this._bMousedownChange = false;
+				this.fireSelect();
+			}
+
+		};
 
 		function _initItemNavigation(oThis){
 
@@ -206,7 +216,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/delegate
 			}
 
 			_selectYear(oThis, iIndex);
-			oThis.fireSelect();
+			oThis._bMousedownChange = true;
 
 			oEvent.preventDefault(); // to prevent focus set outside of DatePicker
 			oEvent.setMark("cancelAutoClose");
