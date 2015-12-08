@@ -215,7 +215,7 @@
   background-color: #f2f2f2;
 }
 .sap-desktop .sapUiCalItem:focus {
-  background-color: #ffffff;
+  background-color: #d8d8d8;
 }
 .sapUiCalMonthView .sapUiCalFirstWDay {
   clear: both;
