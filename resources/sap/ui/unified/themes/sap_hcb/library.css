@@ -1682,6 +1682,7 @@ html[data-sap-ui-browser^="cr"] .sapUiFupInputMask > input {
   -webkit-box-sizing: border-box;
 }
 .sapUiCalDaySel,
+.sapUiCalDaySel.sapUiCalDayOtherMonth,
 .sapUiCalMonthSel,
 .sapUiCalYearSel {
   background-color: #0f5d94;
