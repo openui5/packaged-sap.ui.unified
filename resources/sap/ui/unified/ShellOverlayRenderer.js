@@ -1,6 +1,6 @@
 /*!
  * UI development toolkit for HTML5 (OpenUI5)
- * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
+ * (c) Copyright 2009-2016 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -15,7 +15,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * @namespace
 	 */
 	var ShellOverlayRenderer = {};
-	
+
 	/**
 	 * Renders the HTML for the given control, using the provided {@link sap.ui.core.RenderManager}.
 	 * @param {sap.ui.core.RenderManager} rm the RenderManager that can be used for writing to the Render-Output-Buffer
@@ -29,7 +29,7 @@ sap.ui.define(['jquery.sap.global'],
 			rm.addClass("sapUiUfdShellOvrlyCntntHidden");
 			rm.addClass("sapUiUfdShellOvrlyOpening");
 		}
-		
+
 		if (oControl._getAnimActive()) {
 			rm.addClass("sapUiUfdShellOvrlyAnim");
 		}
@@ -40,7 +40,7 @@ sap.ui.define(['jquery.sap.global'],
 			});
 		}
 		rm.write("><span id='", oControl.getId(), "-focfirst' tabIndex='0'></span><div id='", oControl.getId(), "-inner'>");
-		
+
 		rm.write("<header class='sapUiUfdShellOvrlyHead'>");
 		rm.write("<hr class='sapUiUfdShellOvrlyBrand'/>");
 		rm.write("<div class='sapUiUfdShellOvrlyHeadCntnt'");
@@ -63,17 +63,17 @@ sap.ui.define(['jquery.sap.global'],
 		rm.write("<div id='" + oControl.getId() + "-cntnt' class='sapUiUfdShellOvrlyCntnt'>");
 		ShellOverlayRenderer.renderContent(rm, oControl);
 		rm.write("</div>");
-		
+
 		rm.write("</div><span id='", oControl.getId(), "-foclast' tabIndex='0'></span></div>");
 	};
-	
+
 	ShellOverlayRenderer.renderSearch = function(rm, oControl) {
 		var iWidth = oControl._getSearchWidth();
 		var sStyle = "";
 		if (iWidth > 0 && oControl._opening) {
 			sStyle = "style='width:" + iWidth + "px'";
 		}
-		
+
 		rm.write("<div id='" + oControl.getId() + "-search' class='sapUiUfdShellOvrlySearch' " + sStyle + "><div>");
 		var oSearch = oControl.getSearch();
 		if (oSearch) {
@@ -81,7 +81,7 @@ sap.ui.define(['jquery.sap.global'],
 		}
 		rm.write("</div></div>");
 	};
-	
+
 	ShellOverlayRenderer.renderContent = function(rm, oControl) {
 		rm.write("<div tabindex='-1'>");
 		var aContent = oControl.getContent();
