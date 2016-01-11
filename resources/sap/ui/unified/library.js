@@ -1,13 +1,13 @@
 /*!
  * UI development toolkit for HTML5 (OpenUI5)
- * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
+ * (c) Copyright 2009-2016 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
 /**
  * Initialization Code and shared classes of library sap.ui.unified.
  */
-sap.ui.define(['jquery.sap.global', 
+sap.ui.define(['jquery.sap.global',
 	'sap/ui/core/library'], // library dependency
 	function(jQuery) {
 
@@ -19,14 +19,14 @@ sap.ui.define(['jquery.sap.global',
 	 * @namespace
 	 * @name sap.ui.unified
 	 * @author SAP SE
-	 * @version 1.28.25
+	 * @version 1.28.26
 	 * @public
 	 */
 
 	// delegate further initialization of this library to the Core
 	sap.ui.getCore().initLibrary({
 		name : "sap.ui.unified",
-		version: "1.28.25",
+		version: "1.28.26",
 		dependencies : ["sap.ui.core"],
 		types: [
 			"sap.ui.unified.CalendarDayType",
@@ -147,7 +147,7 @@ sap.ui.define(['jquery.sap.global',
 	 * @enum {string}
 	 * @public
 	 * @since 1.16.0
-	 * @experimental Since version 1.16.0. 
+	 * @experimental Since version 1.16.0.
 	 * API is not yet finished and might change completely
 	 * @ui5-metamodel This enumeration also will be described in the UI5 (legacy) designtime metamodel
 	 */

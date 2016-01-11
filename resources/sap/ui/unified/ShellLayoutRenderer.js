@@ -1,6 +1,6 @@
 /*!
  * UI development toolkit for HTML5 (OpenUI5)
- * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
+ * (c) Copyright 2009-2016 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -15,7 +15,7 @@ sap.ui.define(['jquery.sap.global'],
 	 * @namespace
 	 */
 	var ShellLayoutRenderer = {};
-	
+
 	/**
 	 * Renders the HTML for the given control, using the provided {@link sap.ui.core.RenderManager}.
 	 * @param {sap.ui.core.RenderManager} rm the RenderManager that can be used for writing to the Render-Output-Buffer
@@ -23,7 +23,7 @@ sap.ui.define(['jquery.sap.global'],
 	 */
 	ShellLayoutRenderer.render = function(rm, oShell){
 		var id = oShell.getId();
-	
+
 		rm.write("<div");
 		rm.writeControlData(oShell);
 		rm.addClass("sapUiUfdShell");
@@ -40,12 +40,12 @@ sap.ui.define(['jquery.sap.global'],
 			rm.addClass("sapUiUfdShellCurtainHidden");
 			rm.addClass("sapUiUfdShellCurtainClosed");
 		}
-		
+
 		rm.writeClasses();
 		rm.write(">");
-		
+
 		rm.write("<hr id='", id, "-brand' class='sapUiUfdShellBrand'/>");
-		
+
 		rm.write("<header id='", id, "-hdr'  class='sapUiUfdShellHead'");
 		if (sap.ui.getCore().getConfiguration().getAccessibility()) {
 			rm.writeAttribute("role", "banner");
@@ -55,22 +55,22 @@ sap.ui.define(['jquery.sap.global'],
 			rm.renderControl(oShell.getHeader());
 		}
 		rm.write("</div>", "</div>", "</header>");
-	
+
 		rm.write("<section id='", id, "-curt' class='sapUiUfdShellCntnt sapUiUfdShellCurtain'>");
 		rm.write("<div id='", id, "-curtcntnt' class='sapUiUfdShellCntnt'>");
 		rm.renderControl(oShell._curtCont);
 		rm.write("</div>");
 		rm.write("<span id='", id, "-curt-focusDummyOut' tabindex='0'></span>");
 		rm.write("</section>");
-		
+
 		rm.write("<div id='", id, "-cntnt' class='sapUiUfdShellCntnt sapUiUfdShellCanvas sapUiUfdShellBackground'>");
 		rm.write("<div id='", id, "-strgbg' class='sapUiUfdShellBG" + (oShell._useStrongBG ? " sapMGlobalBackgroundColorStrong" : "") + "'></div>");
 		rm.write("<div class='sapMGlobalBackgroundImage sapUiUfdShellBG'></div>");
 		rm.renderControl(oShell._cont);
 		rm.write("</div>");
-		
+
 		rm.write("<span id='", id, "-main-focusDummyOut' tabindex='" + (oShell.getShowCurtain() ? 0 : -1) + "'></span>");
-		
+
 		rm.write("</div>");
 	};
 

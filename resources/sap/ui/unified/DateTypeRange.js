@@ -1,6 +1,6 @@
 /*!
  * UI development toolkit for HTML5 (OpenUI5)
- * (c) Copyright 2009-2015 SAP SE or an SAP affiliate company.
+ * (c) Copyright 2009-2016 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -14,13 +14,13 @@ sap.ui.define(['jquery.sap.global', './DateRange', './library'],
 	/**
 	 * Constructor for a new DateTypeRange.
 	 *
-	 * @param {string} [sId] id for the new control, generated automatically if no id is given 
+	 * @param {string} [sId] id for the new control, generated automatically if no id is given
 	 * @param {object} [mSettings] initial settings for the new control
 	 *
 	 * @class
 	 * Date range with calendar day type information. Used to visualize special days in the Calendar.
 	 * @extends sap.ui.unified.DateRange
-	 * @version 1.28.25
+	 * @version 1.28.26
 	 *
 	 * @constructor
 	 * @public
