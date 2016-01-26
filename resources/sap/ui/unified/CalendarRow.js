@@ -28,7 +28,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * @class
 	 * A calendar row with an header and appointments. The Appointments will be placed in the defined interval.
 	 * @extends sap.ui.core.Control
-	 * @version 1.34.2
+	 * @version 1.34.3
 	 *
 	 * @constructor
 	 * @public
@@ -406,10 +406,16 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * it is better if the container triggers the resize check once an then calls this function
 	 * of each <code>CalendarRow</code>.
 	 *
+	 * @param {jQuery.Event} oEvent The event object of the resize handler.
 	 * @returns {sap.ui.unified.CalendarRow} <code>this</code> to allow method chaining
 	 * @public
 	 */
-	CalendarRow.prototype.handleResize = function() {
+	CalendarRow.prototype.handleResize = function(oEvent) {
+
+		if (oEvent && oEvent.size && oEvent.size.width <= 0) {
+			// only if visible at all
+			return this;
+		}
 
 		var $DummyApp = this.$("DummyApp");
 
