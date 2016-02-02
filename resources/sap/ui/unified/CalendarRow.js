@@ -28,7 +28,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * @class
 	 * A calendar row with an header and appointments. The Appointments will be placed in the defined interval.
 	 * @extends sap.ui.core.Control
-	 * @version 1.36.0
+	 * @version 1.36.1
 	 *
 	 * @constructor
 	 * @public
@@ -1097,11 +1097,17 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	// as the top position of the appointments depends on the rendered height it must be calculated after rendering
 	function _positionAppointments() {
 
+		var $Apps = this.$("Apps");
+		var iRowWidth = $Apps.innerWidth();
+
+		if (iRowWidth <= 0) {
+			// if no size (invisible) do nothing
+			return;
+		}
+
 		var $DummyApp = this.$("DummyApp");
 		var iHeight = $DummyApp.outerHeight(true);
 		var iMinWidth = $DummyApp.outerWidth();
-		var $Apps = this.$("Apps");
-		var iRowWidth = $Apps.innerWidth();
 		var iMinPercent =  iMinWidth / iRowWidth * 100;
 		var iMinPercentCeil =  Math.ceil(1000 * iMinPercent) / 1000;
 		var oAppointment;
