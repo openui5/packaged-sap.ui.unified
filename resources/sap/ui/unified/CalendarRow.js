@@ -28,7 +28,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * @class
 	 * A calendar row with an header and appointments. The Appointments will be placed in the defined interval.
 	 * @extends sap.ui.core.Control
-	 * @version 1.34.3
+	 * @version 1.34.4
 	 *
 	 * @constructor
 	 * @public
@@ -752,6 +752,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		var aAppointments = _getAppointmentsSorted.call(this);
 		var oAppointment;
 		var oGroupAppointment;
+		var oGroupAppointment2;
 		var iIntervals = this.getIntervals();
 		var sIntervalType = this.getIntervalType();
 		var oStartDate = this._getStartDate();
@@ -799,6 +800,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			var iEnd = 0;
 			var iLevel = -1;
 			oGroupAppointment = undefined;
+			oGroupAppointment2 = undefined;
 
 			if (oAppointmentStartDate && oAppointmentStartDate.getTime() <= iEndTime &&
 					oAppointmentEndDate && oAppointmentEndDate.getTime() >= iStartTime) {
@@ -810,7 +812,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 					if (oAppointmentEndDate.getTime() > oGroupEndDate.getTime()) {
 						// appointment ends in next group
-						_getGroupAppointment.call(this, oAppointmentEndDate, oAppointment, sIntervalType, iIntervals, oStartDate, oEndDate, iStartTime, aVisibleAppointments);
+						oGroupAppointment2 = _getGroupAppointment.call(this, oAppointmentEndDate, oAppointment, sIntervalType, iIntervals, oStartDate, oEndDate, iStartTime, aVisibleAppointments);
 					}
 				}
 
@@ -829,6 +831,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 					oGroupAppointment._iBegin = iBegin;
 					oGroupAppointment._iEnd = iEnd;
 					oGroupAppointment._iLevel = iLevel;
+					if (oGroupAppointment2) {
+						oGroupAppointment2._iBegin = iBegin;
+						oGroupAppointment2._iEnd = iEnd;
+						oGroupAppointment2._iLevel = iLevel;
+					}
 					continue;
 				}
 
@@ -841,7 +848,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		}
 
 		// if group appointment only has one appointment -> show this appointment
-		if (this.getAggregation("groupAppointments", []).length > 0) {
+		var aGropAppointments = this.getAggregation("groupAppointments", []);
+		if (aGropAppointments.length > 0) {
 			for (i = 0; i < aVisibleAppointments.length; i++) {
 				oAppointment = aVisibleAppointments[i];
 				if (oAppointment.appointment._aAppointments && oAppointment.appointment._aAppointments.length == 1) {
@@ -855,6 +863,20 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 						}
 					}
 					if (!bFound) {
+						// check if in other group appointment - remove it
+						for (j = 0; j < aGropAppointments.length; j++) {
+							oGroupAppointment2 = aGropAppointments[j];
+							if (oGroupAppointment != oGroupAppointment2) {
+								for (var k = 0; k < oGroupAppointment2._aAppointments.length; k++) {
+									if (oGroupAppointment._aAppointments[0] == oGroupAppointment2._aAppointments[k]) {
+										oGroupAppointment2._aAppointments.splice(k, 1);
+										oGroupAppointment2.setProperty("title", oGroupAppointment2._aAppointments.length, true);
+										break;
+									}
+								}
+							}
+						}
+
 						oAppointment.begin = oGroupAppointment._iBegin;
 						oAppointment.end = oGroupAppointment._iEnd;
 						oAppointment.calculatedEnd = oGroupAppointment._iEnd;
@@ -1097,11 +1119,17 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	// as the top position of the appointments depends on the rendered height it must be calculated after rendering
 	function _positionAppointments() {
 
+		var $Apps = this.$("Apps");
+		var iRowWidth = $Apps.innerWidth();
+
+		if (iRowWidth <= 0) {
+			// if no size (invisible) do nothing
+			return;
+		}
+
 		var $DummyApp = this.$("DummyApp");
 		var iHeight = $DummyApp.outerHeight(true);
 		var iMinWidth = $DummyApp.outerWidth();
-		var $Apps = this.$("Apps");
-		var iRowWidth = $Apps.innerWidth();
 		var iMinPercent =  iMinWidth / iRowWidth * 100;
 		var iMinPercentCeil =  Math.ceil(1000 * iMinPercent) / 1000;
 		var oAppointment;

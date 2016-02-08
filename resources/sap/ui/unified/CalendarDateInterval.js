@@ -19,7 +19,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * @class
 	 * Calendar with dates displayed in one line.
 	 * @extends sap.ui.unified.Calendar
-	 * @version 1.34.3
+	 * @version 1.34.4
 	 *
 	 * @constructor
 	 * @public
@@ -298,8 +298,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			var iDay = Math.ceil((oOldDate.getTime() - oStartDate.getTime()) / (1000 * 3600 * 24));
 			oStartDate = this._newUniversalDate(oDate);
 			oStartDate.setUTCDate( oStartDate.getUTCDate() - iDay);
-			_setStartDate.call(this, oStartDate, false, bNoEvent);
+			_setStartDate.call(this, oStartDate, false, true);
+			if (!bNoEvent) {
+				return true; // fire startDateChange event in caller at end of processing
+			}
 		}
+
+		return false;
 
 	};
 
@@ -345,9 +350,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 				oMonthPicker.previousPage();
 			} else {
 				oFocusedDate.setUTCFullYear(oFocusedDate.getUTCFullYear() - 1);
-				this._focusDateExtend(oFocusedDate, true);
+				var bFireStartDateChange = this._focusDateExtend(oFocusedDate, true, false);
 				this._setFocusedDate(oFocusedDate);
 				this._updateHeader(oFocusedDate);
+
+				if (bFireStartDateChange) {
+					this.fireStartDateChange();
+				}
 			}
 			break;
 
@@ -380,9 +389,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 				oMonthPicker.nextPage();
 			} else {
 				oFocusedDate.setUTCFullYear(oFocusedDate.getUTCFullYear() + 1);
-				this._focusDateExtend(oFocusedDate, true);
+				var bFireStartDateChange = this._focusDateExtend(oFocusedDate, true, false);
 				this._setFocusedDate(oFocusedDate);
 				this._updateHeader(oFocusedDate);
+
+				if (bFireStartDateChange) {
+					this.fireStartDateChange();
+				}
 			}
 			break;
 

@@ -27,7 +27,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * <b>Note:</b> JavaScript Date objects are used to set and return the months, mark them as selected or as a special type.
 	 * But the date part of the Date object is not used. If a Date object is returned the date will be set to the 1st of the corresponding month.
 	 * @extends sap.ui.core.Control
-	 * @version 1.34.3
+	 * @version 1.34.4
 	 *
 	 * @constructor
 	 * @public
@@ -342,13 +342,19 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 */
 	CalendarMonthInterval.prototype.focusDate = function(oDate){
 
+		var bFireStartDateChange = false;
 		var oMonthsRow = this.getAggregation("monthsRow");
 		if (!oMonthsRow.checkDateFocusable(oDate)) {
 			var oUTCDate = CalendarUtils._createUniversalUTCDate(oDate);
 			_setStartDateForFocus.call(this, oUTCDate);
+			bFireStartDateChange = true;
 		}
 
 		_displayDate.call(this, oDate, false);
+
+		if (bFireStartDateChange) {
+			this.fireStartDateChange();
+		}
 
 		return this;
 
@@ -649,7 +655,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 	};
 
-	function _setStartDate(oStartDate, bSetFocusDate){
+	function _setStartDate(oStartDate, bSetFocusDate, bNoEvent){
 
 		var oMaxDate = new UniversalDate(this._oMaxDate.getTime());
 		oMaxDate.setUTCMonth(oMaxDate.getUTCMonth() - this._getMonths() + 1);
@@ -680,7 +686,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			}
 		}
 
-		this.fireStartDateChange();
+		if (!bNoEvent) {
+			this.fireStartDateChange();
+		}
 
 	}
 
@@ -888,6 +896,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		if (bChanged || bNotVisible) {
 			_setStartDateForFocus.call(this, oFocusedDate);
 			_renderMonthsRow.call(this, false);
+			this.fireStartDateChange();
 		}
 
 	}
@@ -979,7 +988,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		var iMonth = oMonthsRow._oItemNavigation.getFocusedIndex();
 		oStartDate = new UniversalDate(oDate.getTime());
 		oStartDate.setUTCMonth( oStartDate.getUTCMonth() - iMonth);
-		_setStartDate.call(this, oStartDate, false);
+		_setStartDate.call(this, oStartDate, false, true);
 
 	}
 

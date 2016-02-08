@@ -24,7 +24,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * @class
 	 * Calendar with granularity of time items displayed in one line.
 	 * @extends sap.ui.core.Control
-	 * @version 1.34.3
+	 * @version 1.34.4
 	 *
 	 * @constructor
 	 * @public
@@ -391,13 +391,19 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 */
 	CalendarTimeInterval.prototype.focusDate = function(oDate){
 
+		var bFireStartDateChange = false;
 		var oTimesRow = this.getAggregation("timesRow");
 		if (!oTimesRow.checkDateFocusable(oDate)) {
 			var oUTCDate = CalendarUtils._createUniversalUTCDate(oDate, undefined, true);
 			_setStartDateForFocus.call(this, oUTCDate);
+			bFireStartDateChange = true;
 		}
 
 		_displayDate.call(this, oDate, false);
+
+		if (bFireStartDateChange) {
+			this.fireStartDateChange();
+		}
 
 		return this;
 
@@ -773,6 +779,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 				_setStartDateForFocus.call(this, oFocusedDate);
 				this._setFocusedDate(oFocusedDate);
 				_updateHeader.call(this);
+				this.fireStartDateChange();
 			}
 			break;
 
@@ -828,6 +835,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 				_setStartDateForFocus.call(this, oFocusedDate);
 				this._setFocusedDate(oFocusedDate);
 				_updateHeader.call(this);
+				this.fireStartDateChange();
 			}
 			break;
 
@@ -851,7 +859,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 	};
 
-	function _setStartDate(oStartDate, bSetFocusDate){
+	function _setStartDate(oStartDate, bSetFocusDate, bNoEvent){
 
 		var oMaxDate = new UniversalDate(this._oMaxDate.getTime());
 		oMaxDate.setUTCMinutes(oMaxDate.getUTCMinutes() - this.getIntervalMinutes() * this._getItems() + 1);
@@ -882,7 +890,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			}
 		}
 
-		this.fireStartDateChange();
+		if (!bNoEvent) {
+			this.fireStartDateChange();
+		}
 
 	}
 
@@ -1265,6 +1275,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		if (bChanged || bNotVisible) {
 			_setStartDateForFocus.call(this, oFocusedDate);
 			_renderTimesRow.call(this, false);
+			this.fireStartDateChange();
 		}
 
 	}
@@ -1439,7 +1450,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		var iIndex = oTimesRow._oItemNavigation.getFocusedIndex();
 		oStartDate = new UniversalDate(oDate.getTime());
 		oStartDate.setUTCMinutes( oStartDate.getUTCMinutes() - iIndex * this.getIntervalMinutes());
-		_setStartDate.call(this, oStartDate, false);
+		_setStartDate.call(this, oStartDate, false, true);
 
 	}
 
