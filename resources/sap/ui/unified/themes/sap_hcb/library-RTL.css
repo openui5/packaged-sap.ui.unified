@@ -1893,6 +1893,10 @@ html[data-sap-ui-browser^="cr"] .sapUiFupInputMask > input {
 .sapUiCalHeadB {
   width: 5.75rem;
 }
+.sapUiMedia-Std-Phone .sapUiCalHeadB0 {
+  width: 3rem;
+  /* do not overflow buttons on phone */
+}
 .sapUiCalHeadBFirst {
   margin-left: 0.25rem;
 }
@@ -2824,6 +2828,124 @@ html[data-sap-ui-browser^="ie"].sap-desktop .sapUiSizeCompact .sapUiCalMonthSecT
 }
 .sapUiCalLegDayType10 > .sapUiUnifiedLegendSquare > .sapUiUnifiedLegendSquareColor {
   background: #80196a;
+}
+/* ================================================== */
+/* CSS for control sap.ui.unified/CalendarRow.control */
+/* HCB                                                */
+/* ================================================== */
+.sapUiCalendarRowAppsNoWork {
+  background-color: #585858;
+}
+/* Appointments */
+.sapUiCalendarApp {
+  border-right-color: #ffffff;
+}
+.sapUiCalendarAppCont {
+  border-color: #ffffff;
+}
+.sap-desktop .sapUiCalendarApp:hover:not(:active) > .sapUiCalendarAppCont {
+  border-color: #ffffff;
+}
+/* colors for types */
+.sapUiCalendarAppType01.sapUiCalendarApp,
+.sapUiCalendarAppType01.sapUiCalendarApp:active {
+  border-right-color: #f0ab00;
+}
+.sapUiCalendarAppType02.sapUiCalendarApp,
+.sapUiCalendarAppType02.sapUiCalendarApp:active {
+  border-right-color: #f27020;
+}
+.sapUiCalendarAppType03.sapUiCalendarApp,
+.sapUiCalendarAppType03.sapUiCalendarApp:active {
+  border-right-color: #e52929;
+}
+.sapUiCalendarAppType04.sapUiCalendarApp,
+.sapUiCalendarAppType04.sapUiCalendarApp:active {
+  border-right-color: #a34409;
+}
+.sapUiCalendarAppType05.sapUiCalendarApp,
+.sapUiCalendarAppType05.sapUiCalendarApp:active {
+  border-right-color: #de54c1;
+}
+.sapUiCalendarAppType06.sapUiCalendarApp,
+.sapUiCalendarAppType06.sapUiCalendarApp:active {
+  border-right-color: #008a3b;
+}
+.sapUiCalendarAppType07.sapUiCalendarApp,
+.sapUiCalendarAppType07.sapUiCalendarApp:active {
+  border-right-color: #004990;
+}
+.sapUiCalendarAppType08.sapUiCalendarApp,
+.sapUiCalendarAppType08.sapUiCalendarApp:active {
+  border-right-color: #009de0;
+}
+.sapUiCalendarAppType09.sapUiCalendarApp,
+.sapUiCalendarAppType09.sapUiCalendarApp:active {
+  border-right-color: #00d65c;
+}
+.sapUiCalendarAppType10.sapUiCalendarApp,
+.sapUiCalendarAppType10.sapUiCalendarApp:active {
+  border-right-color: #80196a;
+}
+.sapUiCalendarRowAppsIntHeadType01.sapUiCalendarRowAppsIntHead {
+  background-color: rgba(240, 171, 0, 0.15);
+}
+.sapUiCalendarRowAppsIntHeadType01.sapUiCalendarRowAppsIntHeadFirst {
+  border-right-color: #f0ab00;
+}
+.sapUiCalendarRowAppsIntHeadType02.sapUiCalendarRowAppsIntHead {
+  background-color: rgba(242, 112, 32, 0.15);
+}
+.sapUiCalendarRowAppsIntHeadType02.sapUiCalendarRowAppsIntHeadFirst {
+  border-right-color: #f27020;
+}
+.sapUiCalendarRowAppsIntHeadType03.sapUiCalendarRowAppsIntHead {
+  background-color: rgba(229, 41, 41, 0.15);
+}
+.sapUiCalendarRowAppsIntHeadType03.sapUiCalendarRowAppsIntHeadFirst {
+  border-right-color: #e52929;
+}
+.sapUiCalendarRowAppsIntHeadType04.sapUiCalendarRowAppsIntHead {
+  background-color: rgba(163, 68, 9, 0.15);
+}
+.sapUiCalendarRowAppsIntHeadType04.sapUiCalendarRowAppsIntHeadFirst {
+  border-right-color: #a34409;
+}
+.sapUiCalendarRowAppsIntHeadType05.sapUiCalendarRowAppsIntHead {
+  background-color: rgba(222, 84, 193, 0.15);
+}
+.sapUiCalendarRowAppsIntHeadType05.sapUiCalendarRowAppsIntHeadFirst {
+  border-right-color: #de54c1;
+}
+.sapUiCalendarRowAppsIntHeadType06.sapUiCalendarRowAppsIntHead {
+  background-color: rgba(0, 138, 59, 0.15);
+}
+.sapUiCalendarRowAppsIntHeadType06.sapUiCalendarRowAppsIntHeadFirst {
+  border-right-color: #008a3b;
+}
+.sapUiCalendarRowAppsIntHeadType07.sapUiCalendarRowAppsIntHead {
+  background-color: rgba(0, 73, 144, 0.15);
+}
+.sapUiCalendarRowAppsIntHeadType07.sapUiCalendarRowAppsIntHeadFirst {
+  border-right-color: #004990;
+}
+.sapUiCalendarRowAppsIntHeadType08.sapUiCalendarRowAppsIntHead {
+  background-color: rgba(0, 157, 224, 0.15);
+}
+.sapUiCalendarRowAppsIntHeadType08.sapUiCalendarRowAppsIntHeadFirst {
+  border-right-color: #009de0;
+}
+.sapUiCalendarRowAppsIntHeadType09.sapUiCalendarRowAppsIntHead {
+  background-color: rgba(0, 214, 92, 0.15);
+}
+.sapUiCalendarRowAppsIntHeadType09.sapUiCalendarRowAppsIntHeadFirst {
+  border-right-color: #00d65c;
+}
+.sapUiCalendarRowAppsIntHeadType10.sapUiCalendarRowAppsIntHead {
+  background-color: rgba(128, 25, 106, 0.15);
+}
+.sapUiCalendarRowAppsIntHeadType10.sapUiCalendarRowAppsIntHeadFirst {
+  border-right-color: #80196a;
 }
 /* ============================================ */
 /* CSS for control sap.ui.unified.FileUploader control         */
