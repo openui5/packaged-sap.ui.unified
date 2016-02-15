@@ -19,7 +19,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * @class
 	 * Calendar with dates displayed in one line.
 	 * @extends sap.ui.unified.Calendar
-	 * @version 1.36.1
+	 * @version 1.36.2
 	 *
 	 * @constructor
 	 * @public
@@ -429,7 +429,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 	};
 
-	Calendar.prototype._getDisplayedSecondaryMonths = function(sPrimaryCalendarType, sSecondaryCalendarType){
+	CalendarDateInterval.prototype._getDisplayedSecondaryMonths = function(sPrimaryCalendarType, sSecondaryCalendarType){
 
 		var iDays = this._getDays();
 		var oStartDate = _getStartDate.call(this);
