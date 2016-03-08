@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/theming/
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.36.3
+	 * @version 1.36.4
 	 *
 	 * @constructor
 	 * @public
@@ -115,6 +115,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/theming/
 	////////////////////////////////////////// onEvent Methods /////////////////////////////////////////
 
 	SplitContainer.prototype.onAfterRendering = function() {
+		//Refetch RTL setting (might have changed which leads to global rerendering, see Core.fireLocalizationChanged
+		this.bRtl  = sap.ui.getCore().getConfiguration().getRTL();
+
 		// Shortcuts to the main DOM containers
 		this._contentContainer 			= this.$("canvas");
 		this._secondaryContentContainer = this.$("pane");
