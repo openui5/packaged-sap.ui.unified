@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.28.30
+	 * @version 1.28.31
 	 *
 	 * @constructor
 	 * @public
@@ -604,6 +604,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 		var isInMenuHierarchy = false,
 			touchEnabled = this.getPopup().touchEnabled;
 
+		this.bIgnoreOpenerDOMRef = false;
+
 		if (oEvent.type == "mousedown" || oEvent.type == "touchstart") {
 			// Suppress the delayed mouse event from mobile browser
 			if (touchEnabled && (oEvent.isMarked("delayedMouseEvent") || oEvent.isMarked("cancelAutoClose"))) {
@@ -630,10 +632,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/Popup', 
 					that = that.oOpenedSubMenu;
 				}
 			}
+			if (!isInMenuHierarchy) {
+				this.bIgnoreOpenerDOMRef = true;
+			}
 		}
 
 		if (!isInMenuHierarchy) {
-			this.bIgnoreOpenerDOMRef = true;
 			this.close();
 		}
 	};
