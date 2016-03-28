@@ -28,7 +28,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * @class
 	 * A calendar row with an header and appointments. The Appointments will be placed in the defined interval.
 	 * @extends sap.ui.core.Control
-	 * @version 1.34.9
+	 * @version 1.34.10
 	 *
 	 * @constructor
 	 * @public
@@ -298,10 +298,26 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			// focus on appointment
 			_focusAppointment.call(this, oEvent.target.id);
 		} else {
-			// focus somewhere else -> focus appointment
-			var oAppointment = this.getFocusedAppointment();
-			if (oAppointment) {
-				oAppointment.focus();
+			// check if inside appointment
+			var aVisibleAppointments = this._getVisibleAppointments();
+			var bFound = false;
+			var oAppointment;
+
+			for (var i = 0; i < aVisibleAppointments.length; i++) {
+				oAppointment = aVisibleAppointments[i].appointment;
+				if (jQuery.sap.containsOrEquals(oAppointment.getDomRef(), oEvent.target)) {
+					bFound = true;
+					oAppointment.focus();
+					break;
+				}
+			}
+
+			if (!bFound) {
+				// focus somewhere else -> focus appointment
+				oAppointment = this.getFocusedAppointment();
+				if (oAppointment) {
+					oAppointment.focus();
+				}
 			}
 		}
 

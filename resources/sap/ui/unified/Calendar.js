@@ -25,7 +25,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * Basic Calendar.
 	 * This calendar is used for DatePickers
 	 * @extends sap.ui.core.Control
-	 * @version 1.34.9
+	 * @version 1.34.10
 	 *
 	 * @constructor
 	 * @public
@@ -539,6 +539,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 		if (this.getDomRef()) {
 			this._updateHeader(this._getFocusedDate());
+			this.$().toggleClass("sapUiCalSecType", !!this._getSecondaryCalendarType());
 		}
 
 		return this;

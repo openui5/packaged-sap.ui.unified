@@ -2411,7 +2411,7 @@ html[data-sap-ui-browser^="ie"].sap-desktop .sapUiSizeCompact .sapUiCalMonthSecT
     box-sizing: border-box;
     bottom: 0.25rem;
   }
-  .sap-phone .sapUiCal[data-sap-ui-popup] > .sapUiCalContent {
+  .sap-phone .sapUiCal[data-sap-ui-popup] .sapUiCalContent {
     position: absolute;
     top: 2.875rem;
     left: 0.5rem;
@@ -2440,17 +2440,27 @@ html[data-sap-ui-browser^="ie"].sap-desktop .sapUiSizeCompact .sapUiCalMonthSecT
   .sap-phone .sapUiCal[data-sap-ui-popup] .sapUiCalHeadNext {
     right: 0;
   }
-  .sap-phone .sapUiCal[data-sap-ui-popup] .sapUiCalItems {
-    padding-top: 0.375rem;
+  .sap-phone .sapUiCal[data-sap-ui-popup] .sapUiCalContent > .sapUiCalMonthView > .sapUiCalItems {
+    position: absolute;
+    top: 0.5rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    margin: 1rem;
+    min-height: 11.25rem;
   }
   .sap-phone .sapUiCal[data-sap-ui-popup] > .sapUiCalContent > .sapUiCalMonthPicker,
   .sap-phone .sapUiCal[data-sap-ui-popup] > .sapUiCalContent > .sapUiCalYearPicker {
     padding: 1.25rem 0.5rem 0 0.5rem;
     min-height: 11.25rem;
   }
-  .sap-phone .sapUiCal[data-sap-ui-popup] .sapUiCalItem {
+  .sap-phone .sapUiCal[data-sap-ui-popup] .sapUiCalItems > div {
     height: 16.66%;
     min-height: 1.875rem;
+  }
+  .sap-phone .sapUiCal[data-sap-ui-popup] .sapUiCalItem {
+    height: 100%;
   }
   .sap-phone .sapUiCal[data-sap-ui-popup] .sapUiCalItem,
   .sap-phone .sapUiCal[data-sap-ui-popup] .sapUiCalWeekNum {
@@ -2458,6 +2468,10 @@ html[data-sap-ui-browser^="ie"].sap-desktop .sapUiSizeCompact .sapUiCalMonthSecT
   }
   .sap-phone .sapUiCal[data-sap-ui-popup] .sapUiCalItemNow > .sapUiCalItemText {
     line-height: 1.9375rem;
+  }
+  .sap-phone .sapUiCal[data-sap-ui-popup] .sapUiCalMonthSecType > .sapUiCalItems .sapUiCalItem.sapUiCalItemNow > .sapUiCalItemText {
+    line-height: 1.75rem;
+    height: 100%;
   }
   .sap-phone .sapUiCal[data-sap-ui-popup] .sapUiCalWeekNum {
     height: 100%;
