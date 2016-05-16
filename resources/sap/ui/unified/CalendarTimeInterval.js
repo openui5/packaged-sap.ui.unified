@@ -24,7 +24,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * @class
 	 * Calendar with granularity of time items displayed in one line.
 	 * @extends sap.ui.core.Control
-	 * @version 1.38.1
+	 * @version 1.38.2
 	 *
 	 * @constructor
 	 * @public
@@ -629,10 +629,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 				jQuery.sap.log.warning("minDate > maxDate -> maxDate set to end of the month", this);
 				this._oMaxDate = CalendarUtils._createUniversalUTCDate(oDate, undefined, true);
 				this._oMaxDate.setUTCMonth(this._oMaxDate.getUTCMonth() + 1, 0);
-				this._oMinDate.setUTCHours(23);
-				this._oMinDate.setUTCMinutes(59);
-				this._oMinDate.setUTCSeconds(59);
-				this._oMinDate.setUTCMilliseconds(0);
+				this._oMaxDate.setUTCHours(23);
+				this._oMaxDate.setUTCMinutes(59);
+				this._oMaxDate.setUTCSeconds(59);
+				this._oMaxDate.setUTCMilliseconds(0);
 				this.setProperty("maxDate", CalendarUtils._createLocalDate(this._oMaxDate, true), true);
 			}
 
