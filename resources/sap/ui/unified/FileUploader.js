@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.28.34
+	 * @version 1.28.35
 	 *
 	 * @constructor
 	 * @public
@@ -742,6 +742,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library'],
 	 * @ui5-metamodel This method also will be described in the UI5 (legacy) designtime metamodel
 	 */
 	FileUploader.prototype.clear = function () {
+		var uploadForm = this.getDomRef("fu_form");
+		if (uploadForm) {
+			uploadForm.reset();
+		}
 		//clear the value, don't fire change event, and supress the refocusing of the file input field
 		return this.setValue("", false, true);
 	};
