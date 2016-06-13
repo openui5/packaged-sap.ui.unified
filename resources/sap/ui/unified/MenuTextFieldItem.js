@@ -23,7 +23,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/ValueStateSupport', './MenuItem
 	 * @extends sap.ui.unified.MenuItemBase
 	 *
 	 * @author SAP SE
-	 * @version 1.36.12
+	 * @version 1.36.13
 	 * @since 1.21.0
 	 *
 	 * @constructor
