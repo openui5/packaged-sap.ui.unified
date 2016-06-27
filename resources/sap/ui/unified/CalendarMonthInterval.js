@@ -27,7 +27,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * <b>Note:</b> JavaScript Date objects are used to set and return the months, mark them as selected or as a special type.
 	 * But the date part of the Date object is not used. If a Date object is returned the date will be set to the 1st of the corresponding month.
 	 * @extends sap.ui.core.Control
-	 * @version 1.38.3
+	 * @version 1.38.4
 	 *
 	 * @constructor
 	 * @public
@@ -500,6 +500,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			}
 
 			this._oMinDate = CalendarUtils._createUniversalUTCDate(oDate);
+			this._oMinDate.setDate(1); // always start at begin of month
 
 			var iYear = this._oMinDate.getUTCFullYear();
 			if (iYear < 1 || iYear > 9999) {
@@ -554,6 +555,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			}
 
 			this._oMaxDate = CalendarUtils._createUniversalUTCDate(oDate);
+			this._oMaxDate.setUTCMonth(this._oMaxDate.getUTCMonth() + 1, 0); // always end on end of month
 
 			var iYear = this._oMaxDate.getUTCFullYear();
 			if (iYear < 1 || iYear > 9999) {
@@ -810,7 +812,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			oMaxDate.setUTCMonth(oMaxDate.getUTCMonth() + this._getMonths() - 1);
 		}
 		if (oStartDate.getTime() < this._oMinDate.getTime()) {
-			oStartDate = this._oMinDate;
+			oStartDate = new UniversalDate(this._oMinDate.getTime());
 		}else if (oStartDate.getTime() > oMaxDate.getTime()){
 			oStartDate = oMaxDate;
 		}
