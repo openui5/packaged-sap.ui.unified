@@ -800,6 +800,10 @@ html[dir=rtl][data-sap-ui-browser^="ed"] .sapUiUfdCurrencyValue {
   /* to make the field high enough for most themes; for themes with very large fonts this needs to be increased further */
   width: 5000px;
 }
+.sapUiFupInputMask > input[disabled],
+.sapUiFupInputMask > input:disabled {
+  cursor: default;
+}
 html[data-sap-ui-browser^="ie"] .sapUiFup > form input {
   display: block;
 }
@@ -1237,6 +1241,7 @@ html.sapUiMedia-Std-Desktop .sapUiUfdShellHeadItm.sapUiUfdShellHeadItmSel:hover 
   width: 100%;
   vertical-align: middle;
   display: inline-block;
+  line-height: normal;
 }
 .sapUiUfdShellHeadItmMarker {
   position: absolute;
