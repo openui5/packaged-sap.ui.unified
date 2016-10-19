@@ -381,12 +381,29 @@
         "type": "FIX",
         "text": "sap.m.PlanningCalendar: Interval header has default cursor",
         "references": []
-      },
+      }
+    ]
+  },
+  "1.38.9": {
+    "date": "October 2016",
+    "notes": [
       {
-        "id": "d8c0de541b37f9b3ef47c9b4cdd58ba35772370f",
-        "author": "Michael Sobczak \u003cmichael.sobczak@sap.com\u003e",
+        "id": "33fcdf303909b860a0a7a8f14b499c0c8e702b06",
+        "author": "Sebastian Allmann \u003csebastian.allmann@sap.com\u003e",
         "type": "FIX",
-        "text": "sap.ui.unified.FileUploader: setting content-type for edge browser fixed",
+        "text": "sap.ui.unified.CalendarRow shows group appointment with 0",
+        "references": []
+      }
+    ]
+  },
+  "1.38.10": {
+    "date": "October 2016",
+    "notes": [
+      {
+        "id": "a57269c7c0eaa2ddf5976d55f738b78e752e8be9",
+        "author": "Gergana Marcheva \u003cgergana.marcheva@sap.com\u003e",
+        "type": "FIX",
+        "text": "sap.ui.unified.Currency: Correct alignment in RTL",
         "references": []
       }
     ]
