@@ -19,14 +19,14 @@ sap.ui.define(['jquery.sap.global',
 	 * @namespace
 	 * @name sap.ui.unified
 	 * @author SAP SE
-	 * @version 1.44.0
+	 * @version 1.44.1
 	 * @public
 	 */
 
 	// delegate further initialization of this library to the Core
 	sap.ui.getCore().initLibrary({
 		name : "sap.ui.unified",
-		version: "1.44.0",
+		version: "1.44.1",
 		dependencies : ["sap.ui.core"],
 		types: [
 			"sap.ui.unified.CalendarDayType",
@@ -43,6 +43,7 @@ sap.ui.define(['jquery.sap.global',
 			"sap.ui.unified.calendar.YearPicker",
 			"sap.ui.unified.Calendar",
 			"sap.ui.unified.CalendarDateInterval",
+			"sap.ui.unified.CalendarWeekInterval",
 			"sap.ui.unified.CalendarMonthInterval",
 			"sap.ui.unified.CalendarTimeInterval",
 			"sap.ui.unified.CalendarLegend",

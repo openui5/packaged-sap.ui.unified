@@ -14,7 +14,7 @@ sap.ui.define(['jquery.sap.global'],
 	/**
 	 * Currency renderer.
 	 *
-	 * @version 1.44.0
+	 * @version 1.44.1
 	 * @namespace
 	 */
 	var CurrencyRenderer = {
@@ -50,6 +50,8 @@ sap.ui.define(['jquery.sap.global'],
 		oRm.writeClasses();
 		oRm.write(">");
 		oRm.write("<span");
+		// The currency value should always be displayed in ltr direction
+		oRm.writeAttribute("dir", "ltr");
 		oRm.addClass("sapUiUfdCurrencyValue");
 		oRm.writeClasses();
 		oRm.write(">");

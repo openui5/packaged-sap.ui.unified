@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * If used inside the calendar the properties and aggregation are directly taken from the parent
 	 * (To not duplicate and sync DateRanges and so on...)
 	 * @extends sap.ui.unified.calendar.Month
-	 * @version 1.44.0
+	 * @version 1.44.1
 	 *
 	 * @constructor
 	 * @public
@@ -221,7 +221,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 				break;
 			}
 
-			this.fireFocus({date: CalendarUtils._createLocalDate(oFocusedDate), otherMonth: true});
+			this.fireFocus({date: CalendarUtils._createLocalDate(oFocusedDate), otherMonth: true, _outsideBorder: true});
 
 		}
 

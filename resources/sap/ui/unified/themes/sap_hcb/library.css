@@ -706,7 +706,6 @@ html.sap-desktop .sapUiCalendarApp.sapUiCalendarAppSel:focus:not(:active) > .sap
 }
 .sapUiUfdCurrencyAlign {
   text-align: right;
-  max-width: 200px;
 }
 .sapUiUfdCurrencyValue,
 .sapUiUfdCurrencyCurrency {
