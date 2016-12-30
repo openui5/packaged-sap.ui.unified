@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		 * @extends sap.ui.core.Control
 		 *
 		 * @author SAP SE
-		 * @version 1.42.6
+		 * @version 1.42.7
 		 *
 		 * @constructor
 		 * @public
@@ -120,6 +120,17 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			this.setProperty("value", sValue, true);
 			this._renderValue();
 			return this;
+		};
+
+		Currency.prototype.unbindProperty = function(sPropName) {
+			Control.prototype.unbindProperty.apply(this, arguments);
+
+			if (sPropName === "value") {
+				this._bRenderNoValClass = false;
+				if (this.$()) {
+					this.$().toggleClass("sapUiUfdCurrencyNoVal", false);
+				}
+			}
 		};
 
 		/**

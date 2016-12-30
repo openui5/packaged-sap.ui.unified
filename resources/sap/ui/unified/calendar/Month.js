@@ -27,7 +27,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * If used inside the calendar the properties and aggregation are directly taken from the parent
 	 * (To not duplicate and sync DateRanges and so on...)
 	 * @extends sap.ui.core.Control
-	 * @version 1.42.6
+	 * @version 1.42.7
 	 *
 	 * @constructor
 	 * @public
@@ -1148,13 +1148,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		// check day names
 		var i;
 		var oWeekDay;
-		var bCompact = this.$().parents().hasClass('sapUiSizeCompact');
 
 		for (i = 0; i < aWeekHeaders.length; i++) {
 			oWeekDay = aWeekHeaders[i];
 			// since browsers return different values of clientWidth and scrollWidth we give a tolerance before truncating
 			// and we don't give this tolerance if we are in Compact mode
-			if (Math.abs(oWeekDay.clientWidth - oWeekDay.scrollWidth) > 1 || ((oWeekDay.clientWidth < oWeekDay.scrollWidth) && bCompact)) {
+			if (Math.abs(oWeekDay.clientWidth - oWeekDay.scrollWidth) > 1) {
 				return true;
 			}
 		}
