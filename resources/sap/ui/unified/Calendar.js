@@ -1,6 +1,6 @@
 /*!
  * UI development toolkit for HTML5 (OpenUI5)
- * (c) Copyright 2009-2016 SAP SE or an SAP affiliate company.
+ * (c) Copyright 2009-2017 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -25,7 +25,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * Basic Calendar.
 	 * This calendar is used for DatePickers
 	 * @extends sap.ui.core.Control
-	 * @version 1.42.7
+	 * @version 1.42.8
 	 *
 	 * @constructor
 	 * @public
@@ -239,6 +239,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		this.setAggregation("yearPicker",oYearPicker);
 
 		this._resizeProxy = jQuery.proxy(_handleResize, this);
+		this._oSelectedDay = undefined; //needed for a later usage here after its assignment in the Month.js
 
 	};
 
@@ -1759,8 +1760,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			var aMonths = this.getAggregation("month");
 			for (var i = 0; i < aMonths.length; i++) {
 				var oMonth = aMonths[i];
+
 				if (oMonth.getId() != oEvent.oSource.getId()) {
-					oMonth._updateSelection();
+					oMonth._updateSelection(this._oSelectedDay);
 				}
 			}
 		}
