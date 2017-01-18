@@ -21,7 +21,7 @@ sap.ui.define(['jquery.sap.global', './DateTypeRange', './library'],
 	 *
 	 * Applications could inherit from this element to add own fields.
 	 * @extends sap.ui.unified.DateTypeRange
-	 * @version 1.42.8
+	 * @version 1.42.9
 	 *
 	 * @constructor
 	 * @public
