@@ -1,6 +1,6 @@
 /*!
  * UI development toolkit for HTML5 (OpenUI5)
- * (c) Copyright 2009-2016 SAP SE or an SAP affiliate company.
+ * (c) Copyright 2009-2017 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -25,7 +25,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * Basic Calendar.
 	 * This calendar is used for DatePickers
 	 * @extends sap.ui.core.Control
-	 * @version 1.44.3
+	 * @version 1.44.5
 	 *
 	 * @constructor
 	 * @public
@@ -239,6 +239,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		this.setAggregation("yearPicker",oYearPicker);
 
 		this._resizeProxy = jQuery.proxy(_handleResize, this);
+		this._oSelectedDay = undefined; //needed for a later usage here after its assignment in the Month.js
 
 	};
 
@@ -1322,7 +1323,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 				_renderMonth.call(this, false, false, true);
 			}
 		} else {
-			_focusDate.call(this, oDate, bOtherMonth);
+			this._focusDate(oDate, bOtherMonth);
 		}
 	};
 
@@ -1597,12 +1598,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			}
 		}else if (_getMonths.call(this) > 1) {
 			// on rerendering focus might be set on wrong month
-			_focusDate.call(this, this._getFocusedDate(), true, true);
+			this._focusDate(this._getFocusedDate(), true, true);
 		}
 
 	}
 
-	function _focusDate (oDate, bOtherMonth, bNoEvent){
+	Calendar.prototype._focusDate = function (oDate, bOtherMonth, bNoEvent){
 
 		// if a date should be focused thats out of the borders -> focus the border
 		var oFocusedDate;
@@ -1635,7 +1636,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			this.fireStartDateChange();
 		}
 
-	}
+	};
 
 	function _setHeaderText (oDate){
 
@@ -1780,8 +1781,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			var aMonths = this.getAggregation("month");
 			for (var i = 0; i < aMonths.length; i++) {
 				var oMonth = aMonths[i];
+
 				if (oMonth.getId() != oEvent.oSource.getId()) {
-					oMonth._updateSelection();
+					oMonth._updateSelection(this._oSelectedDay);
 				}
 			}
 		}
@@ -1835,7 +1837,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			}
 		}
 
-		_focusDate.call(this, oFocusedDate, true);
+		this._focusDate(oFocusedDate, true);
 
 		_hideMonthPicker.call(this);
 
@@ -1855,7 +1857,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			oFocusedDate = oDate;
 		}
 
-		_focusDate.call(this, oFocusedDate, true);
+		this._focusDate(oFocusedDate, true);
 
 		_hideYearPicker.call(this);
 
@@ -1879,7 +1881,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 		if (aMonths.length > 1) {
 			// restore focus
-			_focusDate.call(this, this._getFocusedDate(), true, true);
+			this._focusDate(this._getFocusedDate(), true, true);
 		}
 		this._bDateRangeChanged = undefined;
 

@@ -1,6 +1,6 @@
 /*!
  * UI development toolkit for HTML5 (OpenUI5)
- * (c) Copyright 2009-2016 SAP SE or an SAP affiliate company.
+ * (c) Copyright 2009-2017 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -136,8 +136,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/date/UniversalDate'],
 			var iWeekNum = 0;
 			var iWeekDay = 0;
 			var iFirstDayOfWeek = oLocaleData.getFirstDayOfWeek();
+			var oLocale = new sap.ui.core.Locale(sLocale);
 
-			if (sLocale == "en-US") {
+			// search Locale for containing "en-US", since sometimes
+			// when any user settings have been defined, subtag "sapufmt" is added to the locale name
+			// this is described inside sap.ui.core.Configuration file
+			if (oLocale && (oLocale.getLanguage() == 'en' && oLocale.getRegion() == 'US')) {
 				/*
 				 * in US the week starts with Sunday
 				 * The first week of the year starts with January 1st. But Dec. 31 is still in the last year
