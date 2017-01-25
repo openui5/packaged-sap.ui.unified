@@ -1,13 +1,13 @@
 /*!
  * UI development toolkit for HTML5 (OpenUI5)
- * (c) Copyright 2009-2016 SAP SE or an SAP affiliate company.
+ * (c) Copyright 2009-2017 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
 //Provides control sap.ui.unified.Calendar.
 sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleData', 'sap/ui/core/delegate/ItemNavigation',
-               'sap/ui/model/type/Date', 'sap/ui/unified/calendar/CalendarUtils', 'sap/ui/core/date/UniversalDate', 'sap/ui/unified/library'],
-               function(jQuery, Control, LocaleData, ItemNavigation, Date1, CalendarUtils, UniversalDate, library) {
+			'sap/ui/model/type/Date', 'sap/ui/unified/calendar/CalendarUtils', 'sap/ui/core/date/UniversalDate', 'sap/ui/unified/library'],
+			function(jQuery, Control, LocaleData, ItemNavigation, Date1, CalendarUtils, UniversalDate, library) {
 	"use strict";
 
 	/*
@@ -27,7 +27,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * If used inside the calendar the properties and aggregation are directly taken from the parent
 	 * (To not duplicate and sync DateRanges and so on...)
 	 * @extends sap.ui.core.Control
-	 * @version 1.38.16
+	 * @version 1.38.18
 	 *
 	 * @constructor
 	 * @public
@@ -851,46 +851,44 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 	};
 
-	Month.prototype.onmousedown = function (oEvent) {
-		var oEventData = oEvent.originalEvent;
-		this._oMouseDownCoordinates = {};
+	Month.prototype.onmouseup = function(oEvent){
 
-		if (oEvent.pageX == undefined) {
-			oEventData = oEvent.originalEvent.touches[0];
+		// fire select event on mouseup to prevent closing calendar during click
+
+		if (this._bMouseMove) {
+			this._unbindMousemove(true);
+
+			// focus now selected day
+			var oFocusedDate = this._getDate();
+			var aDomRefs = this._oItemNavigation.getItemDomRefs();
+
+			for ( var i = 0; i < aDomRefs.length; i++) {
+				var $DomRef = jQuery(aDomRefs[i]);
+				if (!$DomRef.hasClass("sapUiCalItemOtherMonth")) {
+					if ($DomRef.attr("data-sap-day") == this._oFormatYyyymmdd.format(oFocusedDate.getJSDate(), true)) {
+						$DomRef.focus();
+						break;
+					}
+				}
+			}
+
+			if (this._bMoveChange) {
+				// selection was changed -> make it final
+				var bSelected = _selectDay.call(this, oFocusedDate);
+				if (!bSelected && this._oMoveSelectedDate) {
+					_selectDay.call(this, this._oMoveSelectedDate);
+				}
+				this._bMoveChange = false;
+				this._bMousedownChange = false;
+				this._oMoveSelectedDate = undefined;
+				_fireSelect.call(this);
+			}
 		}
 
-		this._oMouseDownCoordinates.pageX = oEventData.pageX;
-		this._oMouseDownCoordinates.pageY = oEventData.pageY;
-
-		oEvent.preventDefault();
-		oEvent.setMark("cancelAutoClose");
-	};
-
-	Month.prototype.onmouseup = function(oEvent) {
-		var oEventData = oEvent.originalEvent,
-			iOffsetX,
-			iOffsetY;
-
-		if (!this._oMouseDownCoordinates) {
-			return;
+		if (this._bMousedownChange) {
+			this._bMousedownChange = false;
+			_fireSelect.call(this);
 		}
-
-		if (oEvent.pageX == undefined) {
-			oEventData = oEvent.originalEvent.changedTouches[0];
-		}
-
-		iOffsetX = Math.abs(oEventData.pageX - this._oMouseDownCoordinates.pageX);
-		iOffsetY = Math.abs(oEventData.pageY - this._oMouseDownCoordinates.pageY);
-
-		if (iOffsetX < 5 && iOffsetY < 5) {
-			//Mouseup with less than 5px difference in either x or y coordinates is considered as a click
-			this._bMousedownChange = this._bMouseMove = this._bMoveChange = true;
-			_handleMouseup.call(this, oEvent);
-		} else {
-			//Mouseup with offset equal or more than 5px in either x or y coordinates is considered as a drag
-			jQuery.sap.log.info("Mouse drag performed. Unfortunately the calendar doesn't support yet this event");
-		}
-		this._oMouseDownCoordinates = undefined;
 
 	};
 
@@ -957,24 +955,28 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	/*
 	 * called from the calendar in multi-month case to update the interval visualization
 	 * for all months.
+	 *
+	 * @param {Date} oDate selected date
 	 */
-	Month.prototype._updateSelection = function(){
+	Month.prototype._updateSelection = function(oDate){
+		var aSelectedDates = this.getSelectedDates(),
+			sCalendarType = this.getPrimaryCalendarType(),
+			oStartDate,
+			oEndDate = aSelectedDates[0] ? aSelectedDates[0].getEndDate() : undefined;
 
-		var aSelectedDates = this.getSelectedDates();
+		//if there's a selected day while it's single selection or there's not oDate parameter passed, oStartDate is the selected date
+		//oterwise it's the passed oDate parameter
+		oStartDate = (aSelectedDates.length > 0 && this.getSingleSelection()) || !oDate ?
+		aSelectedDates[0].getStartDate() : oDate;
 
-		if (aSelectedDates.length > 0 && this.getSingleSelection()) {
-			var sCalendarType = this.getPrimaryCalendarType();
-			var oStartDate = aSelectedDates[0].getStartDate();
-			if (oStartDate) {
-				oStartDate = CalendarUtils._createUniversalUTCDate(oStartDate, sCalendarType);
-			}
-			var oEndDate = aSelectedDates[0].getEndDate();
-			if (oEndDate) {
-				oEndDate = CalendarUtils._createUniversalUTCDate(oEndDate, sCalendarType);
-			}
-			_updateSelection.call(this, oStartDate, oEndDate);
+		if (oStartDate) {
+			oStartDate = CalendarUtils._createUniversalUTCDate(oStartDate, sCalendarType);
+		}
+		if (oEndDate) {
+			oEndDate = CalendarUtils._createUniversalUTCDate(oEndDate, sCalendarType);
 		}
 
+		_updateSelection.call(this, oStartDate, oEndDate);
 	};
 
 	/*
@@ -1287,6 +1289,11 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			this.fireFocus({date: CalendarUtils._createLocalDate(oFocusedDate), otherMonth: bOtherMonth});
 		}
 
+		if (oEvent.type == "mousedown") {
+			// as no click event is fired in some cases, e.g. if month is changed (because of changing DOM) select the day on mousedown
+			_handleMousedown.call(this, oEvent, oFocusedDate, iIndex);
+		}
+
 	}
 
 	function _handleFocusAgain(oControlEvent){
@@ -1308,45 +1315,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			_handleMousedown.call(this, oEvent, oFocusedDate, iIndex);
 		}
 
-	}
-
-	function _handleMouseup (oEvent) {
-		// fire select event on mouseup to prevent closing calendar during click
-
-		if (this._bMouseMove) {
-			this._unbindMousemove(true);
-
-			// focus now selected day
-			var oFocusedDate = this._getDate();
-			var aDomRefs = this._oItemNavigation.getItemDomRefs();
-
-			for ( var i = 0; i < aDomRefs.length; i++) {
-				var $DomRef = jQuery(aDomRefs[i]);
-				if (!$DomRef.hasClass("sapUiCalItemOtherMonth")) {
-					if ($DomRef.attr("data-sap-day") == this._oFormatYyyymmdd.format(oFocusedDate.getJSDate(), true)) {
-						$DomRef.focus();
-						break;
-					}
-				}
-			}
-
-			if (this._bMoveChange) {
-				// selection was changed -> make it final
-				var bSelected = _selectDay.call(this, oFocusedDate);
-				if (!bSelected && this._oMoveSelectedDate) {
-					_selectDay.call(this, this._oMoveSelectedDate);
-				}
-				this._bMoveChange = false;
-				this._bMousedownChange = false;
-				this._oMoveSelectedDate = undefined;
-				_fireSelect.call(this);
-			}
-		}
-
-		if (this._bMousedownChange) {
-			this._bMousedownChange = false;
-			_fireSelect.call(this);
-		}
 	}
 
 	function _handleMousedown(oEvent, oFocusedDate, iIndex){
@@ -1499,9 +1467,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		var oStartDate;
 		var sCalendarType = this.getPrimaryCalendarType();
 
-		if (oParent && oParent.getSelectedDates) {
-			// if used in Calendar use the aggregation of this one
-			oAggOwner = oParent;
+		if (oParent) {
+			oParent._oSelectedDay = new UniversalDate(oDate.getTime());
+			if (oParent.getSelectedDates){
+				// if used in Calendar use the aggregation of this one
+				oAggOwner = oParent;
+			}
 		}
 
 		/* eslint-disable no-lonely-if */
@@ -1584,6 +1555,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		return true;
 
 	}
+	/*
+	 * Toggles the selected class for the currently selected date.
+	 *
+	 * @param {Date} oStartDate start of a range
+	 * @param {Date} oEndDate end of a range
+	 * @private
+	 */
 
 	function _updateSelection(oStartDate, oEndDate){
 
@@ -1596,15 +1574,39 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		if (!oEndDate) {
 			// start of interval or single date
 			var sYyyymmdd = this._oFormatYyyymmdd.format(oStartDate.getJSDate(), true);
+
 			for ( i = 0; i < aDomRefs.length; i++) {
 				$DomRef = jQuery(aDomRefs[i]);
 				bStart = false;
 				bEnd = false;
+
 				if ($DomRef.attr("data-sap-day") == sYyyymmdd) {
-					$DomRef.addClass("sapUiCalItemSel");
-					$DomRef.attr("aria-selected", "true");
-					bStart = true;
-				} else if ($DomRef.hasClass("sapUiCalItemSel")) {
+					if ($DomRef.hasClass("sapUiCalItemSel")){
+						$DomRef.removeClass("sapUiCalItemSel");
+						$DomRef.attr("aria-selected", "false");
+						/*
+						Focus is needed for consistent behavior in order to focus a deselected day in the corresponding calendar
+						ex: The user deselects Nov 28th from the calendar of December.
+						If we do not explicitly put a focus on the Nov 28th in the November's calendar, the focus is
+						kept on the last interactable day, part of the corresponding calendar but not on the Nov 28 in the November's calendar.
+						 */
+						$DomRef.focus();
+					} else {
+						$DomRef.addClass("sapUiCalItemSel");
+						/*
+						Focus is needed for consistent behavior in order to focus a selected day in the corresponding calendar
+						ex: The user selects Nov 28th from the calendar of December.
+						If we do not explicitly put a focus on the Nov 28th in the November's calendar, the focus is
+						kept on the last interactable day, part of the corresponding calendar but not on the Nov 28 in the November's calendar.
+						 */
+						$DomRef.focus();
+						$DomRef.attr("aria-selected", "true");
+						bStart = true;
+					}
+
+					// we must add here a check for the single selection because if we're on multiple selection
+					// the corresponding selection class will be removed for the selected days in the other calendar
+				} else if ($DomRef.hasClass("sapUiCalItemSel") && this.getSingleSelection()) {
 					$DomRef.removeClass("sapUiCalItemSel");
 					$DomRef.attr("aria-selected", "false");
 				}
