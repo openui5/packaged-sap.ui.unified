@@ -35,7 +35,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/unified/calendar/CalendarUtils', 'sa
 		 * Navigation via year picker switches to the beginning of the same week, but in the chosen year.
 		 *
 		 * @extends sap.ui.unified.CalendarDateInterval
-		 * @version 1.44.5
+		 * @version 1.44.6
 		 *
 		 * @constructor
 		 * @private
@@ -128,7 +128,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/unified/calendar/CalendarUtils', 'sa
 				return;
 			}
 
-			var oWeekNumber = UniversalDate.getWeekByDate(oFocusedDate.getCalendarType(), oFocusedDate.getFullYear(), oFocusedDate.getMonth(), oFocusedDate.getDate()),
+			var oWeekNumber = UniversalDate.getWeekByDate(oFocusedDate.getCalendarType(), oFocusedDate.getUTCFullYear(), oFocusedDate.getUTCMonth(), oFocusedDate.getUTCDate()),
 				oTempUniversalFocusedDate = new UniversalDate(oFocusedDate.getTime()),
 				oNewWeekNumber;
 
