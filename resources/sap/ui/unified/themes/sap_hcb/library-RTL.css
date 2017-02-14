@@ -497,7 +497,7 @@ html.sap-desktop .sapUiCalendarApp.sapUiCalendarAppSel:focus:not(:active) > .sap
   right: 0.375rem;
   top: 0.375rem;
   /*	vertical-align: middle;*/
-  color: #d3d3d3;
+  color: #ffffff;
 }
 .sapUiCalendarAppTitleOnly > .sapUiCalendarAppCont > .sapUiCalendarAppIcon {
   top: calc(50% - 0.5rem);
