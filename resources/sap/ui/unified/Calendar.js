@@ -25,7 +25,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * Basic Calendar.
 	 * This calendar is used for DatePickers
 	 * @extends sap.ui.core.Control
-	 * @version 1.46.2
+	 * @version 1.46.3
 	 *
 	 * @constructor
 	 * @public
@@ -239,8 +239,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		this.setAggregation("yearPicker",oYearPicker);
 
 		this._resizeProxy = jQuery.proxy(_handleResize, this);
-		this._oSelectedDay = undefined; //needed for a later usage here after its assignment in the Month.js
-
 	};
 
 	Calendar.prototype.exit = function(){
@@ -324,7 +322,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		} else if (this.getDomRef() && this._iMode == 0 && !this._sInvalidateMonth) {
 			// DateRange changed -> only rerender days
 			// do this only once if more DateRanges / Special days are changed
-			this._sInvalidateMonth = jQuery.sap.delayedCall(0, this, _invalidateMonth, [this]);
+			this._sInvalidateMonth = jQuery.sap.delayedCall(0, this, this._invalidateMonth, [this]);
 		}
 
 	};
@@ -1648,6 +1646,33 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 	};
 
+	Calendar.prototype._invalidateMonth = function() {
+
+		this._sInvalidateMonth = undefined;
+
+		var aMonths = this.getAggregation("month");
+		if (aMonths) {
+			for (var i = 0; i < aMonths.length; i++) {
+				var oMonth = aMonths[i];
+				oMonth._bDateRangeChanged = true;
+				oMonth._bInvalidateSync = true;
+				if (aMonths.length > 1) {
+					oMonth._bNoFocus = true;
+				}
+				oMonth.invalidate();
+				oMonth._bInvalidateSync = undefined;
+			}
+
+			if (aMonths.length > 1) {
+				// restore focus
+				this._focusDate(this._getFocusedDate(), true, true);
+			}
+		}
+
+		this._bDateRangeChanged = undefined;
+
+	};
+
 	function _setHeaderText (oDate){
 
 		// sets the text for the month and the year button to the header
@@ -1793,7 +1818,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 				var oMonth = aMonths[i];
 
 				if (oMonth.getId() != oEvent.oSource.getId()) {
-					oMonth._updateSelection(this._oSelectedDay);
+					oMonth._updateSelection();
 				}
 			}
 		}
@@ -1859,9 +1884,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		var oYearPicker = this.getAggregation("yearPicker");
 		var oDate = CalendarUtils._createUniversalUTCDate(oYearPicker.getDate(), this.getPrimaryCalendarType());
 		var iYear = oYearPicker.getYear();
+		var oModifiedFocusedDate;
 
 		if (this._adjustFocusedDateUponYearChange) {//hook (currently used by PlanningCalendar)
-			this._adjustFocusedDateUponYearChange(oFocusedDate, iYear);
+			oModifiedFocusedDate = this._adjustFocusedDateUponYearChange(oFocusedDate, iYear);
+			if (oModifiedFocusedDate) {
+				oFocusedDate = oModifiedFocusedDate;
+			}
 		} else {
 			oDate.setUTCMonth(oFocusedDate.getUTCMonth(), oFocusedDate.getUTCDate()); // to keep day and month stable also for islamic date
 			oFocusedDate = oDate;
@@ -1870,30 +1899,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		this._focusDate(oFocusedDate, true);
 
 		_hideYearPicker.call(this);
-
-	}
-
-	function _invalidateMonth(){
-
-		this._sInvalidateMonth = undefined;
-
-		var aMonths = this.getAggregation("month");
-		for (var i = 0; i < aMonths.length; i++) {
-			var oMonth = aMonths[i];
-			oMonth._bDateRangeChanged = true;
-			oMonth._bInvalidateSync = true;
-			if (aMonths.length > 1) {
-				oMonth._bNoFocus = true;
-			}
-			oMonth.invalidate();
-			oMonth._bInvalidateSync = undefined;
-		}
-
-		if (aMonths.length > 1) {
-			// restore focus
-			this._focusDate(this._getFocusedDate(), true, true);
-		}
-		this._bDateRangeChanged = undefined;
 
 	}
 
