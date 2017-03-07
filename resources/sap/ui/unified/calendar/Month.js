@@ -27,7 +27,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * If used inside the calendar the properties and aggregation are directly taken from the parent
 	 * (To not duplicate and sync DateRanges and so on...)
 	 * @extends sap.ui.core.Control
-	 * @version 1.46.3
+	 * @version 1.46.4
 	 *
 	 * @constructor
 	 * @public
@@ -233,6 +233,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		} else if (this.getDomRef() && !this._sInvalidateMonth) {
 			// DateRange changed -> only rerender days
 			// do this only once if more DateRanges / Special days are changed
+			if (oOrigin && oOrigin.sParentAggregationName === "specialDates") {
+				// Don't restore focus if special dates are added
+				this._bNoFocus = true;
+			}
 			if (this._bInvalidateSync) { // set if calendar already invalidates in delayed call
 				_invalidateMonth.call(this);
 			} else {
