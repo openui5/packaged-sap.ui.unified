@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.46.4
+	 * @version 1.46.5
 	 *
 	 * @constructor
 	 * @public
@@ -507,6 +507,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/
 		if (this.oFileUpload) {
 			if (typeof oTooltip  === "string") {
 				jQuery(this.oFileUpload).attr("title", jQuery.sap.encodeHTML(oTooltip));
+				this.$().find(".sapUiFupInputMask").attr("title", jQuery.sap.encodeHTML(oTooltip));
 			}
 		}
 		return this;
