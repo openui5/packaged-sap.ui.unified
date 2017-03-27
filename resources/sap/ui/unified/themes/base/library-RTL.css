@@ -543,6 +543,58 @@ html.sap-desktop .sapUiCalendarApp.sapUiCalendarAppSel:focus:not(:active) > .sap
   position: absolute;
   top: 0;
 }
+.sapUiCalendarAppContainer {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+.sapUiCalendarAppContainer > .sapUiCalendarAppContainerLeft {
+  margin: 0 0 0 1rem;
+  float: right;
+  display: inline-block;
+  padding: 0.5rem 0;
+  line-height: 0.875rem;
+  width: 6rem;
+}
+.sapUiCalendarAppContainer > .sapUiCalendarAppContainerLeft > div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sapUiCalendarAppContainer > .sapUiCalendarAppContainerRight {
+  margin-left: 1rem;
+  height: 100%;
+}
+.sapUiCalendarAppContainer > .sapUiCalendarAppContainerRight > .sapUiCalendarApp {
+  position: relative;
+  margin: 0 0 0 1rem;
+}
+.sapUiCalendarAppContainer > .sapUiCalendarAppContainerRight > .sapUiCalendarApp:not(.sapUiCalendarAppSel):not(:active) {
+  background-color: transparent;
+}
+.sapUiCalendarAppContainer > .sapUiCalendarAppContainerRight > .sapUiCalendarApp > .sapUiCalendarAppCont {
+  border: none;
+}
+.sapUiCalendarAppContainer > .sapUiCalendarAppContainerRight > .sapUiCalendarApp > .sapUiCalendarAppCont > .sapUiCalendarAppTitle {
+  text-overflow: ellipsis;
+}
+.sapUiCalendarAppContainer > .sapUiCalendarAppContainerRight > .sapUiCalendarRowAppsIntHead {
+  margin: 0 0 0 1rem;
+  width: auto;
+}
+.sapUiCalendarMonthRowAppsS.sapUiCalendarRowAppsInt {
+  border: 0;
+  background-color: transparent;
+}
+.sapMPlanCal .sapUiCalMonthView {
+  width: 100%;
+}
+.sapMPlanCal .sapUiCalendarNoApps {
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  vertical-align: middle;
+  border-top: 0.0625rem solid #4f4f4f;
+}
 /* ============================================= */
 /* CSS for control sap.ui.unified/ContentSwitcher.control */
 /* ============================================= */
