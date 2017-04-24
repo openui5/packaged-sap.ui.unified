@@ -27,7 +27,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * <b>Note:</b> JavaScript Date objects are used to set and return the months, mark them as selected or as a special type.
 	 * But the date part of the Date object is not used. If a Date object is returned the date will be set to the 1st of the corresponding month.
 	 * @extends sap.ui.core.Control
-	 * @version 1.44.11
+	 * @version 1.44.12
 	 *
 	 * @constructor
 	 * @public
@@ -219,13 +219,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 		_updateHeader.call(this);
 
-		oMonthsRow.setDate(CalendarUtils._createLocalDate(oDate));
-
+		//Do not focus the date. If this is needed after the control rendering, the MonthsRow.applyFocusInto will focus it.
+		oMonthsRow.displayDate(CalendarUtils._createLocalDate(oDate));
 	};
-
-//	CalendarMonthInterval.prototype.onAfterRendering = function(){
-
-//	};
 
 	CalendarMonthInterval.prototype.setStartDate = function(oStartDate){
 

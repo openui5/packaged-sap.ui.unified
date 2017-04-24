@@ -14,7 +14,7 @@ sap.ui.define(['jquery.sap.global'],
 	/**
 	 * Currency renderer.
 	 *
-	 * @version 1.44.11
+	 * @version 1.44.12
 	 * @namespace
 	 */
 	var CurrencyRenderer = {

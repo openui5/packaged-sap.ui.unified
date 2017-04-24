@@ -27,7 +27,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * If used inside the calendar the properties and aggregation are directly taken from the parent
 	 * (To not duplicate and sync DateRanges and so on...)
 	 * @extends sap.ui.core.Control
-	 * @version 1.44.11
+	 * @version 1.44.12
 	 *
 	 * @constructor
 	 * @public
@@ -1121,6 +1121,19 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 			return false;
 		}
 
+	};
+
+	/**
+	 * Overrides the applyFocusInfo in order to focus the given html element.
+	 * Focus handler does not work with DOM elements, but with UI5 controls only. That's why we need to take care that
+	 * when focus is being restored back (e.g. after rerendering), we focus the needed DOM element (in this case day)
+	 *
+	 * @param {object} oInfo the focus info
+	 * @returns {sap.ui.unified.calendar.Month} <code>this</code> for method chaining.
+	 */
+	Month.prototype.applyFocusInfo = function(oInfo){
+		this._oItemNavigation.focusItem(this._oItemNavigation.getFocusedIndex());
+		return this;
 	};
 
 	Month.prototype._renderHeader = function(){
