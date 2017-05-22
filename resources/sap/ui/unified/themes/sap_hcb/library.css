@@ -1495,7 +1495,7 @@ html[data-sap-ui-browser^="cr"] .sapUiFupInputMask > input {
 }
 .sapUiMnuDiv {
   position: relative;
-  height: 3px;
+  height: 0.125rem;
 }
 .sapUiMnuDiv > hr {
   display: inline-block;
