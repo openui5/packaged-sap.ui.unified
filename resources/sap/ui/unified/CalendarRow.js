@@ -28,7 +28,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 	 * @class
 	 * A calendar row with a header and appointments. The Appointments will be placed in the defined interval.
 	 * @extends sap.ui.core.Control
-	 * @version 1.48.1
+	 * @version 1.48.2
 	 *
 	 * @constructor
 	 * @public
@@ -1144,7 +1144,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 		var oGroupAppointment;
 		var oLocaleData = _getLocaleData.call(this);
 		var iFirstDayOfWeek = oLocaleData.getFirstDayOfWeek();
-		var iDay = oDate.getDay();
+		var iDay = oDate.getUTCDay();
 		var oGroupStartDate = new UniversalDate(oDate.getTime());
 		oGroupStartDate.setUTCHours(0);
 		oGroupStartDate.setUTCMinutes(0);

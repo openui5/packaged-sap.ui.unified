@@ -23,7 +23,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/IconPool', './MenuItemBase', '.
 	 * @extends sap.ui.unified.MenuItemBase
 	 *
 	 * @author SAP SE
-	 * @version 1.48.1
+	 * @version 1.48.2
 	 * @since 1.21.0
 	 *
 	 * @constructor
