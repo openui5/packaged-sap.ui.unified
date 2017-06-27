@@ -24,7 +24,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 	 * @implements sap.ui.core.IContextMenu
 	 *
 	 * @author SAP SE
-	 * @version 1.48.2
+	 * @version 1.48.3
 	 * @since 1.21.0
 	 *
 	 * @constructor
@@ -347,9 +347,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 	Menu.prototype.openAsContextMenu = function(oEvent, oOpenerRef) {
 		var x = oEvent.pageX - jQuery(oOpenerRef.getDomRef()).offset().left,
 			y = oEvent.pageY - jQuery(oOpenerRef.getDomRef()).offset().top,
+			bRTL = sap.ui.getCore().getConfiguration().getRTL(),
 			eDock = sap.ui.core.Popup.Dock;
 
-		this.open(true, oOpenerRef, eDock.BeginTop, eDock.BeginTop, oOpenerRef, x + " " + y, 'flip');
+		if (bRTL) {
+			x = oOpenerRef.getDomRef().clientWidth - x;
+		}
+
+		this.open(true, oOpenerRef, eDock.BeginTop, eDock.BeginTop, oOpenerRef,  x + " " + y, 'flip');
 	};
 
 	/**
