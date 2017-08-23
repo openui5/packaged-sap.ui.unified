@@ -1478,9 +1478,6 @@ html.sap-desktop .sapUiCalendarApp.sapUiCalendarAppSel:focus:not(:active) > .sap
   display: table-cell;
   vertical-align: top;
 }
-.sapUiFupGroup > div > div:last-child {
-  padding-right: 1px;
-}
 .sapUiFup > form {
   display: inline-block;
 }
@@ -1532,7 +1529,7 @@ html[data-sap-ui-browser^="cr"] .sapUiFupInputMask > input {
 html[data-sap-ui-browser^="cr"] .sapUiFupInputMask > input {
   float: left;
 }
-.sapUiFupGroup > div > div:last-child {
+.sapUiFup:not(.sapUiFupButtonOnly) .sapUiFupGroup > div > div:last-child {
   padding-right: 4px;
 }
 .sapUiFup:hover .sapUiBtnS.sapUiBtnStdFocus {
