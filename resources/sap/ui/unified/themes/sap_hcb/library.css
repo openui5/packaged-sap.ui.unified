@@ -636,16 +636,16 @@ html.sap-phone .sapUiCal[data-sap-ui-popup] > .sapUiCalContent > .sapUiCalYearPi
 .sapUiUnifiedLegend {
   color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 11px;
+  font-size: 0.75rem;
   font-weight: normal;
-  padding: 12px;
+  padding: 0.75rem;
   background-color: #000000;
 }
 .sapUiUnifiedLegendItems {
-  column-gap: 8px;
-  -moz-column-gap: 8px;
+  column-gap: 0.5rem;
+  -moz-column-gap: 0.5rem;
   /* Firefox */
-  -webkit-column-gap: 8px;
+  -webkit-column-gap: 0.5rem;
   /* Safari and Chrome */
 }
 .sapUiUnifiedLegendDescription {
@@ -657,16 +657,6 @@ html.sap-phone .sapUiCal[data-sap-ui-popup] > .sapUiCalContent > .sapUiCalYearPi
 	(the square in front of the legend description) */
   width: calc(72%);
   cursor: default;
-}
-.sapMDialog-CTX .sapUiUnifiedLegendDescription,
-.sapMPopup-CTX .sapUiUnifiedLegendDescription,
-.sapMDialog-CTX .sapUiUfdCalLegendHeader,
-.sapMPopup-CTX .sapUiUfdCalLegendHeader {
-  font-size: 0.875rem;
-}
-.sapMDialog-CTX .sapUiUnifiedLegendDescription,
-.sapMPopup-CTX .sapUiUnifiedLegendDescription {
-  margin-bottom: 0.5rem;
 }
 .sapUiUnifiedLegendSquare {
   display: inline-block;
@@ -693,14 +683,14 @@ html.sap-phone .sapUiCal[data-sap-ui-popup] > .sapUiCalContent > .sapUiCalYearPi
 /*** compact mode (desktop size) ***/
 .sapUiSizeCompact .sapUiUnifiedLegend,
 .sapUiSizeCompact.sapUiUnifiedLegend {
-  padding: 8px;
+  padding: 0.5rem;
 }
 .sapUiSizeCompact .sapUiUnifiedLegendItems,
 .sapUiSizeCompact.sapUiUnifiedLegendItems {
-  column-gap: 6px;
-  -moz-column-gap: 6px;
+  column-gap: 0.5rem;
+  -moz-column-gap: 0.5rem;
   /* Firefox */
-  -webkit-column-gap: 6px;
+  -webkit-column-gap: 0.5rem;
   /* Safari and Chrome */
 }
 .sapUiSizeCompact .sapUiUnifiedLegendSquare {
@@ -726,16 +716,14 @@ html.sap-phone .sapUiCal[data-sap-ui-popup] > .sapUiCalContent > .sapUiCalYearPi
 .sapUiUnifiedLegendNonWorkingDay > .sapUiUnifiedLegendSquare > .sapUiUnifiedLegendSquareColor {
   background: #000000;
 }
-.sapUiUfdCalLegendHeader {
-  padding-top: 0.5rem;
-}
-.sapUiUnifiedLegendSquareColor.Circle {
-  border-radius: 1rem;
-}
 .sapUiUnifiedLegend hr {
   margin-left: -0.5rem;
   margin-right: -0.5rem;
   border-width: 0 0 1px 0;
+}
+.sapMDialog-CTX .sapUiUnifiedLegend,
+.sapMPopup-CTX .sapUiUnifiedLegend {
+  padding: 1rem;
 }
 /* =========================================== */
 /* CSS for control sap.ui.unified/CalendarRow  */
@@ -797,7 +785,7 @@ html.sapUiMedia-Std-Phone .sapUiCalendarRowWithHead > .sapUiCalendarRowApps {
 }
 .sapUiCalendarRowAppsIntHead {
   height: 1.5rem;
-  line-height: 1.5rem;
+  line-height: 1.3rem;
   width: 100%;
   box-sizing: border-box;
   overflow: hidden;
@@ -805,7 +793,6 @@ html.sapUiMedia-Std-Phone .sapUiCalendarRowWithHead > .sapUiCalendarRowApps {
   text-overflow: ellipsis;
   margin-bottom: 0.25rem;
   cursor: default;
-  background-color: #000000;
 }
 .sapUiCalendarIntervalHeaderCont {
   padding-left: 0.375rem;
@@ -816,6 +803,7 @@ html.sapUiMedia-Std-Phone .sapUiCalendarRowWithHead > .sapUiCalendarRowApps {
   width: auto;
 }
 .sapUiCalendarRowAppsIntHeadFirst {
+  border: 0.0625rem solid #ffffff;
   border-left: 0.25rem solid #737373;
 }
 .sapUiCalendarRowAppsIntHeadIcon {
@@ -1516,9 +1504,6 @@ html.sap-desktop .sapUiCalendarApp.sapUiCalendarAppSel:focus:not(:active) > .sap
   display: table-cell;
   vertical-align: top;
 }
-.sapUiFupGroup > div > div:last-child {
-  padding-left: 1px;
-}
 .sapUiFup > form {
   display: inline-block;
 }
@@ -1573,7 +1558,7 @@ html[data-sap-ui-browser^="cr"] .sapUiFupInputMask > input {
 html[data-sap-ui-browser^="cr"] .sapUiFupInputMask > input {
   float: right;
 }
-.sapUiFupGroup > div > div:last-child {
+.sapUiFup:not(.sapUiFupButtonOnly) .sapUiFupGroup > div > div:last-child {
   padding-left: 4px;
 }
 .sapUiFup:hover .sapUiBtnS.sapUiBtnStdFocus {
