@@ -2053,6 +2053,7 @@ html.sap-tablet .sapMRespMenuDialog .sapMPage .sapMHeader-CTX {
   height: 100%;
   display: inline-block;
   vertical-align: top;
+  line-height: 2.5rem;
 }
 .sapUiUfdShellHeadEnd > .sapUiUfdShellIco {
   text-align: right;

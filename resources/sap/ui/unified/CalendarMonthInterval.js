@@ -27,7 +27,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * <b>Note:</b> JavaScript Date objects are used to set and return the months, mark them as selected or as a special type.
 	 * But the date part of the Date object is not used. If a Date object is returned the date will be set to the 1st of the corresponding month.
 	 * @extends sap.ui.core.Control
-	 * @version 1.48.6
+	 * @version 1.48.7
 	 *
 	 * @constructor
 	 * @public
@@ -223,7 +223,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 	};
 
-	/**
+	/*
 	 * Sets a start date.
 	 * @param {Date} oDate a JavaScript date
 	 * @return {sap.ui.unified.CalendarMonthInterval} <code>this</code> for method chaining
@@ -499,7 +499,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 	};
 
-	/**
+	/*
 	 * Sets a minimum date for the calendar.
 	 * @param {Date} oDate a JavaScript date
 	 * @return {sap.ui.unified.Calendar} <code>this</code> for method chaining
@@ -553,7 +553,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 	};
 
-	/**
+	/*
 	 * Sets a maximum date for the calendar.
 	 * @param {Date} oDate a JavaScript date
 	 * @return {sap.ui.unified.CalendarMonthInterval} <code>this</code> for method chaining

@@ -25,7 +25,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/delegate
 	 * renders a YearPicker with ItemNavigation
 	 * This is used inside the calendar. Not for stand alone usage
 	 * @extends sap.ui.core.Control
-	 * @version 1.48.6
+	 * @version 1.48.7
 	 *
 	 * @constructor
 	 * @public
@@ -126,7 +126,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/delegate
 		return this;
 
 	};
-	/**
+	/*
 	 * Sets a date.
 	 * @param {Date} oDate a JavaScript date
 	 * @return {sap.ui.unified.YearPicker} <code>this</code> for method chaining
