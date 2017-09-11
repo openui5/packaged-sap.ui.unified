@@ -40,7 +40,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/unified/calendar/CalendarUtils', 'sa
 		 * Navigation via year picker switches to the beginning of the same week, but in the chosen year.
 		 *
 		 * @extends sap.ui.unified.CalendarDateInterval
-		 * @version 1.48.7
+		 * @version 1.48.8
 		 *
 		 * @constructor
 		 * @private
