@@ -20,7 +20,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Element', './library'],
 	 * @class
 	 * Date range for use in DatePicker
 	 * @extends sap.ui.core.Element
-	 * @version 1.38.27
+	 * @version 1.38.28
 	 *
 	 * @constructor
 	 * @public
