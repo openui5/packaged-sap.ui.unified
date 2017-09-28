@@ -28,7 +28,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/unified/calendar/DatesRow', 'sap/ui/
 	 * Other usages are not supported.
 	 *
 	 * @extends sap.ui.core.Control
-	 * @version 1.50.1
+	 * @version 1.50.2
 	 *
 	 * @constructor
 	 * @private

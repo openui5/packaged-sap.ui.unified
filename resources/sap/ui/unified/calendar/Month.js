@@ -27,7 +27,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * If used inside the calendar the properties and aggregation are directly taken from the parent
 	 * (To not duplicate and sync DateRanges and so on...)
 	 * @extends sap.ui.core.Control
-	 * @version 1.50.1
+	 * @version 1.50.2
 	 *
 	 * @constructor
 	 * @public
@@ -40,7 +40,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		library : "sap.ui.unified",
 		properties : {
 			/**
-			 * the month including this date is rendered and this date is initial focused (if no other focus set)
+			 * A date as JavaScript Date object.
+			 * The month including this date is rendered and this date is focused initially (if no other focus is set).
 			 */
 			date : {type : "object", group : "Data"},
 
@@ -366,7 +367,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 
 	};
 
-	/**
+	/*
 	 * Sets a date for the month.
 	 * @param {Date} oDate a JavaScript date
 	 * @return {sap.ui.unified.calendar.Month} <code>this</code> for method chaining
