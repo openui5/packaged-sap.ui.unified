@@ -28,7 +28,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 	 * @class
 	 * A calendar row with a header and appointments. The Appointments will be placed in the defined interval.
 	 * @extends sap.ui.core.Control
-	 * @version 1.50.2
+	 * @version 1.50.3
 	 *
 	 * @constructor
 	 * @public
@@ -278,6 +278,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 	* @private
 	*/
 	CalendarRow.PCROW_FOREIGN_KEY_NAME = "relatedToPCRowDateRange";
+
+	/**
+	* Shortcut for accessing IntervalTypes
+	* @private
+	*/
+	var CalendarIntervalType = sap.ui.unified.CalendarIntervalType;
 
    /**
 	* Holds the name of the aggregation corresponding to non working dates
@@ -580,7 +586,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 		// check if part of an Interval
 		for (iIndex = 0; iIndex < aIntervals.length; iIndex++) {
 			var oInterval = aIntervals[iIndex];
-			if (jQuery.sap.containsOrEquals(oInterval, oEvent.target)) {
+			if (!this._isOneMonthIntervalOnSmallSizes() && jQuery.sap.containsOrEquals(oInterval, oEvent.target)) {
 				bInterval = true;
 				break;
 			}
@@ -671,13 +677,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 
 			if (this.getUpdateCurrentTime()) {
 				switch (sIntervalType) {
-				case sap.ui.unified.CalendarIntervalType.Hour:
+				case CalendarIntervalType.Hour:
 					iTime = 60000;
 					break;
 
-				case sap.ui.unified.CalendarIntervalType.Day:
-				case sap.ui.unified.CalendarIntervalType.Week:
-				case sap.ui.unified.CalendarIntervalType.OneMonth:
+				case CalendarIntervalType.Day:
+				case CalendarIntervalType.Week:
+				case CalendarIntervalType.OneMonth:
 					iTime = 1800000;
 					break;
 
@@ -837,6 +843,13 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 
 	};
 
+	/*
+	 *  returns if the appointments are rendered as list instead in a table
+	 */
+	CalendarRow.prototype._isOneMonthIntervalOnSmallSizes = function() {
+		return this.getIntervalType() === CalendarIntervalType.OneMonth && this.getIntervals() === 1;
+	};
+
 	function _getLocale(){
 
 		if (!this._sLocale) {
@@ -874,21 +887,21 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 		this._oUTCStartDate = _calculateStartDate.call(this, oStartDate);
 
 		switch (sIntervalType) {
-		case sap.ui.unified.CalendarIntervalType.Hour:
+		case CalendarIntervalType.Hour:
 			oEndDate = new UniversalDate(this._oUTCStartDate.getTime());
 			oEndDate.setUTCHours(oEndDate.getUTCHours() + iIntervals);
 			this._iMinDelta = this._iHoursMinDelta;
 			break;
 
-		case sap.ui.unified.CalendarIntervalType.Day:
-		case sap.ui.unified.CalendarIntervalType.Week:
-		case sap.ui.unified.CalendarIntervalType.OneMonth:
+		case CalendarIntervalType.Day:
+		case CalendarIntervalType.Week:
+		case CalendarIntervalType.OneMonth:
 			oEndDate = new UniversalDate(this._oUTCStartDate.getTime());
 			oEndDate.setUTCDate(oEndDate.getUTCDate() + iIntervals);
 			this._iMinDelta = this._iDaysMinDelta;
 			break;
 
-		case sap.ui.unified.CalendarIntervalType.Month:
+		case CalendarIntervalType.Month:
 			oEndDate = new UniversalDate(this._oUTCStartDate.getTime());
 			oEndDate.setUTCMonth(oEndDate.getUTCMonth() + iIntervals);
 			this._iMinDelta = this._iMonthsMinDelta;
@@ -915,22 +928,22 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 		var oUTCStartDate = CalendarUtils._createUniversalUTCDate(oDate, undefined, true);
 
 		switch (sIntervalType) {
-		case sap.ui.unified.CalendarIntervalType.Hour:
+		case CalendarIntervalType.Hour:
 			oUTCStartDate.setUTCMinutes(0);
 			oUTCStartDate.setUTCSeconds(0);
 			oUTCStartDate.setUTCMilliseconds(0);
 			break;
 
-		case sap.ui.unified.CalendarIntervalType.Day:
-		case sap.ui.unified.CalendarIntervalType.Week:
-		case sap.ui.unified.CalendarIntervalType.OneMonth:
+		case CalendarIntervalType.Day:
+		case CalendarIntervalType.Week:
+		case CalendarIntervalType.OneMonth:
 			oUTCStartDate.setUTCHours(0);
 			oUTCStartDate.setUTCMinutes(0);
 			oUTCStartDate.setUTCSeconds(0);
 			oUTCStartDate.setUTCMilliseconds(0);
 			break;
 
-		case sap.ui.unified.CalendarIntervalType.Month:
+		case CalendarIntervalType.Month:
 			oUTCStartDate.setUTCDate(1);
 			oUTCStartDate.setUTCHours(0);
 			oUTCStartDate.setUTCMinutes(0);
@@ -1026,7 +1039,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 					oAppointmentEndDate && oAppointmentEndDate.getTime() >= iStartTime) {
 
 				if (bGroupsEnabled &&
-					(sIntervalType == sap.ui.unified.CalendarIntervalType.Month) &&
+					(sIntervalType == CalendarIntervalType.Month) &&
 					((oAppointmentEndDate.getTime() - oAppointmentStartDate.getTime()) < 604800000/*7 days*/)) {
 					// in month mode, group appointment < one week
 
@@ -1201,7 +1214,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 
 		var iBegin = 0;
 
-		if (sIntervalType != sap.ui.unified.CalendarIntervalType.Month) {
+		if (sIntervalType != CalendarIntervalType.Month) {
 			iBegin =  100 * (oAppointmentStartDate.getTime() - iStartTime) / this._iRowSize;
 		} else {
 			// as months have different lengths, calculate the % depending on the interval borders
@@ -1234,7 +1247,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 
 		var iEnd = 0;
 
-		if (sIntervalType != sap.ui.unified.CalendarIntervalType.Month) {
+		if (sIntervalType != CalendarIntervalType.Month) {
 			iEnd =  100 - (100 * (oAppointmentEndDate.getTime() - iStartTime) / this._iRowSize);
 		} else {
 			// as months have different lengths, calculate the % depending on the interval borders
@@ -1310,23 +1323,23 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 					for (j = 0; j < iIntervals; j++) {
 
 						switch (sIntervalType) {
-						case sap.ui.unified.CalendarIntervalType.Hour:
+						case CalendarIntervalType.Hour:
 							oIntervalEndDate.setUTCHours(oIntervalEndDate.getUTCHours() + 1);
 							if (j > 0) {
 								oIntervalStartDate.setUTCHours(oIntervalStartDate.getUTCHours() + 1);
 							}
 							break;
 
-						case sap.ui.unified.CalendarIntervalType.Day:
-						case sap.ui.unified.CalendarIntervalType.Week:
-						case sap.ui.unified.CalendarIntervalType.OneMonth:
+						case CalendarIntervalType.Day:
+						case CalendarIntervalType.Week:
+						case CalendarIntervalType.OneMonth:
 							oIntervalEndDate.setUTCDate(oIntervalEndDate.getUTCDate() + 1);
 							if (j > 0) {
 								oIntervalStartDate.setUTCDate(oIntervalStartDate.getUTCDate() + 1);
 							}
 							break;
 
-						case sap.ui.unified.CalendarIntervalType.Month:
+						case CalendarIntervalType.Month:
 							// as months have different length, go to 1st of next month to determine last of month
 							oIntervalEndDate.setUTCDate(1);
 							oIntervalEndDate.setUTCMonth(oIntervalEndDate.getUTCMonth() + 2);
@@ -1364,9 +1377,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 	// as the top position of the appointments depends on the rendered height it must be calculated after rendering
 	function _positionAppointments() {
 
-		var iIntervals = this.getIntervals();
-		var sIntervalType = this.getIntervalType();
-		if (sIntervalType === sap.ui.unified.CalendarIntervalType.OneMonth && iIntervals === 1) {
+		if (this._isOneMonthIntervalOnSmallSizes()) {
 			return;
 		}
 
@@ -1718,21 +1729,21 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 		oEndDate.setUTCSeconds(0);
 
 		switch (sIntervalType) {
-		case sap.ui.unified.CalendarIntervalType.Hour:
+		case CalendarIntervalType.Hour:
 			oEndDate.setUTCDate(oEndDate.getUTCDate() + 1);
 			oEndDate.setUTCMilliseconds(-1);
 			break;
 
-		case sap.ui.unified.CalendarIntervalType.Day:
-		case sap.ui.unified.CalendarIntervalType.Week:
-		case sap.ui.unified.CalendarIntervalType.OneMonth:
+		case CalendarIntervalType.Day:
+		case CalendarIntervalType.Week:
+		case CalendarIntervalType.OneMonth:
 			oStartDate.setUTCDate(1);
 			oEndDate.setUTCMonth(oEndDate.getUTCMonth() + 1);
 			oEndDate.setUTCDate(1);
 			oEndDate.setUTCMilliseconds(-1);
 			break;
 
-			case sap.ui.unified.CalendarIntervalType.Month:
+			case CalendarIntervalType.Month:
 			oStartDate.setUTCMonth(0);
 			oStartDate.setUTCDate(1);
 			oEndDate.setUTCFullYear(oEndDate.getUTCFullYear() + 1);
@@ -1802,7 +1813,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 
 		// calculate with hours, days and months and not timestamps and millisecons because of rounding issues
 		switch (sIntervalType) {
-		case sap.ui.unified.CalendarIntervalType.Hour:
+		case CalendarIntervalType.Hour:
 			oIntervalStartDate.setUTCHours(oIntervalStartDate.getUTCHours() + iInterval);
 			if (bSubInterval) {
 				oIntervalStartDate.setUTCMinutes(oIntervalStartDate.getUTCMinutes() + iSubInterval * 60 / iSubIntervals);
@@ -1814,9 +1825,9 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 			}
 			break;
 
-		case sap.ui.unified.CalendarIntervalType.Day:
-		case sap.ui.unified.CalendarIntervalType.Week:
-		case sap.ui.unified.CalendarIntervalType.OneMonth:
+		case CalendarIntervalType.Day:
+		case CalendarIntervalType.Week:
+		case CalendarIntervalType.OneMonth:
 			oIntervalStartDate.setUTCDate(oIntervalStartDate.getUTCDate() + iInterval);
 			if (bSubInterval) {
 				oIntervalStartDate.setUTCHours(oIntervalStartDate.getUTCHours() + iSubInterval * 24 / iSubIntervals);
@@ -1828,7 +1839,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 			}
 			break;
 
-		case sap.ui.unified.CalendarIntervalType.Month:
+		case CalendarIntervalType.Month:
 			oIntervalStartDate.setUTCMonth(oIntervalStartDate.getUTCMonth() + iInterval);
 			if (bSubInterval) {
 				oIntervalStartDate.setUTCDate(oIntervalStartDate.getUTCDate() + iSubInterval);
