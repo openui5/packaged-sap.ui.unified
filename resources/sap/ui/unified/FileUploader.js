@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.28
+	 * @version 1.38.29
 	 *
 	 * @constructor
 	 * @public
@@ -1084,7 +1084,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/
 	 */
 	FileUploader.prototype.abort = function(sHeaderCheck, sValueCheck) {
 		if (!this.getUseMultipart()) {
-			for (var i = 0; i < this._aXhr.length; i++) {
+			var iStart = this._aXhr.length - 1;
+			for (var i = iStart; i > -1 ; i--) {
 				if (sHeaderCheck && sValueCheck) {
 					for (var j = 0; j < this._aXhr[i].requestHeaders.length; j++) {
 						var sHeader = this._aXhr[i].requestHeaders[j].name;
