@@ -23,7 +23,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/
 	 * @implements sap.ui.core.IFormContent
 	 *
 	 * @author SAP SE
-	 * @version 1.50.3
+	 * @version 1.50.4
 	 *
 	 * @constructor
 	 * @public
@@ -837,12 +837,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/
 		}
 		//clear the value, don't fire change event, and suppress the refocusing of the file input field
 		return this.setValue("", false, true);
-	};
-
-	FileUploader.prototype.ontap = function () {
-		if (this.getEnabled() && this.getVisible()) {
-			this.FUEl.click();
-		}
 	};
 
 	FileUploader.prototype.onmousedown = function(oEvent) {
