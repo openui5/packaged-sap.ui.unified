@@ -51,7 +51,7 @@ function(
 	 * @implements sap.ui.core.IContextMenu
 	 *
 	 * @author SAP SE
-	 * @version 1.52.0
+	 * @version 1.52.1
 	 * @since 1.21.0
 	 *
 	 * @constructor
