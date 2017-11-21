@@ -1686,6 +1686,9 @@ html[data-sap-ui-browser^="cr"] .sapUiFupInputMask > input {
   box-shadow: 0 0.125rem 1rem 0 rgba(255, 255, 255, 0.4), 0 0 0 2px #000000;
   border-radius: 0.25rem;
 }
+html[data-sap-ui-browser*='ie'] .sapUiMnu {
+  overflow: hidden !important;
+}
 .sapUiMnu:focus {
   outline: none;
 }
@@ -1903,6 +1906,9 @@ html[data-sap-ui-browser*='ie'] .sapUiMnuItm:focus::before {
 .sapUiMnu.sapUiMnuScroll {
   overflow-x: none;
   overflow-y: auto;
+}
+html[data-sap-ui-browser*='ie'] .sapUiMnu {
+  overflow-y: auto !important;
 }
 .sapUiMnu.sapUiMnuScroll .sapUiMnuItmR {
   width: 1.5rem;

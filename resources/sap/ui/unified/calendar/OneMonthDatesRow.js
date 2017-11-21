@@ -28,7 +28,7 @@ sap.ui.define(['sap/ui/unified/calendar/DatesRow', 'sap/ui/unified/calendar/Cale
 	 * Other usages are not supported.
 	 *
 	 * @extends sap.ui.core.Control
-	 * @version 1.52.1
+	 * @version 1.52.2
 	 *
 	 * @constructor
 	 * @private
