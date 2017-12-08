@@ -2320,7 +2320,7 @@ html.sap-desktop .sapUiSizeCompact .sapUiCalItemNow:focus > .sapUiCalItemText {
   padding-top: 0;
   padding-right: 50%;
   line-height: inherit;
-  text-align: left;
+  text-align: start;
 }
 html.sap-desktop .sapUiSizeCompact .sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem:focus > .sapUiCalItemText,
 html[data-sap-ui-browser^="ff"].sap-desktop .sapUiSizeCompact .sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem:focus > .sapUiCalItemText {
@@ -2338,8 +2338,32 @@ html[data-sap-ui-browser^="ff"].sap-desktop .sapUiSizeCompact .sapUiCalNoNameLin
   line-height: inherit;
   padding-top: 0;
   padding-left: 0.5rem;
-  text-align: right;
+  text-align: end;
   box-sizing: border-box;
+}
+html[data-sap-ui-browser^="ie"] .sapUiSizeCompact.sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem > .sapUiCalItemText,
+html[data-sap-ui-browser^="ed"] .sapUiSizeCompact.sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem > .sapUiCalItemText,
+html[data-sap-ui-browser^="ie"] .sapUiSizeCompact .sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem > .sapUiCalItemText,
+html[data-sap-ui-browser^="ed"] .sapUiSizeCompact .sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem > .sapUiCalItemText {
+  text-align: left;
+}
+html[data-sap-ui-browser^="ie"] .sapUiSizeCompact.sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem > .sapUiCalDayName,
+html[data-sap-ui-browser^="ed"] .sapUiSizeCompact.sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem > .sapUiCalDayName,
+html[data-sap-ui-browser^="ie"] .sapUiSizeCompact .sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem > .sapUiCalDayName,
+html[data-sap-ui-browser^="ed"] .sapUiSizeCompact .sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem > .sapUiCalDayName {
+  text-align: right;
+}
+html[dir=rtl][data-sap-ui-browser^="ie"] .sapUiSizeCompact.sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem > .sapUiCalItemText,
+html[dir=rtl][data-sap-ui-browser^="ed"] .sapUiSizeCompact.sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem > .sapUiCalItemText,
+html[dir=rtl][data-sap-ui-browser^="ie"] .sapUiSizeCompact .sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem > .sapUiCalItemText,
+html[dir=rtl][data-sap-ui-browser^="ed"] .sapUiSizeCompact .sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem > .sapUiCalItemText {
+  text-align: right;
+}
+html[dir=rtl][data-sap-ui-browser^="ie"] .sapUiSizeCompact.sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem > .sapUiCalDayName,
+html[dir=rtl][data-sap-ui-browser^="ed"] .sapUiSizeCompact.sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem > .sapUiCalDayName,
+html[dir=rtl][data-sap-ui-browser^="ie"] .sapUiSizeCompact .sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem > .sapUiCalDayName,
+html[dir=rtl][data-sap-ui-browser^="ed"] .sapUiSizeCompact .sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem > .sapUiCalDayName {
+  text-align: left;
 }
 html.sap-desktop .sapUiSizeCompact .sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem:focus > .sapUiCalDayName,
 html[data-sap-ui-browser^="ff"].sap-desktop .sapUiSizeCompact .sapUiCalNoNameLine > .sapUiCalItems > .sapUiCalItem:focus > .sapUiCalDayName {
