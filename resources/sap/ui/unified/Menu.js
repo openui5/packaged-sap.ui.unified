@@ -53,7 +53,7 @@ function(
 	 * @implements sap.ui.core.IContextMenu
 	 *
 	 * @author SAP SE
-	 * @version 1.52.2
+	 * @version 1.52.3
 	 * @since 1.21.0
 	 *
 	 * @constructor
@@ -209,7 +209,7 @@ function(
 	Menu.prototype.onBeforeRendering = function() {
 		this._resetDelayedRerenderItems();
 
-		if (!this._oScroller) {
+		if (!this._oScroller && Device.os.ios && Device.support.touch) {
 			this._oScroller = new ScrollEnablement(this, null, {
 				scrollContainerId: this.getId(),
 				horizontal: false,
