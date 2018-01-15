@@ -1,6 +1,6 @@
 /*!
  * UI development toolkit for HTML5 (OpenUI5)
- * (c) Copyright 2009-2017 SAP SE or an SAP affiliate company.
+ * (c) Copyright 2009-2018 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -24,7 +24,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/unified/calendar/CalendarUtils',
 	 * @class
 	 * Calendar with dates displayed in one line.
 	 * @extends sap.ui.unified.Calendar
-	 * @version 1.52.3
+	 * @version 1.52.4
 	 *
 	 * @constructor
 	 * @public
@@ -839,7 +839,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/unified/calendar/CalendarUtils',
 			this._oPopup.setAutoCloseAreas([this.getDomRef()]);
 			this._oPopup.setDurations(0, 0); // no animations
 			this._oPopup._oCalendar = this;
-			this._oPopup.attachClosed(function() { this._closeCalendarPicker; }, this);
+			this._oPopup.attachClosed(function() { this._closeCalendarPicker(true); }, this);
 			this._oPopup.onsapescape = function(oEvent) {
 				this._oCalendar.onsapescape(oEvent);
 			};
