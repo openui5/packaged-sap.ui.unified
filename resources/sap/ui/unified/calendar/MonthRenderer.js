@@ -41,7 +41,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/unified/calendar/CalendarUtils', 'sa
 
 		oRm.write("<div");
 		oRm.writeControlData(oMonth);
-		oRm.addClass(this.getClass(oMonth));
+		oRm.addClass(this.getClass(oRm, oMonth));
 		if (oMonth._getSecondaryCalendarType()) {
 			oRm.addClass("sapUiCalMonthSecType");
 		}
@@ -92,7 +92,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/unified/calendar/CalendarUtils', 'sa
 
 	};
 
-	MonthRenderer.getClass = function(oMonth){
+	MonthRenderer.getClass = function(oRm, oMonth){
 
 		var sClasses = "sapUiCalMonthView",
 			sCalendarType = oMonth.getPrimaryCalendarType(),
@@ -152,6 +152,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/unified/calendar/CalendarUtils', 'sa
 
 		oRm.write("<div");
 		oRm.writeAccessibilityState(null, {role: "row"});
+		oRm.addStyle("overflow", "hidden");
+		oRm.writeStyles();
 		oRm.write(">"); // div
 
 		this.renderDayNames(oRm, oMonth, oLocaleData, iFirstDayOfWeek, 7, true, undefined);
