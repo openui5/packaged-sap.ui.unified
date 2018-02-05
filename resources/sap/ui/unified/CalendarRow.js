@@ -28,7 +28,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 	 * @class
 	 * A calendar row with a header and appointments. The Appointments will be placed in the defined interval.
 	 * @extends sap.ui.core.Control
-	 * @version 1.48.18
+	 * @version 1.48.19
 	 *
 	 * @constructor
 	 * @public
