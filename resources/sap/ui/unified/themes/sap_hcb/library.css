@@ -1525,6 +1525,7 @@ html.sap-desktop .sapUiCalendarApp.sapUiCalendarAppSel:focus:not(:active) > .sap
   margin-left: 0.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 2rem;
 }
 .sapUiUfdCurrencyNoVal .sapUiUfdCurrencyValue,
 .sapUiUfdCurrencyNoVal .sapUiUfdCurrencyCurrency {
@@ -4124,9 +4125,6 @@ html.sap-desktop .sapUiCalendarApp:hover:not(:active) > .sapUiCalendarAppCont {
 /* CSS for control sap.ui.unified/Currency  */
 /* High Contrast Black theme                */
 /* ======================================== */
-.sapUiUfdCurrencyCurrency {
-  width: 2rem;
-}
 /* ==================================== */
 /* CSS for control sap.ui.unified/Menu  */
 /* High Contrast Black theme            */
