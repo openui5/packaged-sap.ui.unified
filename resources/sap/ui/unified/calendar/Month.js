@@ -27,7 +27,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 	 * If used inside the calendar the properties and aggregation are directly taken from the parent
 	 * (To not duplicate and sync DateRanges and so on...)
 	 * @extends sap.ui.core.Control
-	 * @version 1.44.27
+	 * @version 1.44.28
 	 *
 	 * @constructor
 	 * @public
@@ -898,6 +898,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 		} else if (Device.support.touch
 			&& this._isValueInThreshold(this._oMousedownPosition.clientX, oEvent.clientX, 10)
 			&& this._isValueInThreshold(this._oMousedownPosition.clientY, oEvent.clientY, 10)
+			&& oEvent.target.classList.contains("sapUiCalItemText")
 		) {
 			var oSelectedDate = this._newUniversalDate(this._oFormatYyyymmdd.parse(jQuery(oEvent.target).parent().attr("data-sap-day"), true));
 			_selectDay.call(this, oSelectedDate, false, false);
