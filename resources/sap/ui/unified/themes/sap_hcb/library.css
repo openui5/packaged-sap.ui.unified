@@ -714,6 +714,7 @@ html.sap-desktop .sapUiCalendarApp.sapUiCalendarAppSel:focus:not(:active) > .sap
   margin-left: 0.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 2rem;
 }
 .sapUiUfdCurrencyNoVal .sapUiUfdCurrencyValue,
 .sapUiUfdCurrencyNoVal .sapUiUfdCurrencyCurrency {
