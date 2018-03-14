@@ -5,11 +5,39 @@
  */
 
 //Provides control sap.ui.unified.Calendar.
-sap.ui.define(['jquery.sap.global', 'sap/ui/Device',
-		'sap/ui/core/Control', 'sap/ui/core/Locale', 'sap/ui/core/LocaleData', 'sap/ui/core/Renderer', 'sap/ui/core/format/DateFormat',
-		'./calendar/CalendarUtils', './calendar/Header', './calendar/MonthsRow', './calendar/YearPicker', './calendar/CalendarDate',
-		'./Calendar', './CalendarRenderer'],
-	function (jQuery, Device, Control, Locale, LocaleData, Renderer, DateFormat, CalendarUtils, Header, MonthsRow, YearPicker, CalendarDate, Calendar, CalendarRenderer) {
+sap.ui.define([
+	'jquery.sap.global',
+	'sap/ui/Device',
+	'sap/ui/core/Control',
+	'sap/ui/core/Locale',
+	'sap/ui/core/LocaleData',
+	'sap/ui/core/Renderer',
+	'sap/ui/core/format/DateFormat',
+	'./calendar/CalendarUtils',
+	'./calendar/Header',
+	'./calendar/MonthsRow',
+	'./calendar/YearPicker',
+	'./calendar/CalendarDate',
+	'./Calendar',
+	'./CalendarRenderer',
+	"./CalendarMonthIntervalRenderer"
+], function(
+	jQuery,
+	Device,
+	Control,
+	Locale,
+	LocaleData,
+	Renderer,
+	DateFormat,
+	CalendarUtils,
+	Header,
+	MonthsRow,
+	YearPicker,
+	CalendarDate,
+	Calendar,
+	CalendarRenderer,
+	CalendarMonthIntervalRenderer
+) {
 		"use strict";
 
 	/*
@@ -29,7 +57,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/Device',
 	 * <b>Note:</b> JavaScript Date objects are used to set and return the months, mark them as selected or as a special type.
 	 * But the date part of the Date object is not used. If a Date object is returned the date will be set to the 1st of the corresponding month.
 	 * @extends sap.ui.core.Control
-	 * @version 1.54.0
+	 * @version 1.54.1
 	 *
 	 * @constructor
 	 * @public

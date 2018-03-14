@@ -18,8 +18,7 @@ sap.ui.define([
 	'jquery.sap.script',
 	'jquery.sap.keycodes',
 	'jquery.sap.events'
-],
-function(
+], function(
 	jQuery,
 	Element,
 	Control,
@@ -51,7 +50,7 @@ function(
 	 * @implements sap.ui.core.IContextMenu
 	 *
 	 * @author SAP SE
-	 * @version 1.54.0
+	 * @version 1.54.1
 	 * @since 1.21.0
 	 *
 	 * @constructor

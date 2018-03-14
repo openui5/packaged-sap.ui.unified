@@ -5,8 +5,12 @@
  */
 
 // Provides control sap.ui.unified.Currency.
-sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/format/NumberFormat'],
-	function(jQuery, Control, NumberFormat) {
+sap.ui.define([
+	'jquery.sap.global',
+	'sap/ui/core/Control',
+	'sap/ui/core/format/NumberFormat',
+	"./CurrencyRenderer"
+], function(jQuery, Control, NumberFormat, CurrencyRenderer) {
 		"use strict";
 
 		/**
@@ -50,7 +54,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/format/N
 		 * @extends sap.ui.core.Control
 		 *
 		 * @author SAP SE
-		 * @version 1.54.0
+		 * @version 1.54.1
 		 *
 		 * @constructor
 		 * @public
@@ -98,7 +102,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/format/N
 				 * Displays the currency symbol instead of the ISO currency code.
 				 */
 				useSymbol : {type : "boolean", group : "Appearance", defaultValue : true}
-			}
+			},
+			designtime: "sap/ui/unified/designtime/Currency.designtime"
 		}});
 
 		//Whitespace characters to align values

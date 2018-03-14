@@ -5,8 +5,8 @@
  */
 
 // Provides control sap.ui.unified.Shell.
-sap.ui.define(['./ShellHeader', './ShellLayout', './library'],
-	function(ShellHeader, ShellLayout, library) {
+sap.ui.define(['./ShellHeader', './ShellLayout', './library', "./ShellRenderer"],
+	function(ShellHeader, ShellLayout, library, ShellRenderer) {
 	"use strict";
 
 
@@ -25,7 +25,7 @@ sap.ui.define(['./ShellHeader', './ShellLayout', './library'],
 	 * @extends sap.ui.unified.ShellLayout
 	 *
 	 * @author SAP SE
-	 * @version 1.54.0
+	 * @version 1.54.1
 	 *
 	 * @constructor
 	 * @public

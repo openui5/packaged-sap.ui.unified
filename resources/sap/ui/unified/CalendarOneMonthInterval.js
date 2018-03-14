@@ -5,9 +5,31 @@
  */
 
 //Provides control sap.ui.unified.CalendarOneMonthInterval.
-sap.ui.define(['jquery.sap.global', 'sap/ui/unified/calendar/CalendarUtils', 'sap/ui/unified/calendar/CalendarDate', './library',
-		'sap/ui/unified/CalendarDateInterval', 'sap/ui/unified/CalendarDateIntervalRenderer', 'sap/ui/unified/calendar/OneMonthDatesRow', 'sap/ui/core/Renderer', 'sap/ui/unified/Calendar', 'sap/ui/unified/CalendarRenderer'],
-	function (jQuery, CalendarUtils, CalendarDate, library, CalendarDateInterval, CalendarDateIntervalRenderer, OneMonthDatesRow, Renderer, Calendar, CalendarRenderer) {
+sap.ui.define([
+	'jquery.sap.global',
+	'sap/ui/unified/calendar/CalendarUtils',
+	'sap/ui/unified/calendar/CalendarDate',
+	'./library',
+	'sap/ui/unified/CalendarDateInterval',
+	'sap/ui/unified/CalendarDateIntervalRenderer',
+	'sap/ui/unified/calendar/OneMonthDatesRow',
+	'sap/ui/core/Renderer',
+	'sap/ui/unified/Calendar',
+	'sap/ui/unified/CalendarRenderer',
+	"./CalendarOneMonthIntervalRenderer"
+], function(
+	jQuery,
+	CalendarUtils,
+	CalendarDate,
+	library,
+	CalendarDateInterval,
+	CalendarDateIntervalRenderer,
+	OneMonthDatesRow,
+	Renderer,
+	Calendar,
+	CalendarRenderer,
+	CalendarOneMonthIntervalRenderer
+	) {
 		"use strict";
 
 		/*
@@ -39,7 +61,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/unified/calendar/CalendarUtils', 'sa
 		 * Navigation via year picker switches to the corresponding year and the same month as before the navigation.
 		 *
 		 * @extends sap.ui.unified.CalendarDateInterval
-		 * @version 1.54.0
+		 * @version 1.54.1
 		 *
 		 * @constructor
 		 * @private

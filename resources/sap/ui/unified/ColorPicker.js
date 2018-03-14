@@ -5,11 +5,40 @@
  */
 
 // Provides control sap.ui.unified.ColorPicker.
-sap.ui.define(["jquery.sap.global", "./library", "sap/ui/core/Control", "sap/ui/core/HTML", "sap/ui/core/ResizeHandler",
-	"sap/ui/layout/Grid", "sap/ui/layout/GridData", "sap/ui/layout/VerticalLayout", "sap/ui/layout/HorizontalLayout",
-	"sap/ui/core/Icon", "sap/ui/core/theming/Parameters", "sap/ui/core/InvisibleText", "sap/ui/Device", "sap/ui/core/library", "sap/ui/Global"],
-	function(jQuery, Library, Control, HTML, ResizeHandler, Grid, GridData, VLayout, HLayout, Icon, Parameters,
-		InvisibleText, Device, coreLibrary) {
+sap.ui.define([
+	"jquery.sap.global",
+	"./library",
+	"sap/ui/core/Control",
+	"sap/ui/core/HTML",
+	"sap/ui/core/ResizeHandler",
+	"sap/ui/layout/Grid",
+	"sap/ui/layout/GridData",
+	"sap/ui/layout/VerticalLayout",
+	"sap/ui/layout/HorizontalLayout",
+	"sap/ui/core/Icon",
+	"sap/ui/core/theming/Parameters",
+	"sap/ui/core/InvisibleText",
+	"sap/ui/Device",
+	"sap/ui/core/library",
+	"./ColorPickerRenderer",
+	"sap/ui/Global"
+], function(
+	jQuery,
+	Library,
+	Control,
+	HTML,
+	ResizeHandler,
+	Grid,
+	GridData,
+	VLayout,
+	HLayout,
+	Icon,
+	Parameters,
+	InvisibleText,
+	Device,
+	coreLibrary,
+	ColorPickerRenderer
+) {
 	"use strict";
 
 
@@ -38,7 +67,7 @@ sap.ui.define(["jquery.sap.global", "./library", "sap/ui/core/Control", "sap/ui/
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.54.0
+	 * @version 1.54.1
 	 *
 	 * @constructor
 	 * @public

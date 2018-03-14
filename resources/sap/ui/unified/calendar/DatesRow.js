@@ -5,9 +5,14 @@
  */
 
 //Provides control sap.ui.unified.Calendar.
-sap.ui.define(['jquery.sap.global',
-		'sap/ui/unified/calendar/CalendarUtils', 'sap/ui/unified/calendar/CalendarDate', 'sap/ui/unified/calendar/Month', 'sap/ui/unified/library'],
-	function(jQuery, CalendarUtils, CalendarDate, Month, library) {
+sap.ui.define([
+	'jquery.sap.global',
+	'sap/ui/unified/calendar/CalendarUtils',
+	'sap/ui/unified/calendar/CalendarDate',
+	'sap/ui/unified/calendar/Month',
+	'sap/ui/unified/library',
+	"./DatesRowRenderer"
+], function(jQuery, CalendarUtils, CalendarDate, Month, library, DatesRowRenderer) {
 	"use strict";
 
 	/*
@@ -27,7 +32,7 @@ sap.ui.define(['jquery.sap.global',
 	 * If used inside the calendar the properties and aggregation are directly taken from the parent
 	 * (To not duplicate and sync DateRanges and so on...)
 	 * @extends sap.ui.unified.calendar.Month
-	 * @version 1.54.0
+	 * @version 1.54.1
 	 *
 	 * @constructor
 	 * @public

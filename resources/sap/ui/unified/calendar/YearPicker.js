@@ -5,9 +5,32 @@
  */
 
 //Provides control sap.ui.unified.Calendar.
-sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap/ui/core/delegate/ItemNavigation',
-		'sap/ui/unified/calendar/CalendarUtils', 'sap/ui/unified/calendar/CalendarDate', 'sap/ui/core/date/UniversalDate', 'sap/ui/unified/library', 'sap/ui/core/format/DateFormat', 'sap/ui/core/library', 'jquery.sap.keycodes'],
-	function(jQuery, Control, Device, ItemNavigation, CalendarUtils, CalendarDate, UniversalDate, library, DateFormat, coreLibrary) {
+sap.ui.define([
+	'jquery.sap.global',
+	'sap/ui/core/Control',
+	'sap/ui/Device',
+	'sap/ui/core/delegate/ItemNavigation',
+	'sap/ui/unified/calendar/CalendarUtils',
+	'sap/ui/unified/calendar/CalendarDate',
+	'sap/ui/core/date/UniversalDate',
+	'sap/ui/unified/library',
+	'sap/ui/core/format/DateFormat',
+	'sap/ui/core/library',
+	"./YearPickerRenderer",
+	'jquery.sap.keycodes'
+], function(
+	jQuery,
+	Control,
+	Device,
+	ItemNavigation,
+	CalendarUtils,
+	CalendarDate,
+	UniversalDate,
+	library,
+	DateFormat,
+	coreLibrary,
+	YearPickerRenderer
+) {
 	"use strict";
 
 	// shortcut for sap.ui.core.CalendarType
@@ -28,7 +51,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 	 * renders a YearPicker with ItemNavigation
 	 * This is used inside the calendar. Not for stand alone usage
 	 * @extends sap.ui.core.Control
-	 * @version 1.54.0
+	 * @version 1.54.1
 	 *
 	 * @constructor
 	 * @public

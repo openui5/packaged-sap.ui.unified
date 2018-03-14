@@ -5,8 +5,8 @@
  */
 
 // Provides control sap.ui.unified.CalendarLegend.
-sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/Device'],
-	function(jQuery, Control, library, Device) {
+sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/Device', './CalendarLegendRenderer'],
+	function(jQuery, Control, library, Device, CalendarLegendRenderer) {
 	"use strict";
 
 	// shortcut for sap.ui.unified.CalendarDayType
@@ -26,7 +26,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.54.0
+	 * @version 1.54.1
 	 *
 	 * @constructor
 	 * @public
@@ -61,7 +61,8 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/
 
 				// holds a reference to all standard items in the given format, which will be eventually rendered.
 				_standardItems: {type: "sap.ui.unified.CalendarLegendItem", multiple: true, visibility: "hidden"}
-			}
+			},
+			designtime: "sap/ui/unified/designtime/CalendarLegend.designtime"
 		},
 
 		constructor: function (vId, mSettings) {

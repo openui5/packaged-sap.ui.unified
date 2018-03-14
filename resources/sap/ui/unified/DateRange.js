@@ -6,7 +6,7 @@
 
 //Provides control sap.ui.unified.DateRange.
 sap.ui.define(['sap/ui/core/Element', './library', 'sap/ui/unified/calendar/CalendarUtils'],
-		function(Element, library, CalendarUtils) {
+	function(Element, library, CalendarUtils) {
 	"use strict";
 
 
@@ -20,7 +20,7 @@ sap.ui.define(['sap/ui/core/Element', './library', 'sap/ui/unified/calendar/Cale
 	 * @class
 	 * Date range for use in DatePicker
 	 * @extends sap.ui.core.Element
-	 * @version 1.54.0
+	 * @version 1.54.1
 	 *
 	 * @constructor
 	 * @public
