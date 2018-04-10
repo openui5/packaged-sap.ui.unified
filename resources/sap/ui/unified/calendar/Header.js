@@ -27,7 +27,7 @@ sap.ui.define([
 	 *
 	 * <b>Note:</b> This is used inside the calendar. Not for standalone usage
 	 * @extends sap.ui.core.Control
-	 * @version 1.54.2
+	 * @version 1.54.3
 	 *
 	 * @constructor
 	 * @public

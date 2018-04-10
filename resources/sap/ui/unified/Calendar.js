@@ -54,7 +54,7 @@ sap.ui.define([
 	 * Basic Calendar.
 	 * This calendar is used for DatePickers
 	 * @extends sap.ui.core.Control
-	 * @version 1.54.2
+	 * @version 1.54.3
 	 *
 	 * @constructor
 	 * @public
@@ -1319,6 +1319,7 @@ sap.ui.define([
 		case 1: // month picker
 			oFocusedDate.setYear(oFocusedDate.getYear() - 1);
 			oHeader.setTextButton2(this._oYearFormat.format(oFocusedDate.toUTCJSDate(), true));
+			oHeader.setAriaLabelButton1(this._oYearFormat.format(oFocusedDate.toUTCJSDate(), true));
 			var sSecondaryCalendarType = this._getSecondaryCalendarType();
 			if (sSecondaryCalendarType) {
 				oDate = new CalendarDate(oFocusedDate, sSecondaryCalendarType);
@@ -1372,6 +1373,7 @@ sap.ui.define([
 		case 1: // month picker
 			oFocusedDate.setYear(oFocusedDate.getYear() + 1);
 			oHeader.setTextButton2(this._oYearFormat.format(oFocusedDate.toUTCJSDate(), true));
+			oHeader.setAriaLabelButton1(this._oYearFormat.format(oFocusedDate.toUTCJSDate(), true));
 			var sSecondaryCalendarType = this._getSecondaryCalendarType();
 			if (sSecondaryCalendarType) {
 				oDate = new CalendarDate(oFocusedDate, sSecondaryCalendarType);
@@ -1925,6 +1927,7 @@ sap.ui.define([
 		oFirstDate.setDate(1); // always use the first of the month to have stable year in Japanese calendar
 		sYear = this._oYearFormat.format(oFirstDate.toUTCJSDate(), true);
 		oHeader.setTextButton2(sYear);
+		oHeader.setAriaLabelButton2(sYear);
 
 		if (sSecondaryCalendarType) {
 			oFirstDate = new CalendarDate(oFirstDate, sSecondaryCalendarType);

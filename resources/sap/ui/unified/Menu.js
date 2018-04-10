@@ -50,7 +50,7 @@ sap.ui.define([
 	 * @implements sap.ui.core.IContextMenu
 	 *
 	 * @author SAP SE
-	 * @version 1.54.2
+	 * @version 1.54.3
 	 * @since 1.21.0
 	 *
 	 * @constructor
@@ -180,6 +180,7 @@ sap.ui.define([
 
 		// Cleanup
 		this._resetDelayedRerenderItems();
+		Device.resize.detachHandler(this._handleResizeChange, this);
 	};
 
 	/**
@@ -674,6 +675,10 @@ sap.ui.define([
 			if (!Device.browser.msie && !Device.browser.edge) { //for IE & Edge skip it, otherwise it will move the focus out of the hovered item set before
 				this.getDomRef().focus();
 			}
+		}
+
+		if (Device.browser.msie) {
+			this.getDomRef().focus();
 		}
 
 		this._openSubMenuDelayed(oItem);
