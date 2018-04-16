@@ -14,7 +14,7 @@ sap.ui.define([],
 	/**
 	 * Currency renderer.
 	 *
-	 * @version 1.52.10
+	 * @version 1.52.11
 	 * @namespace
 	 */
 	var CurrencyRenderer = {
