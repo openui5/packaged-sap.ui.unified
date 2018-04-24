@@ -23,7 +23,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.44.30
+	 * @version 1.44.31
 	 * @since 1.21.0
 	 *
 	 * @constructor
@@ -561,6 +561,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 			if (!Device.browser.msie && !Device.browser.edge) { //for IE & Edge skip it, otherwise it will move the focus out of the hovered item set before
 				this.getDomRef().focus();
 			}
+		}
+
+		if (Device.browser.msie) {
+			this.getDomRef().focus();
 		}
 
 		this._openSubMenuDelayed(oItem);
