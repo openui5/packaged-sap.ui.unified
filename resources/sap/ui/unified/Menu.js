@@ -50,7 +50,7 @@ sap.ui.define([
 	 * @implements sap.ui.core.IContextMenu
 	 *
 	 * @author SAP SE
-	 * @version 1.54.4
+	 * @version 1.54.5
 	 * @since 1.21.0
 	 *
 	 * @constructor
@@ -180,7 +180,7 @@ sap.ui.define([
 
 		// Cleanup
 		this._resetDelayedRerenderItems();
-		Device.resize.detachHandler(this._handleResizeChange, this);
+		this._detachResizeHandler();
 	};
 
 	/**
@@ -311,7 +311,18 @@ sap.ui.define([
 		}
 	};
 
-
+	/**
+	 * Called when the resize handler should be detached (e.g. on exit and close).
+	 * @private
+	 */
+	Menu.prototype._detachResizeHandler = function(){
+		// detach listener in case it is not detached in close
+		// in IE when destroy is called both close and exit were called and detach was called twice
+		if (this._hasResizeListener) {
+			Device.resize.detachHandler(this._handleResizeChange, this);
+			this._hasResizeListener = false;
+		}
+	};
 
 	/**
 	 * Opens the menu at the specified position.
@@ -349,6 +360,8 @@ sap.ui.define([
 		this.bOpen = true;
 
 		Device.resize.attachHandler(this._handleResizeChange, this);
+		// mark that the resize handler is attach so we know to detach it later on
+		this._hasResizeListener = true;
 
 		// Set the tab index of the menu and focus
 		var oDomRef = this.getDomRef();
@@ -477,7 +490,7 @@ sap.ui.define([
 		// Close the sap.ui.core.Popup
 		this.getPopup().close(0);
 
-		Device.resize.detachHandler(this._handleResizeChange, this);
+		this._detachResizeHandler();
 
 		//Remove the Menus DOM after it is closed
 		this._resetDelayedRerenderItems();

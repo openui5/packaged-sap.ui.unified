@@ -34,7 +34,7 @@ sap.ui.define([
 	 * Other usages are not supported.
 	 *
 	 * @extends sap.ui.core.Control
-	 * @version 1.54.4
+	 * @version 1.54.5
 	 *
 	 * @constructor
 	 * @private
