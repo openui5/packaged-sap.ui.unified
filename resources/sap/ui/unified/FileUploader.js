@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.38.36
+	 * @version 1.38.37
 	 *
 	 * @constructor
 	 * @public
@@ -1169,6 +1169,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/
 					iKeyCode != eKC.PAGE_UP &&
 					iKeyCode != eKC.PAGE_DOWN &&
 					iKeyCode != eKC.END &&
+					iKeyCode != eKC.ESCAPE &&
 					iKeyCode != eKC.HOME &&
 					iKeyCode != eKC.ARROW_LEFT &&
 					iKeyCode != eKC.ARROW_UP &&
@@ -1461,7 +1462,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/
 					jQuery.sap.log.info("File uploaded to " + that.getUploadUrl());
 					var sResponse;
 					try {
-						sResponse = that.oIFrameRef.contentDocument.body.innerHTML;
+						sResponse = that.oIFrameRef.contentWindow.document.body.innerHTML;
 					} catch (ex) {
 						// in case of cross-domain submit we get a permission denied exception
 						// when we try to access the body of the IFrame document
