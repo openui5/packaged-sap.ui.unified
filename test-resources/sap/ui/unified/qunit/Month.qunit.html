@@ -358,6 +358,94 @@
 					isValueInThresholdStub.restore();
 				});
 
+				QUnit.test("select event is also called when click on sapUiCalDayName", function (assert) {
+					// Arrange
+					var oTarget = document.createElement("span"),
+							oTargetParent = document.createElement("div"),
+							oMouseEvent = { clientX: 10, clientY: 10, target: oTarget},
+							deviceStub = this.stub(sap.ui.Device.support, "touch", true),
+							oMonthSelectSpy = this.spy(this.oM, "fireSelect");
+
+					oTarget.classList.add("sapUiCalDayName");
+					oTargetParent.setAttribute('data-sap-day', "20170101");
+					oTargetParent.appendChild(oTarget);
+					this.oM._oMousedownPosition = oMouseEvent;
+					this.oM._oItemNavigation = new sap.ui.core.delegate.ItemNavigation();
+
+					// Act
+					this.oM.onmouseup(oMouseEvent);
+
+					// Assert
+					assert.equal(oMonthSelectSpy.callCount, 1, "select was fired");
+
+					// Cleanup
+					deviceStub.restore();
+					oMonthSelectSpy.reset();
+				});
+
+				QUnit.test("select event is also called when click on sapUiCalItemText", function (assert) {
+					// Arrange
+					var oTarget = document.createElement("span"),
+							oTargetParent = document.createElement("div"),
+							oMouseEvent = { clientX: 10, clientY: 10, target: oTarget},
+							deviceStub = this.stub(sap.ui.Device.support, "touch", true),
+							oMonthSelectSpy = this.spy(this.oM, "fireSelect");
+
+					oTarget.classList.add("sapUiCalItemText");
+					oTargetParent.setAttribute('data-sap-day', "20170101");
+					oTargetParent.appendChild(oTarget);
+					this.oM._oMousedownPosition = oMouseEvent;
+					this.oM._oItemNavigation = new sap.ui.core.delegate.ItemNavigation();
+
+					// Act
+					this.oM.onmouseup(oMouseEvent);
+
+					// Assert
+					assert.equal(oMonthSelectSpy.callCount, 1, "select was fired");
+
+					// Cleanup
+					deviceStub.restore();
+					oMonthSelectSpy.reset();
+				});
+
+				QUnit.test("Selecting a week number in IE + touch does not cause day selection", function (assert) {
+					// Arrange
+					var oTarget = document.createElement("span");
+					oTarget.classList.add("sapUiCalWeekNum");
+					var oMouseEvent = { clientX: 10, clientY: 10, target: oTarget },
+							isSelectedDaySpy = this.spy(this.oM, "_selectDay"),
+							oBrowserStub = this.stub(sap.ui.Device, "browser", {msie: true});
+
+					//act
+					this.oM._handleMousedown(oMouseEvent, CalendarDate.fromLocalJSDate(new Date(2017, 6, 20), this.oM.getPrimaryCalendarType()));
+
+					//assert
+					assert.strictEqual(isSelectedDaySpy.called, false, "_handleMousedown does not invoke _selectDay in IE");
+
+					//cleanup
+					oBrowserStub.restore();
+					isSelectedDaySpy.restore();
+				});
+
+				QUnit.test("Selecting a week number in Edge + touch does not cause day selection", function (assert) {
+					// Arrange
+					var oTarget = document.createElement("span");
+					oTarget.classList.add("sapUiCalWeekNum");
+					var oMouseEvent = { clientX: 10, clientY: 10, target: oTarget },
+							isSelectedDaySpy = this.spy(this.oM, "_selectDay"),
+							oBrowserStub = this.stub(sap.ui.Device, "browser", {edge: true});
+
+					// act
+					this.oM._handleMousedown(oMouseEvent, CalendarDate.fromLocalJSDate(new Date(2017, 6, 20), this.oM.getPrimaryCalendarType()));
+
+					// assert
+					assert.strictEqual(isSelectedDaySpy.called, false, "_handleMousedown does not invoke _selectDay in Edge");
+
+					// cleanup
+					oBrowserStub.restore();
+					isSelectedDaySpy.restore();
+				});
+
 				QUnit.module("Aria", {
 					beforeEach: function() {
 						//Prepare
