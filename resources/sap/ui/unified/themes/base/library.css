@@ -913,6 +913,12 @@ html.sapUiMedia-Std-Phone .sapUiCalendarRowWithHead > .sapUiCalendarRowApps {
   overflow: hidden;
   margin-bottom: 0.25rem;
 }
+.sapUiSizeCompact .sapUiCalendarApp {
+  min-width: 2rem;
+}
+.sapUiSizeCozy .sapUiCalendarApp {
+  min-width: 3rem;
+}
 /* Removes the empty space in the cell that is below an appointment.
 Use it only if there's one appointment per day for a row that doesn't have interval headers set. */
 .sapMPlanCal.sapUiCalendarAppFitVertically .sapUiCalendarApp {
@@ -1758,7 +1764,9 @@ html[data-sap-ui-browser^="cr"] .sapUiFupInputMask > input {
   color: #ffffff;
   text-shadow: none;
 }
-.sapUiFup:active .sapMBtnInner .sapMBtnIcon {
+.sapUiFup:active .sapMBtnInner .sapMBtnIcon,
+.sapUiFup:active .sapUiFupGroup .sapMBtn > span.sapMBtnInner.sapMBtnAccept > .sapMBtnIcon,
+.sapUiFup:active .sapUiFupGroup .sapMBtn > span.sapMBtnInner.sapMBtnReject > .sapMBtnIcon {
   color: #ffffff;
 }
 /* ==================================== */
