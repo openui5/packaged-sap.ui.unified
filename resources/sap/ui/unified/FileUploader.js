@@ -22,7 +22,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.44.33
+	 * @version 1.44.34
 	 *
 	 * @constructor
 	 * @public
@@ -86,7 +86,12 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/
 			fileType : {type : "string[]", group : "Data", defaultValue : null},
 
 			/**
-			 * Allows multiple files to be chosen and uploaded from the same folder. This property is not supported by Internet Explorer 9.
+			 * Allows multiple files to be chosen and uploaded from the same folder.
+			 * This property is not supported by Internet Explorer 9.
+			 *
+			 * <b>Note:</b> Keep in mind that the various operating systems for mobile devices
+			 * can react differently to the property so that fewer upload functions may be
+			 * available in some cases.
 			 */
 			multiple : {type : "boolean", group : "Behavior", defaultValue : false},
 
@@ -1265,7 +1270,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/
 					if (aFileTypes && aFileTypes.length > 0) {
 						bWrongType = true;
 						iIdx = sName.lastIndexOf(".");
-						sFileEnding = sName.substring(iIdx + 1);
+						sFileEnding = (iIdx === -1) ? "" : sName.substring(iIdx + 1);
 						for (var k = 0; k < aFileTypes.length; k++) {
 							if (sFileEnding.toLowerCase() == aFileTypes[k].toLowerCase()) {
 								bWrongType = false;
@@ -1293,7 +1298,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/
 				bWrongType = true;
 				sName = this.oFileUpload.value || "";
 				iIdx = sName.lastIndexOf(".");
-				sFileEnding = sName.substring(iIdx + 1);
+				sFileEnding = (iIdx === -1) ? "" : sName.substring(iIdx + 1);
 				for (var l = 0; l < aFileTypes.length; l++) {
 					if (sFileEnding == aFileTypes[l]) {
 						bWrongType = false;
