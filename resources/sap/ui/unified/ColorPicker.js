@@ -67,7 +67,7 @@ sap.ui.define([
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.56.6
+	 * @version 1.56.7
 	 *
 	 * @constructor
 	 * @public
@@ -1739,6 +1739,7 @@ sap.ui.define([
 			i;
 
 		iHue = this._getValueInRange(iHue, 0, 360);
+		iHue %= 360;
 
 		if (iSat > 100) {
 			iSat = 1;
@@ -1942,7 +1943,10 @@ sap.ui.define([
 		}
 
 		// store the new values
-		this.Color.h = Math.round(hueValue);
+		// be careful not to change 360 to 0
+		if (hueValue !== 0 || this.Color.h !== 360) {
+			this.Color.h = Math.round(hueValue);
+		}
 		this.Color.s = satValue;
 		this.Color.l = litValue;
 	};
