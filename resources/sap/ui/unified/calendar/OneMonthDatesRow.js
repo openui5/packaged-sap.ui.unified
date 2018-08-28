@@ -34,7 +34,7 @@ sap.ui.define([
 	 * Other usages are not supported.
 	 *
 	 * @extends sap.ui.unified.calendar.DatesRow
-	 * @version 1.58.0
+	 * @version 1.58.1
 	 *
 	 * @constructor
 	 * @private

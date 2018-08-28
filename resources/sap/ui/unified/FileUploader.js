@@ -59,7 +59,7 @@ sap.ui.define([
 	 * @implements sap.ui.core.IFormContent, sap.ui.unified.IProcessableBlobs
 	 *
 	 * @author SAP SE
-	 * @version 1.58.0
+	 * @version 1.58.1
 	 *
 	 * @constructor
 	 * @public
@@ -1262,7 +1262,7 @@ sap.ui.define([
 				bWrongType = true;
 				sName = this.oFileUpload.value || "";
 				iIdx = sName.lastIndexOf(".");
-				sFileEnding = sName.substring(iIdx + 1);
+				sFileEnding = (iIdx === -1) ? "" : sName.substring(iIdx + 1);
 				for (var l = 0; l < aFileTypes.length; l++) {
 					if (sFileEnding == aFileTypes[l]) {
 						bWrongType = false;
@@ -1509,7 +1509,7 @@ sap.ui.define([
 			if (aFileTypes && aFileTypes.length > 0) {
 				bWrongType = true;
 				iIdx = sName.lastIndexOf(".");
-				sFileEnding = sName.substring(iIdx + 1);
+				sFileEnding = (iIdx === -1) ? "" : sName.substring(iIdx + 1);
 				for (var k = 0; k < aFileTypes.length; k++) {
 					if (sFileEnding.toLowerCase() == aFileTypes[k].toLowerCase()) {
 						bWrongType = false;

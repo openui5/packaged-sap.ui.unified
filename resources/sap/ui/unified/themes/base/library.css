@@ -1304,7 +1304,7 @@ html.sap-desktop .sapUiCalendarApp.sapUiCalendarAppSel:focus:not(:active) > .sap
   margin-right: 4px;
 }
 .sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker {
-  max-width: 291px;
+  max-width: 99%;
   min-width: 200px;
 }
 .sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker .sapUiColorPicker-ColorPickerBox {
@@ -1586,10 +1586,7 @@ html.sap-desktop .sapUiCalendarApp.sapUiCalendarAppSel:focus:not(:active) > .sap
 }
 .sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker .sapUiColorPicker-ColorPickerSlider,
 .sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker .sapUiColorPicker-ColorPickerAlphaSlider {
-  padding-left: 0;
-  padding-right: 0;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 10px 0;
 }
 .sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker .sapUiColorPicker-ColorPickerSlider .sapMSliderInner,
 .sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker .sapUiColorPicker-ColorPickerAlphaSlider .sapMSliderInner {
@@ -1628,6 +1625,7 @@ html.sap-desktop .sapUiCalendarApp.sapUiCalendarAppSel:focus:not(:active) > .sap
 .sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker .sapUiColorPicker-ColorPickerInputFieldsRight .sapMInputBaseInner {
   padding: 0;
   width: 43px;
+  min-width: 2rem;
   text-align: center;
 }
 .sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker .colors .sapMInputBase {
@@ -1649,6 +1647,7 @@ html.sap-desktop .sapUiCalendarApp.sapUiCalendarAppSel:focus:not(:active) > .sap
 }
 .sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker .sapUiColorPicker-swatches {
   white-space: normal;
+  width: 100%;
 }
 .sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker .sapUiColorPicker-swatches .sapUiColorPicker-ColorPickerLabels {
   width: 1.6rem;
@@ -1677,7 +1676,7 @@ html.sap-desktop .sapUiCalendarApp.sapUiCalendarAppSel:focus:not(:active) > .sap
   margin-bottom: 0;
 }
 .sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker .colorModeLabels {
-  word-spacing: 44px;
+  word-spacing: 46px;
   padding-left: 18px;
   position: relative;
 }
@@ -1694,13 +1693,71 @@ html.sap-desktop .sapUiCalendarApp.sapUiCalendarAppSel:focus:not(:active) > .sap
   width: 12px;
   font-size: 0.75rem;
 }
-.sapUiSizeCompact .sapUiColorPicker-Default > .sapUnifiedColorPicker .sapMBtn {
+.sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker.phoneGrid.sapUiRespGrid.sapUiRespGridHSpace1 > div {
+  width: 92%;
+}
+.sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker.phoneGrid.sapUiRespGrid.sapUiRespGridHSpace1 > div .sapUiColorPicker-ColorPickerBox {
+  width: 100%;
+  height: auto;
+  max-height: none;
+}
+.sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker.phoneGrid.sapUiRespGrid.sapUiRespGridHSpace1 > div .sapUiColorPicker-ColorPickerBox:after {
+  padding-bottom: 100%;
+}
+.sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker.phoneGrid .sapMSliderInner {
+  max-width: 100%;
+}
+.sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker.phoneGrid .sapUiColorPicker-ColorPickerBox {
+  width: 100%;
+}
+.sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker.phoneGrid .phoneContent {
+  white-space: normal;
+  width: 100%;
+}
+.sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker.phoneGrid .phoneContent > div:first-child {
+  width: 84%;
+}
+.sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker.phoneGrid .phoneContent > div:nth-child(2) {
+  float: right;
+}
+.sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker.phoneGrid .phoneSliders {
+  width: 100%;
+}
+.sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker.phoneGrid .phoneSliders .sapUiColorPicker-ColorPickerSlider {
+  width: 100%;
+}
+.sapUiSizeCompact .sapUiColorPicker-Default > .sapUnifiedColorPicker.phoneGrid .sapUiColorPicker-ColorPickerOldColor {
+  margin-top: 8px;
+  width: 32px;
+  height: 1.97rem;
+}
+.sapUiSizeCompact .sapUiColorPicker-Default > .sapUnifiedColorPicker.phoneGrid .sapUiColorPicker-ColorPickerNewColor {
+  width: 32px;
+  height: 1.97rem;
+}
+.sapUiSizeCompact .sapUiColorPicker-Default > .sapUnifiedColorPicker.phoneGrid .colors {
+  margin-top: 0.5rem;
+}
+.sapUiSizeCompact .sapUiColorPicker-Default > .sapUnifiedColorPicker:not(.phoneGrid) .sapMBtn {
   margin-left: 10px;
   width: 1.3rem;
 }
 .sapUiSizeCompact .sapUiColorPicker-Large .sapUnifiedColorPicker .sapUiColorPicker-ColorPickerInputFieldsLeft .sapMInputBaseInner,
 .sapUiSizeCompact .sapUiColorPicker-Large .sapUnifiedColorPicker .sapUiColorPicker-ColorPickerInputFieldsRight .sapMInputBaseInner {
   width: 2.8125rem;
+}
+.sapUiSizeCompact .sapUiColorPicker-Large .sapUnifiedColorPicker .colorModeLabels {
+  word-spacing: 49px;
+}
+.sapUiSizeCompact .sapUiColorPicker-Large .sapUnifiedColorPicker.phoneGrid .colors {
+  margin-top: 0.5rem;
+}
+.sapUiSizeCompact .sapUiColorPicker-Simplified .sapUnifiedColorPicker.phoneGrid .comparissonFields {
+  margin-top: -3px;
+}
+.sapUiSizeCompact .sapUiColorPicker-Simplified .sapUnifiedColorPicker.phoneGrid .sapUiColorPicker-ColorPickerNewColor,
+.sapUiSizeCompact .sapUiColorPicker-Simplified .sapUnifiedColorPicker.phoneGrid .sapUiColorPicker-ColorPickerOldColor {
+  height: 2.1rem;
 }
 .sapUiSizeCompact .sapUiColorPicker-Large .sapUnifiedColorPicker .colors > div:first-child {
   margin-left: -8px;
@@ -1733,20 +1790,72 @@ html.sap-desktop .sapUiCalendarApp.sapUiCalendarAppSel:focus:not(:active) > .sap
 .sapUiColorPicker-Large .sapUnifiedColorPicker .colors > div:nth-child(2) {
   top: 19px;
 }
-.sapUiColorPicker-Default > .sapUnifiedColorPicker .sapMBtn {
+:not(.sapUiColorPicker-Large) > .sapUnifiedColorPicker.phoneGrid .sapUiColorPicker-ColorPickerOldColor,
+:not(.sapUiColorPicker-Large) > .sapUnifiedColorPicker.phoneGrid .sapUiColorPicker-ColorPickerNewColor {
+  width: 40px;
+}
+:not(.sapUiColorPicker-Large) > .sapUnifiedColorPicker.phoneGrid .sapUiColorPicker-ColorPickerNewColor {
+  border-left: 1px solid #000000;
+  border-top: none;
+}
+:not(.sapUiColorPicker-Large) > .sapUnifiedColorPicker.phoneGrid .sapUiColorPicker-ColorPickerOldColor {
+  border-right: 1px solid #000000;
+  border-bottom: none;
+  margin-top: 11px;
+}
+.sapUiColorPicker-Default > .sapUnifiedColorPicker:not(.phoneGrid) .sapMBtn {
   top: -10px;
   float: right;
   margin-left: 5px;
   width: 1.7rem;
   border-right: none;
 }
-.sapUiColorPicker-Default > .sapUnifiedColorPicker .sapMBtn .sapMBtnIcon {
+.sapUiColorPicker-Default > .sapUnifiedColorPicker .sapMBtnIcon {
   transform: rotate(90deg);
 }
 .sapUiColorPicker-Default > .sapUnifiedColorPicker.sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker > div:last-child {
   margin-right: 16px;
   padding-right: 0;
   overflow-x: hidden;
+}
+.sapUiColorPicker-Default > .sapUnifiedColorPicker.phoneGrid .colors {
+  width: 100%;
+  white-space: normal;
+}
+.sapUiColorPicker-Default > .sapUnifiedColorPicker.phoneGrid .colors > div:nth-child(2) {
+  float: right;
+}
+.sapUiColorPicker-Default > .sapUnifiedColorPicker.phoneGrid .colors .sapMBtn {
+  top: 0;
+}
+.phoneGrid.sapUiColorPicker-ColorPickerMatrix.sapUnifiedColorPicker.sapUiRespGrid.sapUiRespGridHSpace1 > div:first-child {
+  height: auto;
+}
+.sapUiColorPicker-Simplified .sapUnifiedColorPicker.phoneGrid .simplifiedHex {
+  width: 100%;
+}
+.sapUiColorPicker-Simplified .sapUnifiedColorPicker.phoneGrid .simplifiedHex > div:nth-child(2) {
+  width: 100%;
+}
+.sapUiColorPicker-Simplified .sapUnifiedColorPicker.phoneGrid .simplifiedHex > div:nth-child(2) .sapUiColorPicker-ColorPickerHexField {
+  width: 100%;
+  margin-left: 2px;
+}
+.sapUiColorPicker-Simplified .sapUnifiedColorPicker.phoneGrid .sapUiColorPicker-ColorPickerNewColor,
+.sapUiColorPicker-Simplified .sapUnifiedColorPicker.phoneGrid .sapUiColorPicker-ColorPickerOldColor {
+  height: 2.84rem;
+}
+.sapUiColorPicker-Simplified .sapUnifiedColorPicker.phoneGrid .phoneSliders > div:nth-child(3) {
+  text-align: center;
+}
+.sapUiPopupWithPadding .sapMDialogScrollCont {
+  padding: 0;
+}
+.sapUiPopupWithPadding .sapMDialogScrollCont .sapUiRespGrid.sapUiRespGridHSpace1 > div:first-child {
+  padding-top: 0;
+}
+.sapMPopover .sapUiColorPicker-ColorPickerMatrix.sapUiRespGrid.sapUiRespGridHSpace1 {
+  padding-bottom: 0.5rem;
 }
 /* ======================================== */
 /* CSS for control sap.ui.unified/Currency  */
