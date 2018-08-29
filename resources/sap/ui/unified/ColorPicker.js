@@ -38,7 +38,7 @@ sap.ui.define(["jquery.sap.global", "./library", "sap/ui/core/Control", "sap/ui/
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.52.17
+	 * @version 1.52.18
 	 *
 	 * @constructor
 	 * @public
@@ -1707,6 +1707,7 @@ sap.ui.define(["jquery.sap.global", "./library", "sap/ui/core/Control", "sap/ui/
 			i;
 
 		iHue = this._getValueInRange(iHue, 0, 360);
+		iHue %= 360;
 
 		if (iSat > 100) {
 			iSat = 1;
@@ -1910,7 +1911,10 @@ sap.ui.define(["jquery.sap.global", "./library", "sap/ui/core/Control", "sap/ui/
 		}
 
 		// store the new values
-		this.Color.h = Math.round(hueValue);
+		// be careful not to change 360 to 0
+		if (hueValue !== 0 || this.Color.h !== 360) {
+			this.Color.h = Math.round(hueValue);
+		}
 		this.Color.s = satValue;
 		this.Color.l = litValue;
 	};
