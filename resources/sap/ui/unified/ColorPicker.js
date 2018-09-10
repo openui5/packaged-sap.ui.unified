@@ -66,7 +66,7 @@ sap.ui.define([
 	 * @extends sap.ui.core.Control
 	 *
 	 * @author SAP SE
-	 * @version 1.58.1
+	 * @version 1.58.2
 	 *
 	 * @constructor
 	 * @public
@@ -2258,7 +2258,8 @@ sap.ui.define([
 	 * @override
 	 */
 	ColorPicker.prototype.onAfterRendering = function() {
-		var sRGBString = this._getCSSColorString();
+		var sRGBString = this._getCSSColorString(),
+			oParent = this.getParent();
 
 		// get the jQuery-Object for oCPBox and cpCur
 		this.$CPBox = this.oCPBox.$();
@@ -2282,6 +2283,12 @@ sap.ui.define([
 		}
 		this.oSlider.iShiftGrip =  Math.round(jQuery(this.oSlider.oGrip).outerWidth() / 2);
 		this.oAlphaSlider.iShiftGrip =  Math.round(jQuery(this.oAlphaSlider.oGrip).outerWidth() / 2);
+
+		//TODO This is a temporary fix. It's in order to satisfy the control's VD until the refactoring of the control
+		if (oParent && oParent.getMetadata().getName() === "sap.m.Dialog") {
+			oParent.addStyleClass("colorPickerDialog");
+		}
+
 	};
 
 	/**
