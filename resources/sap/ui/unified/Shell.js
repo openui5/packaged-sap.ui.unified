@@ -25,7 +25,7 @@ sap.ui.define(['jquery.sap.global', './ShellHeader', './ShellLayout', './library
 	 * @extends sap.ui.unified.ShellLayout
 	 *
 	 * @author SAP SE
-	 * @version 1.38.37
+	 * @version 1.38.38
 	 *
 	 * @constructor
 	 * @public
