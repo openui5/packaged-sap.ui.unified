@@ -58,7 +58,7 @@ sap.ui.define([
 	 * If used inside the calendar the properties and aggregation are directly taken from the parent
 	 * (To not duplicate and sync DateRanges and so on...)
 	 * @extends sap.ui.core.Control
-	 * @version 1.56.10
+	 * @version 1.56.11
 	 *
 	 * @constructor
 	 * @public
