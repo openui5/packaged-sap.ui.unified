@@ -59,7 +59,7 @@ sap.ui.define([
 	 * @implements sap.ui.core.IFormContent, sap.ui.unified.IProcessableBlobs
 	 *
 	 * @author SAP SE
-	 * @version 1.58.2
+	 * @version 1.58.3
 	 *
 	 * @constructor
 	 * @public
@@ -459,9 +459,15 @@ sap.ui.define([
 	 * @private
 	 */
 	FileUploader.prototype.init = function(){
-
+		var that = this;
 		// load the respective UI-Elements from the FileUploaderHelper
-		this.oFilePath = library.FileUploaderHelper.createTextField(this.getId() + "-fu_input");
+		this.oFilePath = library.FileUploaderHelper.createTextField(this.getId() + "-fu_input").addEventDelegate({
+			onAfterRendering: function () {
+				if (that.getWidth()) {
+					that._resizeDomElements();
+				}
+			}
+		});
 		this.oBrowse = library.FileUploaderHelper.createButton();
 		this.oFilePath.setParent(this);
 		this.oBrowse.setParent(this);
@@ -753,7 +759,7 @@ sap.ui.define([
 				var _newWidth = $fp.outerWidth() - _buttonWidth;
 				if (_newWidth < 0) {
 					this.oFilePath.getDomRef().style.width = "0px";
-					if (!Device.browser.internet_explorer) {
+					if (this.oFileUpload && !Device.browser.internet_explorer) {
 						this.oFileUpload.style.width = $b.outerWidth(true);
 					}
 				} else {
