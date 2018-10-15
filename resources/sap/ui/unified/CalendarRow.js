@@ -66,7 +66,7 @@ sap.ui.define([
 	 * @class
 	 * A calendar row with a header and appointments. The Appointments will be placed in the defined interval.
 	 * @extends sap.ui.core.Control
-	 * @version 1.58.3
+	 * @version 1.58.4
 	 *
 	 * @constructor
 	 * @public
