@@ -65,7 +65,7 @@ sap.ui.define([
 	 * @class
 	 * Calendar with granularity of time items displayed in one line.
 	 * @extends sap.ui.core.Control
-	 * @version 1.58.4
+	 * @version 1.58.5
 	 *
 	 * @constructor
 	 * @public
@@ -1860,9 +1860,9 @@ sap.ui.define([
 		var oFocusedDate = new UniversalDate(this._getFocusedDate().getTime());
 		var oDate = CalendarUtils._createUniversalUTCDate(oSelectedDate);
 
-		oFocusedDate.setUTCDate(oDate.getUTCDate());
-		oFocusedDate.setUTCMonth(oDate.getUTCMonth());
 		oFocusedDate.setUTCFullYear(oDate.getUTCFullYear());
+		oFocusedDate.setUTCMonth(oDate.getUTCMonth());
+		oFocusedDate.setUTCDate(oDate.getUTCDate());
 		_focusDate.call(this, oFocusedDate, true);
 		_closeCalendarPicker.call(this);
 	}

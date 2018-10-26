@@ -14,7 +14,7 @@ sap.ui.define(['sap/ui/core/Core', 'sap/ui/base/Object'], function(Core, BaseObj
 	// delegate further initialization of this library to the Core
 	sap.ui.getCore().initLibrary({
 		name : "sap.ui.unified",
-		version: "1.58.4",
+		version: "1.58.5",
 		dependencies : ["sap.ui.core"],
 		designtime: "sap/ui/unified/designtime/library.designtime",
 		types: [
@@ -79,7 +79,7 @@ sap.ui.define(['sap/ui/core/Core', 'sap/ui/base/Object'], function(Core, BaseObj
 	 * @namespace
 	 * @alias sap.ui.unified
 	 * @author SAP SE
-	 * @version 1.58.4
+	 * @version 1.58.5
 	 * @public
 	 */
 	var thisLib = sap.ui.unified;
