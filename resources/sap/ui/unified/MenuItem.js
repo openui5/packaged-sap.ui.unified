@@ -23,7 +23,7 @@ sap.ui.define(['sap/ui/core/IconPool', './MenuItemBase', './library'],
 	 * @extends sap.ui.unified.MenuItemBase
 	 *
 	 * @author SAP SE
-	 * @version 1.52.20
+	 * @version 1.52.21
 	 * @since 1.21.0
 	 *
 	 * @constructor
