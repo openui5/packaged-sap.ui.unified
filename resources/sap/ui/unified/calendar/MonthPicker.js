@@ -19,7 +19,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/Device', 'sap
 	 * renders a MonthPicker with ItemNavigation
 	 * This is used inside the calendar. Not for stand alone usage
 	 * @extends sap.ui.core.Control
-	 * @version 1.52.21
+	 * @version 1.52.22
 	 *
 	 * @constructor
 	 * @public
