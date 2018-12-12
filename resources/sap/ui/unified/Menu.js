@@ -50,7 +50,7 @@ sap.ui.define([
 	 * @implements sap.ui.core.IContextMenu
 	 *
 	 * @author SAP SE
-	 * @version 1.56.15
+	 * @version 1.56.16
 	 * @since 1.21.0
 	 *
 	 * @constructor
@@ -769,7 +769,9 @@ sap.ui.define([
 		//-> This function and all its callers are obsolete when switching later to standard popup autoclose
 		//   (all needed further code locations for that change are marked with "TBD: standard popup autoclose")
 		var isInMenuHierarchy = false,
-			touchEnabled = this.getPopup().touchEnabled;
+		// before we were relaying on Popup.touchEnabled, but the logic in the Popup was changed
+		// and touchEnabled wasn't valid anymore for Combi devices, which caused the Menu to close automatically right after it was opened
+			touchEnabled = Device.support.touch;
 
 		this.bIgnoreOpenerDOMRef = false;
 
