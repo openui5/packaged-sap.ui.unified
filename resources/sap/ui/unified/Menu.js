@@ -53,7 +53,7 @@ function(
 	 * @implements sap.ui.core.IContextMenu
 	 *
 	 * @author SAP SE
-	 * @version 1.52.24
+	 * @version 1.52.25
 	 * @since 1.21.0
 	 *
 	 * @constructor
@@ -697,7 +697,7 @@ function(
 			return;
 		}
 		var oItem = this.getItemByDomRef(oEvent.target);
-		if (!this.bOpen || !oItem || oItem == this.oHoveredItem) {
+		if (!this.bOpen || !oItem) {
 			return;
 		}
 
