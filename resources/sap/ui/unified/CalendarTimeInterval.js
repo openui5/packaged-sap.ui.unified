@@ -27,7 +27,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 	 * @class
 	 * Calendar with granularity of time items displayed in one line.
 	 * @extends sap.ui.core.Control
-	 * @version 1.52.26
+	 * @version 1.52.27
 	 *
 	 * @constructor
 	 * @public
@@ -1809,8 +1809,10 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', 'sap/ui/core/LocaleDa
 		var oDate = CalendarUtils._createUniversalUTCDate(oSelectedDate);
 
 		oFocusedDate.setUTCFullYear(oDate.getUTCFullYear());
-		oFocusedDate.setUTCMonth(oDate.getUTCMonth());
-		oFocusedDate.setUTCDate(oDate.getUTCDate());
+
+		//setting separately month and date afterwards could lead to not needed shifting of the month
+		oFocusedDate.setUTCMonth(oDate.getUTCMonth(), oDate.getUTCDate());
+
 		_focusDate.call(this, oFocusedDate, true);
 		_closeCalendarPicker.call(this);
 	}
