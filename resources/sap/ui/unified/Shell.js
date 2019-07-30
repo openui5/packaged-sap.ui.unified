@@ -25,7 +25,7 @@ sap.ui.define(['./ShellHeader', './ShellLayout', './library'],
 	 * @extends sap.ui.unified.ShellLayout
 	 *
 	 * @author SAP SE
-	 * @version 1.52.30
+	 * @version 1.52.31
 	 *
 	 * @constructor
 	 * @public
