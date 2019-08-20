@@ -15,7 +15,7 @@ sap.ui.define([],
 	 * Menu renderer.
 	 * @author SAP - TD Core UI&AM UI Infra
 	 *
-	 * @version 1.52.31
+	 * @version 1.52.32
 	 * @namespace
 	 */
 	var MenuRenderer = {
