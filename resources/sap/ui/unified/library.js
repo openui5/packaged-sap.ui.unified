@@ -20,7 +20,7 @@ sap.ui.define([
 	// delegate further initialization of this library to the Core
 	sap.ui.getCore().initLibrary({
 		name : "sap.ui.unified",
-		version: "1.52.34",
+		version: "1.52.35",
 		dependencies : ["sap.ui.core"],
 		types: [
 			"sap.ui.unified.CalendarDayType",
@@ -77,7 +77,7 @@ sap.ui.define([
 	 * @namespace
 	 * @alias sap.ui.unified
 	 * @author SAP SE
-	 * @version 1.52.34
+	 * @version 1.52.35
 	 * @public
 	 */
 	var thisLib = sap.ui.unified;

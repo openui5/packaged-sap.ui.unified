@@ -28,7 +28,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/
 	 * @implements sap.ui.core.IFormContent, sap.ui.unified.IProcessableBlobs
 	 *
 	 * @author SAP SE
-	 * @version 1.52.34
+	 * @version 1.52.35
 	 *
 	 * @constructor
 	 * @public
@@ -1597,10 +1597,14 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/core/Control', './library', 'sap/ui/
 					aFileUpload.push('multiple ');
 				}
 			}
-			if (this.getMimeType() && window.File) {
-				var aMimeTypes = this.getMimeType();
-				var sMimeTypes = aMimeTypes.join(",");
-				aFileUpload.push('accept="' + sMimeTypes + '" ');
+			if ((this.getMimeType() || this.getFileType()) && window.File) {
+				var aMimeTypes = this.getMimeType() || [];
+				var aFileTypes = this.getFileType() || [];
+				aFileTypes = aFileTypes.map(function(item) {
+					return item.indexOf(".") === 0 ? item : "." + item;
+				});
+				var sAcceptedTypes = aFileTypes.concat(aMimeTypes).join(",");
+				aFileUpload.push('accept="' + sAcceptedTypes + '" ');
 			}
 			aFileUpload.push('>');
 
