@@ -1,6 +1,6 @@
 /*!
  * UI development toolkit for HTML5 (OpenUI5)
- * (c) Copyright 2009-2019 SAP SE or an SAP affiliate company.
+ * (c) Copyright 2009-2020 SAP SE or an SAP affiliate company.
  * Licensed under the Apache License, Version 2.0 - see LICENSE.txt.
  */
 
@@ -24,8 +24,7 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/unified/library'],
 	 * @param {sap.ui.core.Control} oFileUploader An object representation of the control that should be rendered.
 	 */
 	FileUploaderRenderer.render = function(oRm, oFileUploader) {
-		var accessibility = sap.ui.getCore().getConfiguration().getAccessibility(),
-			bEnabled = oFileUploader.getEnabled();
+		var bEnabled = oFileUploader.getEnabled();
 
 		oRm.write('<div');
 		oRm.writeControlData(oFileUploader);
@@ -56,10 +55,6 @@ sap.ui.define(['jquery.sap.global', 'sap/ui/unified/library'],
 		oRm.write('<div ');
 		if (!oFileUploader.bMobileLib) {
 			oRm.write('class="sapUiFupInp"');
-		}
-		if (accessibility) {
-			oRm.writeAttribute("role", "textbox");
-			oRm.writeAttribute("aria-readonly", "true");
 		}
 		oRm.write('>');
 
